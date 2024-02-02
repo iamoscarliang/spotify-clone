@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph">
+
+    <fragment
+        android:id="@+id/onboardFragment"
+        android:name="com.oscarliang.spotifyclone.ui.onboard.OnboardFragment"
+        android:label="fragment_onboarding"
+        tools:layout="@layout/fragment_onboard">
+
+        <action
+            android:id="@+id/action_onboardFragment_to_signupFragment"
+            app:destination="@id/signupFragment" />
+
+        <action
+            android:id="@+id/action_onboardFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.oscarliang.spotifyclone.ui.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login">
+
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/signupFragment"
+        android:name="com.oscarliang.spotifyclone.ui.signup.SignupFragment"
+        android:label="fragment_signup"
+        tools:layout="@layout/fragment_signup">
+
+        <action
+            android:id="@+id/action_signupFragment_to_signupNameFragment"
+            app:destination="@id/signupNameFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/signupNameFragment"
+        android:name="com.oscarliang.spotifyclone.ui.signupname.SignupNameFragment"
+        android:label="fragment_signup_name"
+        tools:layout="@layout/fragment_signup_name">
+
+        <action
+            android:id="@+id/action_signupNameFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.oscarliang.spotifyclone.ui.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.oscarliang.spotifyclone.ui.search.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search">
+
+        <action
+            android:id="@+id/action_searchFragment_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
+
+        <action
+            android:id="@+id/action_searchFragment_to_searchResultFragment"
+            app:destination="@id/searchResultFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/categoryFragment"
+        android:name="com.oscarliang.spotifyclone.ui.category.CategoryFragment"
+        android:label="fragment_category"
+        tools:layout="@layout/fragment_category" />
+
+    <fragment
+        android:id="@+id/searchResultFragment"
+        android:name="com.oscarliang.spotifyclone.ui.searchresult.SearchResultFragment"
+        android:label="fragment_search_result"
+        tools:layout="@layout/fragment_search_result" />
+
+    <fragment
+        android:id="@+id/libraryFragment"
+        android:name="com.oscarliang.spotifyclone.ui.library.LibraryFragment"
+        android:label="fragment_library"
+        tools:layout="@layout/fragment_library">
+
+        <action
+            android:id="@+id/action_libraryFragment_to_playlistEditFragment"
+            app:destination="@id/playlistEditFragment" />
+
+        <action
+            android:id="@+id/action_libraryFragment_to_playlistFragment"
+            app:destination="@id/playlistFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/playlistFragment"
+        android:name="com.oscarliang.spotifyclone.ui.playlist.PlaylistFragment"
+        android:label="fragment_playlist"
+        tools:layout="@layout/fragment_playlist">
+
+        <action
+            android:id="@+id/action_playlistFragment_to_playlistEditFragment"
+            app:destination="@id/playlistEditFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/playlistEditFragment"
+        android:name="com.oscarliang.spotifyclone.ui.playlistedit.PlaylistEditFragment"
+        android:label="fragment_playlist_edit"
+        tools:layout="@layout/fragment_playlist_edit" />
+
+    <fragment
+        android:id="@+id/albumFragment"
+        android:name="com.oscarliang.spotifyclone.ui.album.AlbumFragment"
+        android:label="fragment_album"
+        tools:layout="@layout/fragment_album" />
+
+    <fragment
+        android:id="@+id/artistFragment"
+        android:name="com.oscarliang.spotifyclone.ui.artist.ArtistFragment"
+        android:label="fragment_artist"
+        tools:layout="@layout/fragment_artist" />
+
+    <fragment
+        android:id="@+id/musicFragment"
+        android:name="com.oscarliang.spotifyclone.ui.music.MusicFragment"
+        android:label="fragment_music"
+        tools:layout="@layout/fragment_music" />
+
+    <action
+        android:id="@+id/action_to_onboardFragment"
+        app:destination="@id/onboardFragment" />
+
+    <action
+        android:id="@+id/action_to_albumFragment"
+        app:destination="@id/albumFragment" />
+
+    <action
+        android:id="@+id/action_to_artistFragment"
+        app:destination="@id/artistFragment" />
+
+    <action
+        android:id="@+id/action_to_playlistFragment"
+        app:destination="@id/playlistFragment" />
+
+    <action
+        android:id="@+id/action_to_musicFragment"
+        app:destination="@id/musicFragment"
+        app:enterAnim="@anim/slide_in"
+        app:popExitAnim="@anim/slide_out" />
+
+</navigation>

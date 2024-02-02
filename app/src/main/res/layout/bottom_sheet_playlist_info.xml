@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:background="@color/dark_gray">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/image_handler"
+        android:layout_width="50dp"
+        android:layout_height="5dp"
+        android:layout_margin="10dp"
+        android:background="@color/gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/Circle" />
+
+    <LinearLayout
+        android:id="@+id/layout_playlist_info"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image_handler">
+
+        <include
+            android:id="@+id/layout_playlist_info_item"
+            layout="@layout/layout_playlist_info_item" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/gray"
+        app:layout_constraintBottom_toBottomOf="@+id/layout_playlist_info"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_playlist_info">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_playlist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="start|center_vertical"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            android:text="Edit playlist"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:backgroundTint="@color/dark_gray"
+            app:icon="@drawable/ic_edit"
+            app:iconPadding="20dp"
+            app:iconTint="@color/white"
+            app:rippleColor="@color/gray" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_delete_playlist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="start|center_vertical"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            android:text="Delete playlist"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:backgroundTint="@color/dark_gray"
+            app:icon="@drawable/ic_delete"
+            app:iconPadding="20dp"
+            app:iconTint="@color/white"
+            app:rippleColor="@color/gray" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

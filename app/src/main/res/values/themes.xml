@@ -1,0 +1,36 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Theme.SpotifyClone" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryVariant">@color/white</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/white</item>
+        <item name="colorSecondaryVariant">@color/white</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/dark_gray</item>
+        <!-- Navigation bar color. -->
+        <item name="android:navigationBarColor">@color/dark_gray</item>
+        <!-- Menu color. -->
+        <item name="android:actionMenuTextColor">@color/green</item>
+        <!-- SeekBar color. -->
+        <item name="android:progressBackgroundTint">@color/gray</item>
+        <item name="android:progressTint">@color/white</item>
+        <item name="android:thumbTint">@color/white</item>
+        <!-- EditText color. -->
+        <item name="android:editTextColor">@color/white</item>
+        <item name="android:textColorHint">@color/gray</item>
+    </style>
+
+    <style name="RoundedRectangle">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8%</item>
+    </style>
+
+    <style name="Circle">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+</resources>
