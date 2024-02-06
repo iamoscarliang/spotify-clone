@@ -9,11 +9,11 @@ import java.util.List;
 
 public interface MusicRepository {
 
-    LiveData<Resource<List<Music>>> getMusicsByAlbumId(String album);
+    LiveData<Resource<List<Music>>> getMusicsByAlbumId(String albumId);
 
     LiveData<Resource<List<Music>>> getMusicsByCategory(String category, int maxResult);
 
-    LiveData<Resource<List<Music>>> getMusicsByIds(List<String> titles);
+    LiveData<Resource<List<Music>>> getMusicsByIds(List<String> ids);
 
     LiveData<Resource<List<Music>>> search(String query, int maxResult);
 

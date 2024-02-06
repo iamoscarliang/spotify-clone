@@ -13,9 +13,9 @@ public interface AlbumRepository {
 
     LiveData<Resource<List<Album>>> getLatestAlbums(int maxResult);
 
-    LiveData<Resource<List<Album>>> getAlbumsByArtistId(String artistName);
+    LiveData<Resource<List<Album>>> getAlbumsByArtistId(String artistId);
 
-    LiveData<Resource<Album>> getAlbumById(String title);
+    LiveData<Resource<Album>> getAlbumById(String id);
 
     LiveData<Resource<List<Album>>> search(String query, int maxResult);
 

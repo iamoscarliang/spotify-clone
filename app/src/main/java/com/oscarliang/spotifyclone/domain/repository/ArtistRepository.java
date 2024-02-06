@@ -11,7 +11,7 @@ public interface ArtistRepository {
 
     LiveData<Resource<List<Artist>>> getAllArtists(int maxResult);
 
-    LiveData<Resource<Artist>> getArtistById(String name);
+    LiveData<Resource<Artist>> getArtistById(String id);
 
     LiveData<Resource<List<Artist>>> search(String query, int maxResult);
 
