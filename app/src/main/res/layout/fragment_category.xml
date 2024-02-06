@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.category.CategoryFragment">
@@ -124,5 +125,10 @@
         <include layout="@layout/layout_category_shimmer" />
 
     </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <include
+        android:id="@+id/layout_loading_state_category"
+        layout="@layout/layout_loading_state"
+        android:visibility="gone" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
