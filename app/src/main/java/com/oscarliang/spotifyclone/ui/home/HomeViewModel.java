@@ -1,5 +1,6 @@
 package com.oscarliang.spotifyclone.ui.home;
 
+import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
@@ -14,6 +15,7 @@ import com.oscarliang.spotifyclone.util.AbsentLiveData;
 import com.oscarliang.spotifyclone.util.Resource;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -23,29 +25,31 @@ public class HomeViewModel extends ViewModel {
     private final LiveData<Resource<List<Album>>> mAllAlbums;
     private final LiveData<Resource<List<Artist>>> mAllArtists;
 
-    private final MutableLiveData<Integer> mLatestAlbumsMaxResult = new MutableLiveData<>();
-    private final MutableLiveData<Integer> mAllAlbumsMaxResult = new MutableLiveData<>();
-    private final MutableLiveData<Integer> mAllArtistsMaxResult = new MutableLiveData<>();
+    @VisibleForTesting
+    final MutableLiveData<Integer> mLatestMaxResult = new MutableLiveData<>();
+
+    @VisibleForTesting
+    final MutableLiveData<Integer> mAllMaxResult = new MutableLiveData<>();
 
     @Inject
     public HomeViewModel(GetLatestAlbumsUseCase getLatestAlbumsUseCase,
                          GetAllAlbumsUseCase getAllAlbumsUseCase,
                          GetAllArtistsUseCase getAllArtistsUseCase) {
-        mLatestAlbums = Transformations.switchMap(mLatestAlbumsMaxResult, maxResult -> {
+        mLatestAlbums = Transformations.switchMap(mLatestMaxResult, maxResult -> {
             if (maxResult == null || maxResult == 0) {
                 return AbsentLiveData.create();
             } else {
                 return getLatestAlbumsUseCase.execute(maxResult);
             }
         });
-        mAllAlbums = Transformations.switchMap(mAllAlbumsMaxResult, maxResult -> {
+        mAllAlbums = Transformations.switchMap(mAllMaxResult, maxResult -> {
             if (maxResult == null || maxResult == 0) {
                 return AbsentLiveData.create();
             } else {
                 return getAllAlbumsUseCase.execute(maxResult);
             }
         });
-        mAllArtists = Transformations.switchMap(mAllArtistsMaxResult, maxResult -> {
+        mAllArtists = Transformations.switchMap(mAllMaxResult, maxResult -> {
             if (maxResult == null || maxResult == 0) {
                 return AbsentLiveData.create();
             } else {
@@ -66,16 +70,27 @@ public class HomeViewModel extends ViewModel {
         return mAllArtists;
     }
 
-    public void setLatestAlbums(int maxResult) {
-        mLatestAlbumsMaxResult.setValue(maxResult);
+    public void setLatest(int maxResult) {
+        if (Objects.equals(mLatestMaxResult.getValue(), maxResult)) {
+            return;
+        }
+        mLatestMaxResult.setValue(maxResult);
     }
 
-    public void setAllAlbums(int maxResult) {
-        mAllAlbumsMaxResult.setValue(maxResult);
+    public void setAll(int maxResult) {
+        if (Objects.equals(mAllMaxResult.getValue(), maxResult)) {
+            return;
+        }
+        mAllMaxResult.setValue(maxResult);
     }
 
-    public void setAllArtists(int maxResult) {
-        mAllArtistsMaxResult.setValue(maxResult);
+    public void refresh() {
+        if (mLatestMaxResult.getValue() != null) {
+            mLatestMaxResult.setValue(mLatestMaxResult.getValue());
+        }
+        if (mAllMaxResult.getValue() != null) {
+            mAllMaxResult.setValue(mAllMaxResult.getValue());
+        }
     }
 
 }

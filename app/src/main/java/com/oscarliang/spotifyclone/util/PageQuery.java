@@ -14,10 +14,6 @@ public class PageQuery {
         mPage = page;
     }
 
-    public static PageQuery next(PageQuery currentPage) {
-        return new PageQuery(currentPage.mQuery, currentPage.mResultPerPage, currentPage.mPage + 1);
-    }
-
     public boolean isEmpty() {
         return mQuery == null || mQuery.isEmpty()
                 || mResultPerPage == 0 || mPage == 0;

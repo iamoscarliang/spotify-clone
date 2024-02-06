@@ -1,5 +1,6 @@
 package com.oscarliang.spotifyclone.ui.playlistedit;
 
+import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
@@ -14,6 +15,7 @@ import com.oscarliang.spotifyclone.util.Event;
 import com.oscarliang.spotifyclone.util.Resource;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -22,23 +24,24 @@ public class PlaylistEditViewModel extends ViewModel {
     private final LiveData<Resource<List<Music>>> mMusics;
     private final LiveData<Event<Resource<Playlist>>> mUpdatePlaylistState;
 
-    private final MutableLiveData<List<String>> mMusicTitles = new MutableLiveData<>();
-    private final MutableLiveData<UpdatePlaylistQuery> mUpdateQuery = new MutableLiveData<>();
+    @VisibleForTesting
+    final MutableLiveData<List<String>> mMusicIds = new MutableLiveData<>();
+
+    @VisibleForTesting
+    final MutableLiveData<UpdatePlaylistQuery> mUpdatePlaylistQuery = new MutableLiveData<>();
 
     @Inject
     public PlaylistEditViewModel(GetMusicsByIdsUseCase getMusicsByIdsUseCase,
                                  UpdatePlaylistUseCase updatePlaylistUseCase) {
-        mMusics = Transformations.switchMap(mMusicTitles, titles -> {
+        mMusics = Transformations.switchMap(mMusicIds, titles -> {
             if (titles == null || titles.isEmpty()) {
                 return AbsentLiveData.create();
             } else {
                 return getMusicsByIdsUseCase.execute(titles);
             }
         });
-        mUpdatePlaylistState = Transformations.switchMap(mUpdateQuery, query -> {
-            if (query == null
-                    || query.mUserId == null || query.mPlaylist == null
-                    || query.mPlaylistName == null || query.mMusics == null) {
+        mUpdatePlaylistState = Transformations.switchMap(mUpdatePlaylistQuery, query -> {
+            if (query == null || query.isEmpty()) {
                 return AbsentLiveData.create();
             } else {
                 return updatePlaylistUseCase.execute(query.mUserId, query.mPlaylist, query.mPlaylistName, query.mMusics);
@@ -54,14 +57,25 @@ public class PlaylistEditViewModel extends ViewModel {
         return mUpdatePlaylistState;
     }
 
-    public void setPlaylistMusics(List<String> musicTitles) {
-        mMusicTitles.setValue(musicTitles);
+    public void setPlaylistMusics(List<String> musicIds) {
+        if (Objects.equals(mMusicIds.getValue(), musicIds)) {
+            return;
+        }
+        mMusicIds.setValue(musicIds);
     }
 
     public void updatePlaylist(String userId, Playlist playlist, String playlistName, List<Music> musics) {
-        mUpdateQuery.setValue(new UpdatePlaylistQuery(userId, playlist, playlistName, musics));
+        mUpdatePlaylistQuery.setValue(new UpdatePlaylistQuery(userId, playlist, playlistName, musics));
     }
 
+    public void retry() {
+        List<String> current = mMusicIds.getValue();
+        if (current != null && !current.isEmpty()) {
+            mMusicIds.setValue(current);
+        }
+    }
+
+    @VisibleForTesting
     public static class UpdatePlaylistQuery {
 
         private final String mUserId;
@@ -75,6 +89,28 @@ public class PlaylistEditViewModel extends ViewModel {
             mPlaylist = playlist;
             mPlaylistName = playlistName;
             mMusics = musics;
+        }
+
+        public boolean isEmpty() {
+            return mUserId == null || mPlaylist == null || mPlaylist.getId() == null
+                    || mPlaylistName == null || mMusics == null
+                    || mUserId.isEmpty() || mPlaylist.getId().isEmpty()
+                    || mPlaylistName.isEmpty() || mMusics.isEmpty();
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            UpdatePlaylistQuery that = (UpdatePlaylistQuery) o;
+            return Objects.equals(mUserId, that.mUserId)
+                    && Objects.equals(mPlaylist, that.mPlaylist)
+                    && Objects.equals(mPlaylistName, that.mPlaylistName)
+                    && Objects.equals(mMusics, that.mMusics);
         }
 
     }

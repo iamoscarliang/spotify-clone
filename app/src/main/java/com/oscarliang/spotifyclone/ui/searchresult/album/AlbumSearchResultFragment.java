@@ -23,6 +23,8 @@ import com.oscarliang.spotifyclone.util.AutoClearedValue;
 import com.oscarliang.spotifyclone.util.Constants;
 import com.oscarliang.spotifyclone.util.NextPageHandler;
 
+import java.util.Collections;
+
 import javax.inject.Inject;
 
 public class AlbumSearchResultFragment extends Fragment implements Injectable {
@@ -126,6 +128,8 @@ public class AlbumSearchResultFragment extends Fragment implements Injectable {
                     }.loadPage();
                     break;
                 case ERROR:
+                    // Clear all result, so the loading state will be triggered
+                    mAdapter.submitList(Collections.emptyList());
                     Snackbar.make(getView(), resource.mMessage, Snackbar.LENGTH_LONG).show();
                     break;
                 case LOADING:

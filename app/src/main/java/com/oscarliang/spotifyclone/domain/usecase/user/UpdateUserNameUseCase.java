@@ -2,7 +2,6 @@ package com.oscarliang.spotifyclone.domain.usecase.user;
 
 import androidx.lifecycle.LiveData;
 
-import com.google.firebase.auth.UserProfileChangeRequest;
 import com.oscarliang.spotifyclone.domain.repository.UserRepository;
 import com.oscarliang.spotifyclone.util.Event;
 import com.oscarliang.spotifyclone.util.Resource;
@@ -19,10 +18,7 @@ public class UpdateUserNameUseCase {
     }
 
     public LiveData<Event<Resource<Void>>> execute(String name) {
-        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                .setDisplayName(name)
-                .build();
-        return mRepository.updateProfile(profileUpdates);
+        return mRepository.setUserName(name);
     }
 
 }

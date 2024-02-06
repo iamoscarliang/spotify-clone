@@ -1,5 +1,6 @@
 package com.oscarliang.spotifyclone.ui.searchresult.music;
 
+import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
@@ -20,7 +21,8 @@ public class MusicSearchResultViewModel extends ViewModel {
 
     private final LiveData<Resource<List<Music>>> mMusics;
 
-    private final MutableLiveData<PageQuery> mQuery = new MutableLiveData<>();
+    @VisibleForTesting
+    final MutableLiveData<PageQuery> mQuery = new MutableLiveData<>();
 
     @Inject
     public MusicSearchResultViewModel(SearchMusicUseCase searchMusicUseCase) {
@@ -39,14 +41,17 @@ public class MusicSearchResultViewModel extends ViewModel {
 
     public void setQuery(String input, int resultPerPage) {
         PageQuery query = new PageQuery(input, resultPerPage, 1);
-        if (Objects.equals(query, mQuery.getValue())) {
+        if (Objects.equals(mQuery.getValue(), query)) {
             return;
         }
         mQuery.setValue(query);
     }
 
     public void loadNextPage() {
-        mQuery.setValue(PageQuery.next(mQuery.getValue()));
+        PageQuery current = mQuery.getValue();
+        if (current != null && !current.isEmpty()) {
+            mQuery.setValue(new PageQuery(current.mQuery, current.mResultPerPage, current.mPage + 1));
+        }
     }
 
 }

@@ -3,7 +3,9 @@ package com.oscarliang.spotifyclone.ui;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
@@ -25,6 +27,7 @@ import com.oscarliang.spotifyclone.util.Resource;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 import javax.inject.Inject;
@@ -36,8 +39,11 @@ public class MainViewModel extends ViewModel {
     private final LiveData<Event<Resource<Playlist>>> mAddToPlaylistState;
     private final LiveData<Event<Resource<Playlist>>> mAddToNewPlaylistState;
 
-    private final MutableLiveData<AddToPlaylistQuery> mAddToPlaylistQuery = new MutableLiveData<>();
-    private final MutableLiveData<AddToNewPlaylistQuery> mAddToNewPlaylistQuery = new MutableLiveData<>();
+    @VisibleForTesting
+    final MutableLiveData<AddToPlaylistQuery> mAddToPlaylistQuery = new MutableLiveData<>();
+
+    @VisibleForTesting
+    final MutableLiveData<AddToNewPlaylistQuery> mAddToNewPlaylistQuery = new MutableLiveData<>();
 
     private final MutableLiveData<List<Music>> mMusics = new MutableLiveData<>();
     private final MutableLiveData<Music> mCurrentMusic = new MutableLiveData<>();
@@ -83,7 +89,7 @@ public class MainViewModel extends ViewModel {
             }
         }, MoreExecutors.directExecutor());
         mAddToPlaylistState = Transformations.switchMap(mAddToPlaylistQuery, query -> {
-            if (query == null || query.mUserId == null || query.mPlaylist == null || query.mMusic == null) {
+            if (query == null || query.isEmpty()) {
                 return AbsentLiveData.create();
             } else {
                 return addMusicToPlaylistUseCase.execute(query.mUserId, query.mPlaylist, query.mMusic);
@@ -178,7 +184,7 @@ public class MainViewModel extends ViewModel {
         }
     }
 
-    public void addMusic(Music music) {
+    public void addMusic(@NonNull Music music) {
         // Clear previous music and add new music to playlist
         mController.clearMediaItems();
         MediaItem mediaItem = createMediaItem(music);
@@ -188,7 +194,10 @@ public class MainViewModel extends ViewModel {
         mMusics.setValue(Collections.singletonList(music));
     }
 
-    public void addPlaylist(List<Music> musics, String playlistId) {
+    public void addPlaylist(@NonNull List<Music> musics, @NonNull String playlistId) {
+        if (musics.isEmpty()) {
+            return;
+        }
         // Clear previous music and add new music to playlist
         mController.clearMediaItems();
         for (Music music : musics) {
@@ -221,7 +230,8 @@ public class MainViewModel extends ViewModel {
                 .build();
     }
 
-    private static class AddToPlaylistQuery {
+    @VisibleForTesting
+    public static class AddToPlaylistQuery {
 
         private final String mUserId;
         private final Playlist mPlaylist;
@@ -233,9 +243,30 @@ public class MainViewModel extends ViewModel {
             mMusic = music;
         }
 
+        public boolean isEmpty() {
+            return mUserId == null || mPlaylist == null || mMusic == null
+                    || mPlaylist.getId() == null || mMusic.getId() == null
+                    || mUserId.isEmpty() || mPlaylist.getId().isEmpty() || mMusic.getId().isEmpty();
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            AddToPlaylistQuery that = (AddToPlaylistQuery) o;
+            return Objects.equals(mUserId, that.mUserId)
+                    && Objects.equals(mPlaylist, that.mPlaylist)
+                    && Objects.equals(mMusic, that.mMusic);
+        }
+
     }
 
-    private static class AddToNewPlaylistQuery {
+    @VisibleForTesting
+    public static class AddToNewPlaylistQuery {
 
         private final String mUserId;
         private final String mPlaylist;
@@ -245,6 +276,25 @@ public class MainViewModel extends ViewModel {
             mUserId = userId;
             mPlaylist = playlist;
             mMusic = music;
+        }
+
+        public boolean isEmpty() {
+            return mUserId == null || mPlaylist == null || mMusic == null || mMusic.getId() == null
+                    || mUserId.isEmpty() || mPlaylist.isEmpty() || mMusic.getId().isEmpty();
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            AddToNewPlaylistQuery that = (AddToNewPlaylistQuery) o;
+            return Objects.equals(mUserId, that.mUserId)
+                    && Objects.equals(mPlaylist, that.mPlaylist)
+                    && Objects.equals(mMusic, that.mMusic);
         }
 
     }

@@ -152,7 +152,7 @@ public class LoginFragment extends Fragment implements Injectable,
         hideSoftKeyBoard();
         String email = mBinding.get().editEmail.getText().toString();
         String password = mBinding.get().editPassword.getText().toString();
-        mViewModel.loginUser(email, password);
+        mViewModel.login(email, password);
     }
 
     private void showSoftKeyBoard() {

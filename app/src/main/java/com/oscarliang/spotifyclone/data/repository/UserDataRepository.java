@@ -26,7 +26,7 @@ public class UserDataRepository implements UserRepository {
     }
 
     @Override
-    public LiveData<Event<Resource<AuthResult>>> createUser(String email, String password) {
+    public LiveData<Event<Resource<AuthResult>>> signup(String email, String password) {
         return new FirebaseAuthResource<AuthResult>() {
             @NonNull
             @Override
@@ -37,7 +37,7 @@ public class UserDataRepository implements UserRepository {
     }
 
     @Override
-    public LiveData<Event<Resource<AuthResult>>> loginUser(String email, String password) {
+    public LiveData<Event<Resource<AuthResult>>> login(String email, String password) {
         return new FirebaseAuthResource<AuthResult>() {
             @NonNull
             @Override
@@ -59,11 +59,14 @@ public class UserDataRepository implements UserRepository {
     }
 
     @Override
-    public LiveData<Event<Resource<Void>>> updateProfile(UserProfileChangeRequest profileUpdates) {
+    public LiveData<Event<Resource<Void>>> setUserName(String name) {
         return new FirebaseAuthResource<Void>() {
             @NonNull
             @Override
             protected Task<Void> createCall() {
+                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                        .setDisplayName(name)
+                        .build();
                 return mAuth
                         .getCurrentUser()
                         .updateProfile(profileUpdates);

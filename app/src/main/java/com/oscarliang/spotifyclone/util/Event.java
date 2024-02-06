@@ -1,5 +1,7 @@
 package com.oscarliang.spotifyclone.util;
 
+import java.util.Objects;
+
 public class Event<T> {
 
     private final T mContent;
@@ -23,6 +25,19 @@ public class Event<T> {
     public T peekContent() {
         // Returns the content, even if it's already been handled
         return mContent;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Event<?> event = (Event<?>) o;
+        return mHasBeenHandled == event.mHasBeenHandled
+                && Objects.equals(mContent, event.mContent);
     }
 
 }

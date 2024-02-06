@@ -9,12 +9,12 @@ import com.oscarliang.spotifyclone.util.Resource;
 
 public interface UserRepository {
 
-    LiveData<Event<Resource<AuthResult>>> createUser(String email, String password);
+    LiveData<Event<Resource<AuthResult>>> signup(String email, String password);
 
-    LiveData<Event<Resource<AuthResult>>> loginUser(String email, String password);
+    LiveData<Event<Resource<AuthResult>>> login(String email, String password);
 
     LiveData<Event<Resource<Void>>> resetPassword(String email);
 
-    LiveData<Event<Resource<Void>>> updateProfile(UserProfileChangeRequest profileUpdates);
+    LiveData<Event<Resource<Void>>> setUserName(String name);
 
 }

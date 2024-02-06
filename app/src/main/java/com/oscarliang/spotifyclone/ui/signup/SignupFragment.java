@@ -127,7 +127,7 @@ public class SignupFragment extends Fragment implements Injectable {
         hideSoftKeyBoard();
         String email = mBinding.get().editEmail.getText().toString().trim();
         String password = mBinding.get().editPassword.getText().toString().trim();
-        mViewModel.createUser(email, password);
+        mViewModel.signup(email, password);
     }
 
     private void showSoftKeyBoard() {

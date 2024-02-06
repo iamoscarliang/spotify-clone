@@ -26,6 +26,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    sourceSets {
+        androidTest.java.srcDirs += "src/test-common/java"
+        test.java.srcDirs += "src/test-common/java"
+    }
     buildFeatures {
         viewBinding true
     }
@@ -77,4 +81,14 @@ dependencies {
 
     // Swipe refresh layout
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+
+    // Mockito test
+    def mockito_version = "3.3.3"
+    testImplementation "org.mockito:mockito-core:$mockito_version"
+    androidTestImplementation "org.mockito:mockito-android:$mockito_version"
+
+    // Architecture components test
+    def androidx_arch_test_version = "2.2.0"
+    testImplementation "androidx.arch.core:core-testing:$androidx_arch_test_version"
+    androidTestImplementation "androidx.arch.core:core-testing:$androidx_arch_test_version"
 }

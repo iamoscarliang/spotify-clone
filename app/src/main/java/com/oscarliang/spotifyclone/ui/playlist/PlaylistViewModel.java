@@ -1,5 +1,6 @@
 package com.oscarliang.spotifyclone.ui.playlist;
 
+import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
@@ -14,6 +15,7 @@ import com.oscarliang.spotifyclone.util.Event;
 import com.oscarliang.spotifyclone.util.Resource;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -22,8 +24,11 @@ public class PlaylistViewModel extends ViewModel {
     private final LiveData<Resource<List<Music>>> mMusics;
     private final LiveData<Event<Resource<Playlist>>> mDeletePlaylistState;
 
-    private final MutableLiveData<List<String>> mMusicIds = new MutableLiveData<>();
-    private final MutableLiveData<DeletePlaylistQuery> mPlaylistToDelete = new MutableLiveData<>();
+    @VisibleForTesting
+    final MutableLiveData<List<String>> mMusicIds = new MutableLiveData<>();
+
+    @VisibleForTesting
+    final MutableLiveData<DeletePlaylistQuery> mDeletePlaylistQuery = new MutableLiveData<>();
 
     @Inject
     public PlaylistViewModel(GetMusicsByIdsUseCase getMusicsByIdsUseCase,
@@ -35,8 +40,8 @@ public class PlaylistViewModel extends ViewModel {
                 return getMusicsByIdsUseCase.execute(ids);
             }
         });
-        mDeletePlaylistState = Transformations.switchMap(mPlaylistToDelete, query -> {
-            if (query == null || query.mUserId == null || query.mPlaylist == null) {
+        mDeletePlaylistState = Transformations.switchMap(mDeletePlaylistQuery, query -> {
+            if (query == null || query.isEmpty()) {
                 return AbsentLiveData.create();
             } else {
                 return deletePlaylistUseCase.execute(query.mUserId, query.mPlaylist);
@@ -52,15 +57,26 @@ public class PlaylistViewModel extends ViewModel {
         return mDeletePlaylistState;
     }
 
-    public void setPlaylistMusics(List<String> musicTitles) {
-        mMusicIds.setValue(musicTitles);
+    public void setPlaylistMusics(List<String> musicIds) {
+        if (Objects.equals(mMusicIds.getValue(), musicIds)) {
+            return;
+        }
+        mMusicIds.setValue(musicIds);
     }
 
     public void deletePlaylist(String userId, Playlist playlist) {
-        mPlaylistToDelete.setValue(new DeletePlaylistQuery(userId, playlist));
+        mDeletePlaylistQuery.setValue(new DeletePlaylistQuery(userId, playlist));
     }
 
-    private static class DeletePlaylistQuery {
+    public void retry() {
+        List<String> current = mMusicIds.getValue();
+        if (current != null && !current.isEmpty()) {
+            mMusicIds.setValue(current);
+        }
+    }
+
+    @VisibleForTesting
+    public static class DeletePlaylistQuery {
 
         private final String mUserId;
         private final Playlist mPlaylist;
@@ -68,6 +84,24 @@ public class PlaylistViewModel extends ViewModel {
         public DeletePlaylistQuery(String userId, Playlist playlist) {
             mUserId = userId;
             mPlaylist = playlist;
+        }
+
+        public boolean isEmpty() {
+            return mUserId == null || mUserId.isEmpty()
+                    || mPlaylist == null || mPlaylist.getId() == null || mPlaylist.getId().isEmpty();
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            DeletePlaylistQuery that = (DeletePlaylistQuery) o;
+            return Objects.equals(mUserId, that.mUserId)
+                    && Objects.equals(mPlaylist, that.mPlaylist);
         }
 
     }

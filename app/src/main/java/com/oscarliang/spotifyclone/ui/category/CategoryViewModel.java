@@ -1,5 +1,6 @@
 package com.oscarliang.spotifyclone.ui.category;
 
+import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
@@ -20,7 +21,8 @@ public class CategoryViewModel extends ViewModel {
 
     private final LiveData<Resource<List<Music>>> mMusics;
 
-    private final MutableLiveData<PageQuery> mQuery = new MutableLiveData<>();
+    @VisibleForTesting
+    final MutableLiveData<PageQuery> mQuery = new MutableLiveData<>();
 
     @Inject
     public CategoryViewModel(GetMusicsByCategoryUseCase getMusicsByCategoryUseCase) {
@@ -39,14 +41,24 @@ public class CategoryViewModel extends ViewModel {
 
     public void setQuery(String category, int resultPerPage) {
         PageQuery query = new PageQuery(category, resultPerPage, 1);
-        if (Objects.equals(query, mQuery.getValue())) {
+        if (Objects.equals(mQuery.getValue(), query)) {
             return;
         }
         mQuery.setValue(query);
     }
 
     public void loadNextPage() {
-        mQuery.setValue(PageQuery.next(mQuery.getValue()));
+        PageQuery current = mQuery.getValue();
+        if (current != null && !current.isEmpty()) {
+            mQuery.setValue(new PageQuery(current.mQuery, current.mResultPerPage, current.mPage + 1));
+        }
+    }
+
+    public void retry() {
+        PageQuery current = mQuery.getValue();
+        if (current != null && !current.isEmpty()) {
+            mQuery.setValue(current);
+        }
     }
 
 }

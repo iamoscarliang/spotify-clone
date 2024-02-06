@@ -1,5 +1,6 @@
 package com.oscarliang.spotifyclone.ui.artist;
 
+import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
@@ -13,6 +14,7 @@ import com.oscarliang.spotifyclone.util.AbsentLiveData;
 import com.oscarliang.spotifyclone.util.Resource;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -21,7 +23,8 @@ public class ArtistViewModel extends ViewModel {
     private final LiveData<Resource<Artist>> mArtist;
     private final LiveData<Resource<List<Album>>> mAlbums;
 
-    private final MutableLiveData<String> mArtistId = new MutableLiveData<>();
+    @VisibleForTesting
+    final MutableLiveData<String> mArtistId = new MutableLiveData<>();
 
     @Inject
     public ArtistViewModel(GetArtistByIdUseCase getArtistByIdUseCase,
@@ -51,7 +54,17 @@ public class ArtistViewModel extends ViewModel {
     }
 
     public void setArtistId(String artistId) {
+        if (Objects.equals(mArtistId.getValue(), artistId)) {
+            return;
+        }
         mArtistId.setValue(artistId);
+    }
+
+    public void retry() {
+        String current = mArtistId.getValue();
+        if (current != null && !current.isEmpty()) {
+            mArtistId.setValue(current);
+        }
     }
 
 }

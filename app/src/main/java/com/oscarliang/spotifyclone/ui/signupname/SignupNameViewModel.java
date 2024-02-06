@@ -1,5 +1,6 @@
 package com.oscarliang.spotifyclone.ui.signupname;
 
+import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
@@ -16,7 +17,8 @@ public class SignupNameViewModel extends ViewModel {
 
     private final LiveData<Event<Resource<Void>>> mUpdateProfileState;
 
-    private final MutableLiveData<String> mName = new MutableLiveData<>();
+    @VisibleForTesting
+    final MutableLiveData<String> mName = new MutableLiveData<>();
 
     @Inject
     public SignupNameViewModel(UpdateUserNameUseCase updateUserNameUseCase) {

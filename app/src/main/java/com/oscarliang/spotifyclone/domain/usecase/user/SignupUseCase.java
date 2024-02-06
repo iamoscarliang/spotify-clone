@@ -9,17 +9,17 @@ import com.oscarliang.spotifyclone.util.Resource;
 
 import javax.inject.Inject;
 
-public class LoginUserUseCase {
+public class SignupUseCase {
 
     private final UserRepository mRepository;
 
     @Inject
-    public LoginUserUseCase(UserRepository repository) {
+    public SignupUseCase(UserRepository repository) {
         mRepository = repository;
     }
 
     public LiveData<Event<Resource<AuthResult>>> execute(String email, String password) {
-        return mRepository.loginUser(email, password);
+        return mRepository.signup(email, password);
     }
 
 }

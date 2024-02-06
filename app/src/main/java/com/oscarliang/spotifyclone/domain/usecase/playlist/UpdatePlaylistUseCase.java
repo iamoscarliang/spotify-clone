@@ -40,7 +40,11 @@ public class UpdatePlaylistUseCase {
         // Update the new playlist
         playlist.setName(playlistName);
         playlist.setMusicIds(musicIds);
-        playlist.setImageUrl(musics.get(0).getImageUrl());
+        if (musics.isEmpty()) {
+            playlist.setImageUrl("");
+        } else {
+            playlist.setImageUrl(musics.get(0).getImageUrl());
+        }
 
         return mRepository.updatePlaylist(userId, playlist);
     }
