@@ -1,5 +1,6 @@
 package com.oscarliang.spotifyclone.data.repository;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
 import com.google.firebase.firestore.DocumentReference;
@@ -29,6 +30,7 @@ public class ArtistDataRepository implements ArtistRepository {
     @Override
     public LiveData<Resource<List<Artist>>> getAllArtists(int maxResult) {
         return new FirestoreGetQueryResource<List<Artist>>(Artist.class) {
+            @NonNull
             @Override
             protected Query createCall() {
                 return mDb
@@ -42,6 +44,7 @@ public class ArtistDataRepository implements ArtistRepository {
     @Override
     public LiveData<Resource<Artist>> getArtistById(String id) {
         return new FirestoreGetDocumentResource<Artist>(Artist.class) {
+            @NonNull
             @Override
             protected DocumentReference createCall() {
                 return mDb
@@ -54,6 +57,7 @@ public class ArtistDataRepository implements ArtistRepository {
     @Override
     public LiveData<Resource<List<Artist>>> search(String query, int maxResult) {
         return new FirestoreGetQueryResource<List<Artist>>(Artist.class) {
+            @NonNull
             @Override
             protected Query createCall() {
                 return mDb

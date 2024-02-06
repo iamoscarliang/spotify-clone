@@ -1,5 +1,6 @@
 package com.oscarliang.spotifyclone.data.repository;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
 import com.google.firebase.firestore.CollectionReference;
@@ -27,6 +28,7 @@ public class CategoryDataRepository implements CategoryRepository {
     @Override
     public LiveData<Resource<List<Category>>> getAllCategories() {
         return new FirestoreGetCollectionResource<List<Category>>(Category.class) {
+            @NonNull
             @Override
             protected CollectionReference createCall() {
                 return mDb.collection("categories");

@@ -1,5 +1,6 @@
 package com.oscarliang.spotifyclone.data.repository;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
 import com.google.firebase.firestore.CollectionReference;
@@ -34,6 +35,7 @@ public class PlaylistDataRepository implements PlaylistRepository {
     @Override
     public LiveData<Resource<List<Playlist>>> getPlaylistsByUserId(String userId) {
         return new FirestoreGetQueryResource<List<Playlist>>(Playlist.class) {
+            @NonNull
             @Override
             protected Query createCall() {
                 return mDb
@@ -48,6 +50,7 @@ public class PlaylistDataRepository implements PlaylistRepository {
     @Override
     public LiveData<Event<Resource<Playlist>>> addPlaylist(String userId, Playlist playlist) {
         return new FirestoreAddDocumentResource<Playlist>(playlist) {
+            @NonNull
             @Override
             protected CollectionReference createCall() {
                 return mDb
@@ -61,6 +64,7 @@ public class PlaylistDataRepository implements PlaylistRepository {
     @Override
     public LiveData<Event<Resource<Playlist>>> updatePlaylist(String userId, Playlist playlist) {
         return new FirestoreSetDocumentResource<Playlist>(playlist) {
+            @NonNull
             @Override
             protected DocumentReference createCall() {
                 return mDb
@@ -75,6 +79,7 @@ public class PlaylistDataRepository implements PlaylistRepository {
     @Override
     public LiveData<Event<Resource<Playlist>>> deletePlaylist(String userId, Playlist playlist) {
         return new FirestoreDeleteDocumentResource<Playlist>(playlist) {
+            @NonNull
             @Override
             protected DocumentReference createCall() {
                 return mDb

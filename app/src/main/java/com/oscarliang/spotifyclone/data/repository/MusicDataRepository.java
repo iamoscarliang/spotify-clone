@@ -1,5 +1,6 @@
 package com.oscarliang.spotifyclone.data.repository;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
 import com.google.firebase.firestore.FieldPath;
@@ -28,6 +29,7 @@ public class MusicDataRepository implements MusicRepository {
     @Override
     public LiveData<Resource<List<Music>>> getMusicsByAlbumId(String albumId) {
         return new FirestoreGetQueryResource<List<Music>>(Music.class) {
+            @NonNull
             @Override
             protected Query createCall() {
                 return mDb
@@ -40,6 +42,7 @@ public class MusicDataRepository implements MusicRepository {
     @Override
     public LiveData<Resource<List<Music>>> getMusicsByCategory(String category, int maxResult) {
         return new FirestoreGetQueryResource<List<Music>>(Music.class) {
+            @NonNull
             @Override
             protected Query createCall() {
                 return mDb
@@ -53,6 +56,7 @@ public class MusicDataRepository implements MusicRepository {
     @Override
     public LiveData<Resource<List<Music>>> getMusicsByIds(List<String> ids) {
         return new FirestoreGetQueryResource<List<Music>>(Music.class) {
+            @NonNull
             @Override
             protected Query createCall() {
                 return mDb
@@ -65,6 +69,7 @@ public class MusicDataRepository implements MusicRepository {
     @Override
     public LiveData<Resource<List<Music>>> search(String query, int maxResult) {
         return new FirestoreGetQueryResource<List<Music>>(Music.class) {
+            @NonNull
             @Override
             protected Query createCall() {
                 return mDb

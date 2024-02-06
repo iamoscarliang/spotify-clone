@@ -1,5 +1,6 @@
 package com.oscarliang.spotifyclone.data.repository;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
 import com.google.android.gms.tasks.Task;
@@ -27,6 +28,7 @@ public class UserDataRepository implements UserRepository {
     @Override
     public LiveData<Event<Resource<AuthResult>>> createUser(String email, String password) {
         return new FirebaseAuthResource<AuthResult>() {
+            @NonNull
             @Override
             protected Task<AuthResult> createCall() {
                 return mAuth.createUserWithEmailAndPassword(email, password);
@@ -37,6 +39,7 @@ public class UserDataRepository implements UserRepository {
     @Override
     public LiveData<Event<Resource<AuthResult>>> loginUser(String email, String password) {
         return new FirebaseAuthResource<AuthResult>() {
+            @NonNull
             @Override
             protected Task<AuthResult> createCall() {
                 return mAuth.signInWithEmailAndPassword(email, password);
@@ -47,6 +50,7 @@ public class UserDataRepository implements UserRepository {
     @Override
     public LiveData<Event<Resource<Void>>> resetPassword(String email) {
         return new FirebaseAuthResource<Void>() {
+            @NonNull
             @Override
             protected Task<Void> createCall() {
                 return mAuth.sendPasswordResetEmail(email);
@@ -57,6 +61,7 @@ public class UserDataRepository implements UserRepository {
     @Override
     public LiveData<Event<Resource<Void>>> updateProfile(UserProfileChangeRequest profileUpdates) {
         return new FirebaseAuthResource<Void>() {
+            @NonNull
             @Override
             protected Task<Void> createCall() {
                 return mAuth

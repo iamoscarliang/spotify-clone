@@ -1,6 +1,7 @@
 package com.oscarliang.spotifyclone.data.datasource;
 
 import androidx.annotation.MainThread;
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -59,6 +60,7 @@ public abstract class FirestoreSetDocumentResource<ResultType> {
         }
     }
 
+    @NonNull
     @MainThread
     protected abstract DocumentReference createCall();
 

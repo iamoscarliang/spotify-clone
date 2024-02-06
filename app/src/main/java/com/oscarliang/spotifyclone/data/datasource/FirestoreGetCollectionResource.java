@@ -1,6 +1,7 @@
 package com.oscarliang.spotifyclone.data.datasource;
 
 import androidx.annotation.MainThread;
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -36,7 +37,11 @@ public abstract class FirestoreGetCollectionResource<ResultType> {
                         ResultType newData = (ResultType) response.toObjects(mClazz);
 
                         if (newData != null) {
-                            setValue(Resource.success(newData));
+                            if (response.isEmpty() && response.getMetadata().isFromCache()) {
+                                setValue(Resource.error("No network connection", null));
+                            } else {
+                                setValue(Resource.success(newData));
+                            }
                         } else {
                             setValue(Resource.error("Document not found!", null));
                         }
@@ -55,11 +60,11 @@ public abstract class FirestoreGetCollectionResource<ResultType> {
         }
     }
 
+    @NonNull
     @MainThread
     protected abstract CollectionReference createCall();
 
     protected void onFetchFailed() {
     }
-
 
 }
