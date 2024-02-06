@@ -35,6 +35,7 @@ import com.oscarliang.spotifyclone.ui.common.adapter.MusicAdapter;
 import com.oscarliang.spotifyclone.ui.common.bottomsheet.AddToPlaylistBottomSheet;
 import com.oscarliang.spotifyclone.ui.common.bottomsheet.MusicInfoBottomSheet;
 import com.oscarliang.spotifyclone.ui.common.dialog.CreatePlaylistWithMusicDialog;
+import com.oscarliang.spotifyclone.util.AutoClearedValue;
 import com.oscarliang.spotifyclone.util.Resource;
 
 import java.util.Objects;
@@ -46,11 +47,11 @@ public class AlbumFragment extends Fragment implements Injectable,
         AddToPlaylistBottomSheet.AddToPlaylistBottomSheetCallback,
         CreatePlaylistWithMusicDialog.onCreatePlaylistWithMusicClickListener {
 
-    private static final String ALBUM = "album";
+    private static final String ALBUM_ID_KEY = "album";
 
     private String mAlbumId;
 
-    private FragmentAlbumBinding mBinding;
+    private AutoClearedValue<FragmentAlbumBinding> mBinding;
     private MusicAdapter mAdapter;
     private AlbumViewModel mAlbumViewModel;
     private MainViewModel mMainViewModel;
@@ -68,8 +69,9 @@ public class AlbumFragment extends Fragment implements Injectable,
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mAlbumId = getArguments().getString(ALBUM);
+        Bundle args = getArguments();
+        if (args != null && args.containsKey(ALBUM_ID_KEY)) {
+            mAlbumId = getArguments().getString(ALBUM_ID_KEY);
         }
     }
 
@@ -78,14 +80,9 @@ public class AlbumFragment extends Fragment implements Injectable,
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mBinding = FragmentAlbumBinding.inflate(inflater, container, false);
-        return mBinding.getRoot();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mBinding = null;
+        FragmentAlbumBinding viewBinding = FragmentAlbumBinding.inflate(inflater, container, false);
+        mBinding = new AutoClearedValue<>(this, viewBinding);
+        return viewBinding.getRoot();
     }
 
     @Override
@@ -134,7 +131,7 @@ public class AlbumFragment extends Fragment implements Injectable,
     }
 
     private void initToolbar() {
-        mBinding.toolbar.setNavigationOnClickListener(view -> NavHostFragment.findNavController(this).navigateUp());
+        mBinding.get().toolbar.setNavigationOnClickListener(view -> NavHostFragment.findNavController(this).navigateUp());
     }
 
     private void initRecyclerView() {
@@ -142,8 +139,9 @@ public class AlbumFragment extends Fragment implements Injectable,
             mMainViewModel.addMusic(music);
             mMainViewModel.toggleMusic();
         }, music -> showMusicInfoBottomSheet(music));
-        mBinding.recyclerViewMusic.setAdapter(mAdapter);
-        mBinding.recyclerViewMusic.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        mBinding.get().recyclerViewMusic.setAdapter(mAdapter);
+        mBinding.get().recyclerViewMusic.setLayoutManager(new LinearLayoutManager(getContext(),
+                LinearLayoutManager.VERTICAL, false));
     }
 
     private void subscribeObservers() {
@@ -172,47 +170,54 @@ public class AlbumFragment extends Fragment implements Injectable,
                                         int endColor = ResourcesCompat.getColor(getResources(), R.color.black, null);
                                         int[] colors = {startColor, endColor};
                                         GradientDrawable gradient = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors);
-                                        mBinding.imageAlbumBg.setBackground(gradient);
+                                        mBinding.get().imageAlbumBg.setBackground(gradient);
                                     }
                                     return false;
                                 }
                             })
-                            .into(mBinding.imageAlbum);
-                    mBinding.toolbar.setTitle(resource.mData.getTitle());
-                    mBinding.textArtist.setText(resource.mData.getArtist());
-                    mBinding.textYear.setText("Album • " + resource.mData.getYear());
-
-                    mBinding.shimmerLayoutAlbum.stopShimmer();
-                    mBinding.shimmerLayoutAlbum.setVisibility(View.GONE);
+                            .into(mBinding.get().imageAlbum);
+                    mBinding.get().toolbar.setTitle(resource.mData.getTitle());
+                    mBinding.get().textArtist.setText(resource.mData.getArtist());
+                    mBinding.get().textYear.setText("Album • " + resource.mData.getYear());
+                    mBinding.get().shimmerLayoutAlbum.stopShimmer();
+                    mBinding.get().shimmerLayoutAlbum.setVisibility(View.GONE);
                     break;
                 case ERROR:
-                    Snackbar.make(getView(), resource.mMessage, Snackbar.LENGTH_LONG).show();
+                    mBinding.get().layoutLoadingStateAlbum.layoutLoadingState.setVisibility(View.VISIBLE);
+                    mBinding.get().layoutLoadingStateAlbum.textMessage.setText(resource.mMessage);
                     break;
                 case LOADING:
-                    mBinding.shimmerLayoutAlbum.startShimmer();
-                    mBinding.shimmerLayoutAlbum.setVisibility(View.VISIBLE);
+                    mBinding.get().imageAlbum.setImageResource(0);
+                    mBinding.get().toolbar.setTitle(" ");
+                    mBinding.get().textArtist.setText("");
+                    mBinding.get().textYear.setText("");
+                    mBinding.get().shimmerLayoutAlbum.startShimmer();
+                    mBinding.get().shimmerLayoutAlbum.setVisibility(View.VISIBLE);
+                    mBinding.get().layoutLoadingStateAlbum.layoutLoadingState.setVisibility(View.GONE);
                     break;
             }
         });
-        mAlbumViewModel.getMusics().observe(getViewLifecycleOwner(), resource -> {
-            switch (resource.mState) {
+        mAlbumViewModel.getMusics().observe(getViewLifecycleOwner(), listResource -> {
+            switch (listResource.mState) {
                 case SUCCESS:
-                    mAdapter.submitList(resource.mData);
-                    mBinding.btnPlay.setVisibility(View.VISIBLE);
-                    mBinding.btnPlay.setOnClickListener(view -> {
-                        mMainViewModel.addPlaylist(resource.mData, mAlbumId);
+                    mAdapter.submitList(listResource.mData);
+                    mBinding.get().btnPlay.setVisibility(View.VISIBLE);
+                    mBinding.get().btnPlay.setOnClickListener(view -> {
+                        mMainViewModel.addPlaylist(listResource.mData, mAlbumId);
                         mMainViewModel.toggleMusic();
                     });
-                    mBinding.shimmerLayoutMusic.stopShimmer();
-                    mBinding.shimmerLayoutMusic.setVisibility(View.GONE);
+                    mBinding.get().shimmerLayoutMusic.stopShimmer();
+                    mBinding.get().shimmerLayoutMusic.setVisibility(View.GONE);
                     break;
                 case ERROR:
-                    Snackbar.make(getView(), resource.mMessage, Snackbar.LENGTH_LONG).show();
+                    mBinding.get().layoutLoadingStateAlbum.layoutLoadingState.setVisibility(View.VISIBLE);
+                    mBinding.get().layoutLoadingStateAlbum.textMessage.setText(listResource.mMessage);
                     break;
                 case LOADING:
-                    mBinding.btnPlay.setVisibility(View.INVISIBLE);
-                    mBinding.shimmerLayoutMusic.startShimmer();
-                    mBinding.shimmerLayoutMusic.setVisibility(View.VISIBLE);
+                    mBinding.get().btnPlay.setVisibility(View.INVISIBLE);
+                    mBinding.get().shimmerLayoutMusic.startShimmer();
+                    mBinding.get().shimmerLayoutMusic.setVisibility(View.VISIBLE);
+                    mBinding.get().layoutLoadingStateAlbum.layoutLoadingState.setVisibility(View.GONE);
                     break;
             }
         });
@@ -223,13 +228,13 @@ public class AlbumFragment extends Fragment implements Injectable,
             }
             switch (resource.mState) {
                 case SUCCESS:
-                    Snackbar.make(getView(), "Added to " + resource.mData.getName(), Snackbar.LENGTH_LONG)
+                    Snackbar.make(mBinding.get().layoutContent, "Added to " + resource.mData.getName(), Snackbar.LENGTH_LONG)
                             .setAction("VIEW", view -> navigatePlaylistFragment(resource.mData))
                             .setActionTextColor(ResourcesCompat.getColor(getResources(), R.color.dark_green, null))
                             .show();
                     break;
                 case ERROR:
-                    Snackbar.make(getView(), "Error added to " + resource.mData.getName(),
+                    Snackbar.make(mBinding.get().layoutContent, "Error added to " + resource.mData.getName(),
                             Snackbar.LENGTH_LONG).show();
                     break;
                 case LOADING:
@@ -244,13 +249,13 @@ public class AlbumFragment extends Fragment implements Injectable,
             }
             switch (resource.mState) {
                 case SUCCESS:
-                    Snackbar.make(getView(), "Create playlist " + resource.mData.getName(), Snackbar.LENGTH_LONG)
+                    Snackbar.make(mBinding.get().layoutContent, "Create playlist " + resource.mData.getName(), Snackbar.LENGTH_LONG)
                             .setAction("VIEW", view -> navigatePlaylistFragment(resource.mData))
                             .setActionTextColor(ResourcesCompat.getColor(getResources(), R.color.dark_green, null))
                             .show();
                     break;
                 case ERROR:
-                    Snackbar.make(getView(), "Error create playlist " + resource.mData.getName(),
+                    Snackbar.make(mBinding.get().layoutContent, "Error create playlist " + resource.mData.getName(),
                             Snackbar.LENGTH_LONG).show();
                     break;
                 case LOADING:
@@ -258,13 +263,14 @@ public class AlbumFragment extends Fragment implements Injectable,
                     break;
             }
         });
-        mMainViewModel.getPlaying().observe(this, isPlaying -> {
+        mMainViewModel.getPlaying().observe(getViewLifecycleOwner(), isPlaying -> {
             // Check is current playlist equal album's playlist
             if (mMainViewModel.getPlaylistMetadata() != null
                     && Objects.equals(mMainViewModel.getPlaylistMetadata().title, mAlbumId)) {
-                mBinding.btnPlay.setBackgroundResource(isPlaying ? R.drawable.ic_pause_circle : R.drawable.ic_play_circle);
+                mBinding.get().btnPlay.setBackgroundResource(isPlaying ? R.drawable.ic_pause_circle : R.drawable.ic_play_circle);
             }
         });
+        mBinding.get().layoutLoadingStateAlbum.btnRetry.setOnClickListener(view -> mAlbumViewModel.retry());
     }
 
     private void showMusicInfoBottomSheet(Music music) {

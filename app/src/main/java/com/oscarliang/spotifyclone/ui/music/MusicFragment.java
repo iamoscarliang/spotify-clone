@@ -37,6 +37,7 @@ import com.oscarliang.spotifyclone.ui.MainViewModel;
 import com.oscarliang.spotifyclone.ui.common.bottomsheet.AddToPlaylistBottomSheet;
 import com.oscarliang.spotifyclone.ui.common.bottomsheet.MusicInfoBottomSheet;
 import com.oscarliang.spotifyclone.ui.common.dialog.CreatePlaylistWithMusicDialog;
+import com.oscarliang.spotifyclone.util.AutoClearedValue;
 import com.oscarliang.spotifyclone.util.Resource;
 
 import java.text.SimpleDateFormat;
@@ -49,7 +50,7 @@ public class MusicFragment extends Fragment implements Injectable,
         AddToPlaylistBottomSheet.AddToPlaylistBottomSheetCallback,
         CreatePlaylistWithMusicDialog.onCreatePlaylistWithMusicClickListener {
 
-    private FragmentMusicBinding mBinding;
+    private AutoClearedValue<FragmentMusicBinding> mBinding;
     private MainViewModel mMainViewModel;
     private boolean mUpdateSeekbar = true;
 
@@ -68,14 +69,9 @@ public class MusicFragment extends Fragment implements Injectable,
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mBinding = FragmentMusicBinding.inflate(inflater, container, false);
-        return mBinding.getRoot();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mBinding = null;
+        FragmentMusicBinding viewBinding = FragmentMusicBinding.inflate(inflater, container, false);
+        mBinding = new AutoClearedValue<>(this, viewBinding);
+        return viewBinding.getRoot();
     }
 
     @Override
@@ -130,7 +126,7 @@ public class MusicFragment extends Fragment implements Injectable,
     }
 
     private void initSeekBar() {
-        mBinding.seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        mBinding.get().seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (fromUser) {
@@ -156,8 +152,8 @@ public class MusicFragment extends Fragment implements Injectable,
             public void run() {
                 if (mUpdateSeekbar) {
                     long currentTime = mMainViewModel.getCurrentTime();
-                    if (mBinding.seekbar.getProgress() != currentTime) {
-                        mBinding.seekbar.setProgress((int) currentTime);
+                    if (mBinding.get().seekbar.getProgress() != currentTime) {
+                        mBinding.get().seekbar.setProgress((int) currentTime);
                         setCurrentTime(currentTime);
                     }
                 }
@@ -194,16 +190,16 @@ public class MusicFragment extends Fragment implements Injectable,
                         return false;
                     }
                 })
-                .into(mBinding.imageMusic);
-        mBinding.textTitle.setText(music.getTitle());
-        mBinding.textArtist.setText(music.getArtist());
-        mBinding.btnBack.setOnClickListener(view -> NavHostFragment.findNavController(this).navigateUp());
-        mBinding.btnMore.setOnClickListener(view -> showMusicInfoBottomSheet(music));
-        mBinding.btnPlay.setOnClickListener(view -> mMainViewModel.toggleMusic());
-        mBinding.btnSkipNext.setOnClickListener(view -> mMainViewModel.skipNextMusic());
-        mBinding.btnSkipPrevious.setOnClickListener(view -> mMainViewModel.skipPreviousMusic());
-        mBinding.btnShuffle.setOnClickListener(view -> setShuffleMode(!mMainViewModel.getShuffleModeEnabled()));
-        mBinding.btnRepeat.setOnClickListener(view -> setRepeatMode(mMainViewModel.getRepeatMode() + 1));
+                .into(mBinding.get().imageMusic);
+        mBinding.get().textTitle.setText(music.getTitle());
+        mBinding.get().textArtist.setText(music.getArtist());
+        mBinding.get().btnBack.setOnClickListener(view -> NavHostFragment.findNavController(this).navigateUp());
+        mBinding.get().btnMore.setOnClickListener(view -> showMusicInfoBottomSheet(music));
+        mBinding.get().btnPlay.setOnClickListener(view -> mMainViewModel.toggleMusic());
+        mBinding.get().btnSkipNext.setOnClickListener(view -> mMainViewModel.skipNextMusic());
+        mBinding.get().btnSkipPrevious.setOnClickListener(view -> mMainViewModel.skipPreviousMusic());
+        mBinding.get().btnShuffle.setOnClickListener(view -> setShuffleMode(!mMainViewModel.getShuffleModeEnabled()));
+        mBinding.get().btnRepeat.setOnClickListener(view -> setRepeatMode(mMainViewModel.getRepeatMode() + 1));
         setShuffleMode(mMainViewModel.getShuffleModeEnabled());
         setRepeatMode(mMainViewModel.getRepeatMode());
     }
@@ -216,11 +212,11 @@ public class MusicFragment extends Fragment implements Injectable,
         });
         mMainViewModel.getDuration().observe(getViewLifecycleOwner(), duration -> {
             SimpleDateFormat dateFormat = new SimpleDateFormat("mm:ss", Locale.getDefault());
-            mBinding.textDuration.setText(dateFormat.format(duration));
-            mBinding.seekbar.setMax(duration.intValue());
+            mBinding.get().textDuration.setText(dateFormat.format(duration));
+            mBinding.get().seekbar.setMax(duration.intValue());
         });
-        mMainViewModel.getPlaying().observe(this, isPlaying ->
-                mBinding.btnPlay.setBackgroundResource(isPlaying ? R.drawable.ic_pause_circle : R.drawable.ic_play_circle));
+        mMainViewModel.getPlaying().observe(getViewLifecycleOwner(), isPlaying ->
+                mBinding.get().btnPlay.setBackgroundResource(isPlaying ? R.drawable.ic_pause_circle : R.drawable.ic_play_circle));
         mMainViewModel.getAddToPlaylistState().observe(getViewLifecycleOwner(), event -> {
             Resource<Playlist> resource = event.getContentIfNotHandled();
             if (resource == null) {
@@ -267,12 +263,12 @@ public class MusicFragment extends Fragment implements Injectable,
 
     private void setCurrentTime(long position) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("mm:ss", Locale.getDefault());
-        mBinding.textCurrentTime.setText(dateFormat.format(position));
+        mBinding.get().textCurrentTime.setText(dateFormat.format(position));
     }
 
     private void setShuffleMode(boolean shuffleEnable) {
         mMainViewModel.setShuffleModeEnabled(shuffleEnable);
-        mBinding.btnShuffle.setBackgroundResource(shuffleEnable ? R.drawable.ic_shuffle_on : R.drawable.ic_shuffle_off);
+        mBinding.get().btnShuffle.setBackgroundResource(shuffleEnable ? R.drawable.ic_shuffle_on : R.drawable.ic_shuffle_off);
     }
 
     private void setRepeatMode(int repeatMode) {
@@ -282,13 +278,13 @@ public class MusicFragment extends Fragment implements Injectable,
         mMainViewModel.setRepeatMode(repeatMode);
         switch (repeatMode) {
             case Player.REPEAT_MODE_OFF:
-                mBinding.btnRepeat.setBackgroundResource(R.drawable.ic_repeat_off);
+                mBinding.get().btnRepeat.setBackgroundResource(R.drawable.ic_repeat_off);
                 break;
             case Player.REPEAT_MODE_ONE:
-                mBinding.btnRepeat.setBackgroundResource(R.drawable.ic_repeat_one);
+                mBinding.get().btnRepeat.setBackgroundResource(R.drawable.ic_repeat_one);
                 break;
             case Player.REPEAT_MODE_ALL:
-                mBinding.btnRepeat.setBackgroundResource(R.drawable.ic_repeat_on);
+                mBinding.get().btnRepeat.setBackgroundResource(R.drawable.ic_repeat_on);
                 break;
         }
     }

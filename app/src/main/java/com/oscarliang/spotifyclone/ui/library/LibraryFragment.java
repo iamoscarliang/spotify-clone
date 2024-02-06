@@ -24,6 +24,7 @@ import com.oscarliang.spotifyclone.ui.common.adapter.PlaylistAdapter;
 import com.oscarliang.spotifyclone.ui.common.bottomsheet.PlaylistInfoBottomSheet;
 import com.oscarliang.spotifyclone.ui.common.dialog.CreatePlaylistDialog;
 import com.oscarliang.spotifyclone.ui.common.dialog.DeletePlaylistDialog;
+import com.oscarliang.spotifyclone.util.AutoClearedValue;
 import com.oscarliang.spotifyclone.util.Resource;
 
 import java.util.Collections;
@@ -35,9 +36,9 @@ public class LibraryFragment extends Fragment implements Injectable,
         CreatePlaylistDialog.onCreatePlaylistClickListener,
         DeletePlaylistDialog.OnConfirmDeletePlaylistClickListener {
 
-    private FragmentLibraryBinding mBinding;
+    private AutoClearedValue<FragmentLibraryBinding> mBinding;
     private PlaylistAdapter mAdapter;
-    private LibraryViewModel mLibraryViewModel;
+    private LibraryViewModel mViewModel;
 
     @Inject
     FirebaseAuth mAuth;
@@ -54,20 +55,15 @@ public class LibraryFragment extends Fragment implements Injectable,
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mBinding = FragmentLibraryBinding.inflate(inflater, container, false);
-        return mBinding.getRoot();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mBinding = null;
+        FragmentLibraryBinding viewBinding = FragmentLibraryBinding.inflate(inflater, container, false);
+        mBinding = new AutoClearedValue<>(this, viewBinding);
+        return viewBinding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mLibraryViewModel = new ViewModelProvider(getActivity(), mFactory).get(LibraryViewModel.class);
+        mViewModel = new ViewModelProvider(getActivity(), mFactory).get(LibraryViewModel.class);
 
         initToolbar();
         initDrawer();
@@ -76,7 +72,7 @@ public class LibraryFragment extends Fragment implements Injectable,
         subscribeObservers();
 
         if (savedInstanceState == null) {
-            loadPlaylists();
+            mViewModel.setUser(mAuth.getCurrentUser().getUid());
         }
     }
 
@@ -92,18 +88,18 @@ public class LibraryFragment extends Fragment implements Injectable,
 
     @Override
     public void onCreatePlaylistClick(String playlistName) {
-        mLibraryViewModel.addPlaylist(mAuth.getCurrentUser().getUid(), playlistName);
+        mViewModel.addPlaylist(mAuth.getCurrentUser().getUid(), playlistName);
     }
 
     @Override
     public void onConfirmDeletePlaylistClick(Playlist playlist) {
-        mLibraryViewModel.deletePlaylist(mAuth.getCurrentUser().getUid(), playlist);
+        mViewModel.deletePlaylist(mAuth.getCurrentUser().getUid(), playlist);
     }
 
     private void initToolbar() {
-        mBinding.toolbar.setNavigationOnClickListener(view -> mBinding.drawerLayout.open());
-        mBinding.toolbar.inflateMenu(R.menu.menu_library);
-        mBinding.toolbar.setOnMenuItemClickListener(item -> {
+        mBinding.get().toolbar.setNavigationOnClickListener(view -> mBinding.get().drawerLayout.open());
+        mBinding.get().toolbar.inflateMenu(R.menu.menu_library);
+        mBinding.get().toolbar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.action_add_playlist) {
                 showCreatePlaylistDialog();
                 return true;
@@ -113,23 +109,23 @@ public class LibraryFragment extends Fragment implements Injectable,
     }
 
     private void initDrawer() {
-        mBinding.drawer.navView.setNavigationItemSelectedListener(item -> {
+        mBinding.get().drawer.navView.setNavigationItemSelectedListener(item -> {
             if (item.getItemId() == R.id.action_logout) {
                 mAuth.signOut();
                 navigateOnboardFragment();
             }
             item.setChecked(true);
-            mBinding.drawerLayout.close();
+            mBinding.get().drawerLayout.close();
             return true;
         });
-        TextView textUser = mBinding.drawer.navView.getHeaderView(0).findViewById(R.id.text_user);
+        TextView textUser = mBinding.get().drawer.navView.getHeaderView(0).findViewById(R.id.text_user);
         textUser.setText(mAuth.getCurrentUser().getDisplayName());
     }
 
     private void initSwipeRefreshLayout() {
-        mBinding.swipeRefreshLayout.setOnRefreshListener(() -> {
-            mBinding.swipeRefreshLayout.setRefreshing(false);
-            loadPlaylists();
+        mBinding.get().swipeRefreshLayout.setOnRefreshListener(() -> {
+            mBinding.get().swipeRefreshLayout.setRefreshing(false);
+            mViewModel.refresh();
         });
     }
 
@@ -137,44 +133,40 @@ public class LibraryFragment extends Fragment implements Injectable,
         mAdapter = new PlaylistAdapter(
                 playlist -> navigatePlaylistFragment(playlist),
                 playlist -> showPlaylistInfoBottomSheet(playlist));
-        mBinding.recyclerViewPlaylist.setAdapter(mAdapter);
-        mBinding.recyclerViewPlaylist.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-    }
-
-    private void loadPlaylists() {
-        mLibraryViewModel.setUser(mAuth.getCurrentUser().getUid());
+        mBinding.get().recyclerViewPlaylist.setAdapter(mAdapter);
+        mBinding.get().recyclerViewPlaylist.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
     }
 
     private void subscribeObservers() {
-        mLibraryViewModel.getPlaylists().observe(getViewLifecycleOwner(), resource -> {
+        mViewModel.getPlaylists().observe(getViewLifecycleOwner(), resource -> {
             switch (resource.mState) {
                 case SUCCESS:
                     mAdapter.submitList(resource.mData);
-                    mBinding.shimmerLayoutPlaylist.stopShimmer();
-                    mBinding.shimmerLayoutPlaylist.setVisibility(View.GONE);
+                    mBinding.get().shimmerLayoutPlaylist.stopShimmer();
+                    mBinding.get().shimmerLayoutPlaylist.setVisibility(View.GONE);
                     break;
                 case ERROR:
-                    Snackbar.make(getView(), resource.mMessage, Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(mBinding.get().layoutContent, resource.mMessage, Snackbar.LENGTH_LONG).show();
                     break;
                 case LOADING:
                     mAdapter.submitList(Collections.emptyList());
-                    mBinding.shimmerLayoutPlaylist.startShimmer();
-                    mBinding.shimmerLayoutPlaylist.setVisibility(View.VISIBLE);
+                    mBinding.get().shimmerLayoutPlaylist.startShimmer();
+                    mBinding.get().shimmerLayoutPlaylist.setVisibility(View.VISIBLE);
                     break;
             }
         });
-        mLibraryViewModel.getAddPlaylistState().observe(getViewLifecycleOwner(), event -> {
+        mViewModel.getAddPlaylistState().observe(getViewLifecycleOwner(), event -> {
             Resource<Playlist> resource = event.getContentIfNotHandled();
             if (resource != null) {
                 switch (resource.mState) {
                     case SUCCESS:
                         mAdapter.addToList(resource.mData);
-                        Snackbar.make(getView(), "Create playlist " + resource.mData.getName(),
+                        Snackbar.make(mBinding.get().layoutContent, "Create playlist " + resource.mData.getName(),
                                 Snackbar.LENGTH_LONG).show();
                         break;
                     case ERROR:
-                        Snackbar.make(getView(), "Error creating playlist " + resource.mData.getName(),
-                                        Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(mBinding.get().layoutContent, "Error creating playlist " + resource.mData.getName(),
+                                Snackbar.LENGTH_LONG).show();
                         break;
                     case LOADING:
                         // Ignore
@@ -182,17 +174,17 @@ public class LibraryFragment extends Fragment implements Injectable,
                 }
             }
         });
-        mLibraryViewModel.getDeletePlaylistState().observe(getViewLifecycleOwner(), event -> {
+        mViewModel.getDeletePlaylistState().observe(getViewLifecycleOwner(), event -> {
             Resource<Playlist> resource = event.getContentIfNotHandled();
             if (resource != null) {
                 switch (resource.mState) {
                     case SUCCESS:
                         mAdapter.removeFromList(resource.mData);
-                        Snackbar.make(getView(), "Delete playlist " + resource.mData.getName(),
+                        Snackbar.make(mBinding.get().layoutContent, "Delete playlist " + resource.mData.getName(),
                                 Snackbar.LENGTH_LONG).show();
                         break;
                     case ERROR:
-                        Snackbar.make(getView(), "Error deleting playlist " + resource.mData.getName(),
+                        Snackbar.make(mBinding.get().layoutContent, "Error deleting playlist " + resource.mData.getName(),
                                 Snackbar.LENGTH_LONG).show();
                         break;
                     case LOADING:

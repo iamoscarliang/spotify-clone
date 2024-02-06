@@ -28,9 +28,12 @@ import com.oscarliang.spotifyclone.ui.common.adapter.MusicAdapter;
 import com.oscarliang.spotifyclone.ui.common.bottomsheet.AddToPlaylistBottomSheet;
 import com.oscarliang.spotifyclone.ui.common.bottomsheet.MusicInfoBottomSheet;
 import com.oscarliang.spotifyclone.ui.common.dialog.CreatePlaylistWithMusicDialog;
+import com.oscarliang.spotifyclone.util.AutoClearedValue;
 import com.oscarliang.spotifyclone.util.Constants;
 import com.oscarliang.spotifyclone.util.NextPageHandler;
 import com.oscarliang.spotifyclone.util.Resource;
+
+import java.util.Collections;
 
 import javax.inject.Inject;
 
@@ -39,11 +42,11 @@ public class CategoryFragment extends Fragment implements Injectable,
         AddToPlaylistBottomSheet.AddToPlaylistBottomSheetCallback,
         CreatePlaylistWithMusicDialog.onCreatePlaylistWithMusicClickListener {
 
-    private static final String CATEGORY = "category";
+    private static final String CATEGORY_KEY = "category";
 
     private String mCategory;
 
-    private FragmentCategoryBinding mBinding;
+    private AutoClearedValue<FragmentCategoryBinding> mBinding;
     private MusicAdapter mAdapter;
     private CategoryViewModel mCategoryViewModel;
     private MainViewModel mMainViewModel;
@@ -61,8 +64,9 @@ public class CategoryFragment extends Fragment implements Injectable,
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mCategory = getArguments().getString(CATEGORY);
+        Bundle args = getArguments();
+        if (args != null && args.containsKey(CATEGORY_KEY)) {
+            mCategory = getArguments().getString(CATEGORY_KEY);
         }
     }
 
@@ -71,14 +75,9 @@ public class CategoryFragment extends Fragment implements Injectable,
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mBinding = FragmentCategoryBinding.inflate(inflater, container, false);
-        return mBinding.getRoot();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mBinding = null;
+        FragmentCategoryBinding viewBinding = FragmentCategoryBinding.inflate(inflater, container, false);
+        mBinding = new AutoClearedValue<>(this, viewBinding);
+        return viewBinding.getRoot();
     }
 
     @Override
@@ -127,7 +126,7 @@ public class CategoryFragment extends Fragment implements Injectable,
     }
 
     private void initToolbar() {
-        mBinding.toolbar.setNavigationOnClickListener(v -> NavHostFragment.findNavController(this).navigateUp());
+        mBinding.get().toolbar.setNavigationOnClickListener(v -> NavHostFragment.findNavController(this).navigateUp());
     }
 
     private void initRecyclerView() {
@@ -135,10 +134,10 @@ public class CategoryFragment extends Fragment implements Injectable,
             mMainViewModel.addMusic(music);
             mMainViewModel.toggleMusic();
         }, music -> showMusicInfoBottomSheet(music));
-        mBinding.recyclerViewMusic.setAdapter(mAdapter);
-        mBinding.recyclerViewMusic.setLayoutManager(new LinearLayoutManager(getContext(),
+        mBinding.get().recyclerViewMusic.setAdapter(mAdapter);
+        mBinding.get().recyclerViewMusic.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false));
-        mBinding.nestedScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener)
+        mBinding.get().nestedScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener)
                 (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
                     // Check is scroll to bottom
                     if (scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()) {
@@ -148,8 +147,8 @@ public class CategoryFragment extends Fragment implements Injectable,
     }
 
     private void subscribeObservers() {
-        mCategoryViewModel.getMusics().observe(getViewLifecycleOwner(), resource -> {
-            switch (resource.mState) {
+        mCategoryViewModel.getMusics().observe(getViewLifecycleOwner(), listResource -> {
+            switch (listResource.mState) {
                 case SUCCESS:
                     new NextPageHandler() {
                         @Override
@@ -159,52 +158,56 @@ public class CategoryFragment extends Fragment implements Injectable,
 
                         @Override
                         protected void loadFirstPage() {
-                            if (!resource.mData.isEmpty()) {
+                            if (!listResource.mData.isEmpty()) {
                                 Glide.with(getContext())
-                                        .load(resource.mData.get(0).getImageUrl())
+                                        .load(listResource.mData.get(0).getImageUrl())
                                         .placeholder(R.drawable.ic_music)
                                         .error(R.drawable.ic_music)
-                                        .into(mBinding.imageCategory);
+                                        .into(mBinding.get().imageCategory);
                             }
-                            mBinding.toolbar.setTitle(mCategory);
-                            mBinding.textBrowse.setVisibility(View.VISIBLE);
-                            mBinding.shimmerLayoutCategory.stopShimmer();
-                            mBinding.shimmerLayoutCategory.setVisibility(View.GONE);
-                            mBinding.shimmerLayoutMusic.stopShimmer();
-                            mBinding.shimmerLayoutMusic.setVisibility(View.GONE);
-                            mBinding.progressbar.setVisibility(View.VISIBLE);
+                            mBinding.get().toolbar.setTitle(mCategory);
+                            mBinding.get().textBrowse.setVisibility(View.VISIBLE);
+                            mBinding.get().shimmerLayoutCategory.stopShimmer();
+                            mBinding.get().shimmerLayoutCategory.setVisibility(View.GONE);
+                            mBinding.get().shimmerLayoutMusic.stopShimmer();
+                            mBinding.get().shimmerLayoutMusic.setVisibility(View.GONE);
+                            mBinding.get().progressbar.setVisibility(View.VISIBLE);
                         }
 
                         @Override
                         protected boolean hasMoreResult() {
-                            return resource.mData.size() % Constants.PAGINATION_COUNT == 0
-                                    && resource.mData.size() != mAdapter.getItemCount();
+                            return listResource.mData.size() % Constants.PAGINATION_COUNT == 0
+                                    && listResource.mData.size() != mAdapter.getItemCount();
                         }
 
                         @Override
                         protected void loadResult() {
-                            mAdapter.submitList(resource.mData);
+                            mAdapter.submitList(listResource.mData);
                         }
 
                         @Override
                         protected void onQueryExhausted() {
-                            mBinding.progressbar.setVisibility(View.INVISIBLE);
-                            mBinding.nestedScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) null);
+                            mBinding.get().progressbar.setVisibility(View.INVISIBLE);
+                            mBinding.get().nestedScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) null);
                         }
                     }.loadPage();
                     break;
                 case ERROR:
-                    Snackbar.make(getView(), resource.mMessage, Snackbar.LENGTH_LONG).show();
+                    // Clear all result, so the loading state will be triggered
+                    mAdapter.submitList(Collections.emptyList());
+                    mBinding.get().layoutLoadingStateCategory.layoutLoadingState.setVisibility(View.VISIBLE);
+                    mBinding.get().layoutLoadingStateCategory.textMessage.setText(listResource.mMessage);
                     break;
                 case LOADING:
                     // Show the shimmer effect only when loading the first page
                     if (mAdapter.getItemCount() == 0) {
-                        mBinding.textBrowse.setVisibility(View.INVISIBLE);
-                        mBinding.shimmerLayoutCategory.startShimmer();
-                        mBinding.shimmerLayoutCategory.setVisibility(View.VISIBLE);
-                        mBinding.shimmerLayoutMusic.startShimmer();
-                        mBinding.shimmerLayoutMusic.setVisibility(View.VISIBLE);
+                        mBinding.get().textBrowse.setVisibility(View.INVISIBLE);
+                        mBinding.get().shimmerLayoutCategory.startShimmer();
+                        mBinding.get().shimmerLayoutCategory.setVisibility(View.VISIBLE);
+                        mBinding.get().shimmerLayoutMusic.startShimmer();
+                        mBinding.get().shimmerLayoutMusic.setVisibility(View.VISIBLE);
                     }
+                    mBinding.get().layoutLoadingStateCategory.layoutLoadingState.setVisibility(View.GONE);
                     break;
             }
         });
@@ -215,13 +218,13 @@ public class CategoryFragment extends Fragment implements Injectable,
             }
             switch (resource.mState) {
                 case SUCCESS:
-                    Snackbar.make(getView(), "Added to " + resource.mData.getName(), Snackbar.LENGTH_LONG)
+                    Snackbar.make(mBinding.get().layoutContent, "Added to " + resource.mData.getName(), Snackbar.LENGTH_LONG)
                             .setAction("VIEW", view -> navigatePlaylistFragment(resource.mData))
                             .setActionTextColor(ResourcesCompat.getColor(getResources(), R.color.dark_green, null))
                             .show();
                     break;
                 case ERROR:
-                    Snackbar.make(getView(), "Error added to " + resource.mData.getName(),
+                    Snackbar.make(mBinding.get().layoutContent, "Error added to " + resource.mData.getName(),
                             Snackbar.LENGTH_LONG).show();
                     break;
                 case LOADING:
@@ -236,13 +239,13 @@ public class CategoryFragment extends Fragment implements Injectable,
             }
             switch (resource.mState) {
                 case SUCCESS:
-                    Snackbar.make(getView(), "Create playlist " + resource.mData.getName(), Snackbar.LENGTH_LONG)
+                    Snackbar.make(mBinding.get().layoutContent, "Create playlist " + resource.mData.getName(), Snackbar.LENGTH_LONG)
                             .setAction("VIEW", view -> navigatePlaylistFragment(resource.mData))
                             .setActionTextColor(ResourcesCompat.getColor(getResources(), R.color.dark_green, null))
                             .show();
                     break;
                 case ERROR:
-                    Snackbar.make(getView(), "Error create playlist " + resource.mData.getName(),
+                    Snackbar.make(mBinding.get().layoutContent, "Error create playlist " + resource.mData.getName(),
                             Snackbar.LENGTH_LONG).show();
                     break;
                 case LOADING:
@@ -250,6 +253,7 @@ public class CategoryFragment extends Fragment implements Injectable,
                     break;
             }
         });
+        mBinding.get().layoutLoadingStateCategory.btnRetry.setOnClickListener(view -> mCategoryViewModel.retry());
     }
 
     private void showMusicInfoBottomSheet(Music music) {

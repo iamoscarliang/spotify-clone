@@ -11,6 +11,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
@@ -20,13 +21,13 @@ import com.oscarliang.spotifyclone.di.Injectable;
 import com.oscarliang.spotifyclone.ui.searchresult.album.AlbumSearchResultFragment;
 import com.oscarliang.spotifyclone.ui.searchresult.artist.ArtistSearchResultFragment;
 import com.oscarliang.spotifyclone.ui.searchresult.music.MusicSearchResultFragment;
+import com.oscarliang.spotifyclone.util.AutoClearedValue;
 
 import javax.inject.Inject;
-import androidx.lifecycle.ViewModelProvider;
 
 public class SearchResultFragment extends Fragment implements Injectable {
 
-    private FragmentSearchResultBinding mBinding;
+    private AutoClearedValue<FragmentSearchResultBinding> mBinding;
     private SearchResultViewModel mViewModel;
 
     @Inject
@@ -41,14 +42,10 @@ public class SearchResultFragment extends Fragment implements Injectable {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mBinding = FragmentSearchResultBinding.inflate(inflater, container, false);
-        return mBinding.getRoot();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mBinding = null;
+        FragmentSearchResultBinding viewBinding = FragmentSearchResultBinding.inflate(inflater,
+                container, false);
+        mBinding = new AutoClearedValue<>(this, viewBinding);
+        return viewBinding.getRoot();
     }
 
     @Override
@@ -66,14 +63,15 @@ public class SearchResultFragment extends Fragment implements Injectable {
     }
 
     private void initToolbar() {
-        mBinding.toolbar.setNavigationOnClickListener(v -> NavHostFragment.findNavController(this).navigateUp());
+        mBinding.get().toolbar.setNavigationOnClickListener(v -> NavHostFragment.findNavController(this)
+                .navigateUp());
     }
 
     private void initSearchView() {
-        mBinding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        mBinding.get().searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                mBinding.searchView.clearFocus();
+                mBinding.get().searchView.clearFocus();
                 mViewModel.setQuery(query);
                 return false;
             }
@@ -90,7 +88,7 @@ public class SearchResultFragment extends Fragment implements Injectable {
     }
 
     private void initPager(String query) {
-        mBinding.pager.setAdapter(new FragmentStateAdapter(this) {
+        mBinding.get().pager.setAdapter(new FragmentStateAdapter(this) {
             @NonNull
             @Override
             public Fragment createFragment(int position) {
@@ -119,7 +117,8 @@ public class SearchResultFragment extends Fragment implements Injectable {
                 return 3;
             }
         });
-        new TabLayoutMediator(mBinding.tabLayout, mBinding.pager, true, false, (tab, position) -> {
+        new TabLayoutMediator(mBinding.get().tabLayout, mBinding.get().pager,
+                true, false, (tab, position) -> {
             switch (position) {
                 case 0:
                     tab.setText("Music");
@@ -135,9 +134,9 @@ public class SearchResultFragment extends Fragment implements Injectable {
     }
 
     private void showSoftKeyBoard() {
-        mBinding.searchView.post(() -> {
-            mBinding.searchView.requestFocus();
-            WindowCompat.getInsetsController(getActivity().getWindow(), mBinding.searchView)
+        mBinding.get().searchView.post(() -> {
+            mBinding.get().searchView.requestFocus();
+            WindowCompat.getInsetsController(getActivity().getWindow(), mBinding.get().searchView)
                     .show(WindowInsetsCompat.Type.ime());
         });
     }

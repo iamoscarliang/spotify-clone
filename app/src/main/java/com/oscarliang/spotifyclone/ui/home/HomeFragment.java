@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.oscarliang.spotifyclone.R;
 import com.oscarliang.spotifyclone.databinding.FragmentHomeBinding;
 import com.oscarliang.spotifyclone.di.Injectable;
+import com.oscarliang.spotifyclone.util.AutoClearedValue;
 import com.oscarliang.spotifyclone.util.Constants;
 
 import java.util.Collections;
@@ -29,7 +30,7 @@ import javax.inject.Inject;
 
 public class HomeFragment extends Fragment implements Injectable {
 
-    private FragmentHomeBinding mBinding;
+    private AutoClearedValue<FragmentHomeBinding> mBinding;
     private LatestAlbumAdapter mLatestAlbumAdapter;
     private AllAlbumAdapter mAllAlbumAdapter;
     private AllArtistAdapter mAllArtistAdapter;
@@ -50,14 +51,9 @@ public class HomeFragment extends Fragment implements Injectable {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mBinding = FragmentHomeBinding.inflate(inflater, container, false);
-        return mBinding.getRoot();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mBinding = null;
+        FragmentHomeBinding viewBinding = FragmentHomeBinding.inflate(inflater, container, false);
+        mBinding = new AutoClearedValue<>(this, viewBinding);
+        return viewBinding.getRoot();
     }
 
     @Override
@@ -66,13 +62,14 @@ public class HomeFragment extends Fragment implements Injectable {
         mViewModel = new ViewModelProvider(getActivity(), mFactory).get(HomeViewModel.class);
 
         // Handle the back button event
-        getActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                // We make sure not navigate back to login page
-                getActivity().finish();
-            }
-        });
+        getActivity().getOnBackPressedDispatcher()
+                .addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+                    @Override
+                    public void handleOnBackPressed() {
+                        // We make sure not navigate back to login page
+                        getActivity().finish();
+                    }
+                });
 
         initToolbar();
         initDrawer();
@@ -83,111 +80,106 @@ public class HomeFragment extends Fragment implements Injectable {
         subscribeObservers();
 
         if (savedInstanceState == null) {
-            loadAlbumsAndArtists();
+            mViewModel.setLatest(4);
+            mViewModel.setAll(Constants.PAGINATION_COUNT);
         }
     }
 
     private void initToolbar() {
-        mBinding.toolbar.setNavigationOnClickListener(view -> mBinding.drawerLayout.open());
+        mBinding.get().toolbar.setNavigationOnClickListener(view -> mBinding.get().drawerLayout.open());
     }
 
     private void initDrawer() {
-        mBinding.drawer.navView.setNavigationItemSelectedListener(item -> {
+        mBinding.get().drawer.navView.setNavigationItemSelectedListener(item -> {
             if (item.getItemId() == R.id.action_logout) {
                 mAuth.signOut();
                 navigateOnboardFragment();
             }
             item.setChecked(true);
-            mBinding.drawerLayout.close();
+            mBinding.get().drawerLayout.close();
             return true;
         });
-        TextView textUser = mBinding.drawer.navView.getHeaderView(0).findViewById(R.id.text_user);
+        TextView textUser = mBinding.get().drawer.navView.getHeaderView(0).findViewById(R.id.text_user);
         textUser.setText(mAuth.getCurrentUser().getDisplayName());
     }
 
     private void initSwipeRefreshLayout() {
-        mBinding.swipeRefreshLayout.setOnRefreshListener(() -> {
-            mBinding.swipeRefreshLayout.setRefreshing(false);
-            loadAlbumsAndArtists();
+        mBinding.get().swipeRefreshLayout.setOnRefreshListener(() -> {
+            mBinding.get().swipeRefreshLayout.setRefreshing(false);
+            mViewModel.refresh();
         });
     }
 
     private void initLatestAlbumRecyclerView() {
         mLatestAlbumAdapter = new LatestAlbumAdapter(album -> navigateAlbumFragment(album.getId()));
-        mBinding.recyclerViewLatestAlbum.setAdapter(mLatestAlbumAdapter);
-        mBinding.recyclerViewLatestAlbum.setLayoutManager(new GridLayoutManager(getContext(),
+        mBinding.get().recyclerViewLatestAlbum.setAdapter(mLatestAlbumAdapter);
+        mBinding.get().recyclerViewLatestAlbum.setLayoutManager(new GridLayoutManager(getContext(),
                 getResources().getInteger(R.integer.columns_count)));
     }
 
     private void initAllAlbumRecyclerView() {
         mAllAlbumAdapter = new AllAlbumAdapter(album -> navigateAlbumFragment(album.getId()));
-        mBinding.recyclerViewAllAlbum.setAdapter(mAllAlbumAdapter);
-        mBinding.recyclerViewAllAlbum.setLayoutManager(new LinearLayoutManager(getContext(),
+        mBinding.get().recyclerViewAllAlbum.setAdapter(mAllAlbumAdapter);
+        mBinding.get().recyclerViewAllAlbum.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.HORIZONTAL, false));
     }
 
     private void initAllArtistRecyclerView() {
         mAllArtistAdapter = new AllArtistAdapter(artist -> navigateArtistFragment(artist.getId()));
-        mBinding.recyclerViewAllArtist.setAdapter(mAllArtistAdapter);
-        mBinding.recyclerViewAllArtist.setLayoutManager(new LinearLayoutManager(getContext(),
+        mBinding.get().recyclerViewAllArtist.setAdapter(mAllArtistAdapter);
+        mBinding.get().recyclerViewAllArtist.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.HORIZONTAL, false));
     }
 
-    private void loadAlbumsAndArtists() {
-        mViewModel.setLatestAlbums(4);
-        mViewModel.setAllAlbums(Constants.PAGINATION_COUNT);
-        mViewModel.setAllArtists(Constants.PAGINATION_COUNT);
-    }
-
     private void subscribeObservers() {
-        mViewModel.getLatestAlbums().observe(getViewLifecycleOwner(), resource -> {
-            switch (resource.mState) {
+        mViewModel.getLatestAlbums().observe(getViewLifecycleOwner(), listResource -> {
+            switch (listResource.mState) {
                 case SUCCESS:
-                    mLatestAlbumAdapter.submitList(resource.mData);
-                    mBinding.shimmerLayoutLatestAlbum.stopShimmer();
-                    mBinding.shimmerLayoutLatestAlbum.setVisibility(View.GONE);
+                    mLatestAlbumAdapter.submitList(listResource.mData);
+                    mBinding.get().shimmerLayoutLatestAlbum.stopShimmer();
+                    mBinding.get().shimmerLayoutLatestAlbum.setVisibility(View.GONE);
                     break;
                 case ERROR:
-                    Snackbar.make(getView(), resource.mMessage, Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(mBinding.get().layoutContent, listResource.mMessage, Snackbar.LENGTH_LONG).show();
                     break;
                 case LOADING:
                     mLatestAlbumAdapter.submitList(Collections.emptyList());
-                    mBinding.shimmerLayoutLatestAlbum.startShimmer();
-                    mBinding.shimmerLayoutLatestAlbum.setVisibility(View.VISIBLE);
+                    mBinding.get().shimmerLayoutLatestAlbum.startShimmer();
+                    mBinding.get().shimmerLayoutLatestAlbum.setVisibility(View.VISIBLE);
                     break;
             }
         });
-        mViewModel.getAllAlbums().observe(getViewLifecycleOwner(), resource -> {
-            switch (resource.mState) {
+        mViewModel.getAllAlbums().observe(getViewLifecycleOwner(), listResource -> {
+            switch (listResource.mState) {
                 case SUCCESS:
-                    mAllAlbumAdapter.submitList(resource.mData);
-                    mBinding.shimmerLayoutAllAlbum.stopShimmer();
-                    mBinding.shimmerLayoutAllAlbum.setVisibility(View.GONE);
+                    mAllAlbumAdapter.submitList(listResource.mData);
+                    mBinding.get().shimmerLayoutAllAlbum.stopShimmer();
+                    mBinding.get().shimmerLayoutAllAlbum.setVisibility(View.GONE);
                     break;
                 case ERROR:
-                    Snackbar.make(getView(), resource.mMessage, Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(mBinding.get().layoutContent, listResource.mMessage, Snackbar.LENGTH_LONG).show();
                     break;
                 case LOADING:
                     mAllAlbumAdapter.submitList(Collections.emptyList());
-                    mBinding.shimmerLayoutAllAlbum.startShimmer();
-                    mBinding.shimmerLayoutAllAlbum.setVisibility(View.VISIBLE);
+                    mBinding.get().shimmerLayoutAllAlbum.startShimmer();
+                    mBinding.get().shimmerLayoutAllAlbum.setVisibility(View.VISIBLE);
                     break;
             }
         });
-        mViewModel.getAllArtists().observe(getViewLifecycleOwner(), resource -> {
-            switch (resource.mState) {
+        mViewModel.getAllArtists().observe(getViewLifecycleOwner(), listResource -> {
+            switch (listResource.mState) {
                 case SUCCESS:
-                    mAllArtistAdapter.submitList(resource.mData);
-                    mBinding.shimmerLayoutAllArtist.stopShimmer();
-                    mBinding.shimmerLayoutAllArtist.setVisibility(View.GONE);
+                    mAllArtistAdapter.submitList(listResource.mData);
+                    mBinding.get().shimmerLayoutAllArtist.stopShimmer();
+                    mBinding.get().shimmerLayoutAllArtist.setVisibility(View.GONE);
                     break;
                 case ERROR:
-                    Snackbar.make(getView(), resource.mMessage, Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(mBinding.get().layoutContent, listResource.mMessage, Snackbar.LENGTH_LONG).show();
                     break;
                 case LOADING:
                     mAllArtistAdapter.submitList(Collections.emptyList());
-                    mBinding.shimmerLayoutAllArtist.startShimmer();
-                    mBinding.shimmerLayoutAllArtist.setVisibility(View.VISIBLE);
+                    mBinding.get().shimmerLayoutAllArtist.startShimmer();
+                    mBinding.get().shimmerLayoutAllArtist.setVisibility(View.VISIBLE);
                     break;
             }
         });

@@ -22,6 +22,7 @@ import com.oscarliang.spotifyclone.R;
 import com.oscarliang.spotifyclone.databinding.FragmentLoginBinding;
 import com.oscarliang.spotifyclone.di.Injectable;
 import com.oscarliang.spotifyclone.ui.common.dialog.ResetPasswordDialog;
+import com.oscarliang.spotifyclone.util.AutoClearedValue;
 import com.oscarliang.spotifyclone.util.Resource;
 
 import javax.inject.Inject;
@@ -32,7 +33,7 @@ public class LoginFragment extends Fragment implements Injectable,
     @Inject
     ViewModelProvider.Factory mFactory;
 
-    private FragmentLoginBinding mBinding;
+    private AutoClearedValue<FragmentLoginBinding> mBinding;
     private LoginViewModel mViewModel;
 
     public LoginFragment() {
@@ -44,14 +45,9 @@ public class LoginFragment extends Fragment implements Injectable,
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mBinding = FragmentLoginBinding.inflate(inflater, container, false);
-        return mBinding.getRoot();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mBinding = null;
+        FragmentLoginBinding viewBinding = FragmentLoginBinding.inflate(inflater, container, false);
+        mBinding = new AutoClearedValue<>(this, viewBinding);
+        return viewBinding.getRoot();
     }
 
     @Override
@@ -59,10 +55,10 @@ public class LoginFragment extends Fragment implements Injectable,
         super.onViewCreated(view, savedInstanceState);
         mViewModel = new ViewModelProvider(this, mFactory).get(LoginViewModel.class);
 
-        mBinding.btnBack.setOnClickListener(v -> NavHostFragment.findNavController(this).navigateUp());
-        mBinding.textForgotPassword.setOnClickListener(v -> showResetPasswordDialog());
-        mBinding.btnLogin.setOnClickListener(v -> login());
-        mBinding.btnLogin.setEnabled(false);
+        mBinding.get().btnBack.setOnClickListener(v -> NavHostFragment.findNavController(this).navigateUp());
+        mBinding.get().textForgotPassword.setOnClickListener(v -> showResetPasswordDialog());
+        mBinding.get().btnLogin.setOnClickListener(v -> login());
+        mBinding.get().btnLogin.setEnabled(false);
 
         initEditText();
         subscribeObservers();
@@ -75,7 +71,7 @@ public class LoginFragment extends Fragment implements Injectable,
     }
 
     private void initEditText() {
-        mBinding.editEmail.addTextChangedListener(new TextWatcher() {
+        mBinding.get().editEmail.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
             }
@@ -86,13 +82,13 @@ public class LoginFragment extends Fragment implements Injectable,
 
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int count, int after) {
-                String password = mBinding.editPassword.getText().toString();
+                String password = mBinding.get().editPassword.getText().toString();
                 if (password != null && password.length() > 0) {
-                    mBinding.btnLogin.setEnabled(charSequence != null && charSequence.length() > 0);
+                    mBinding.get().btnLogin.setEnabled(charSequence != null && charSequence.length() > 0);
                 }
             }
         });
-        mBinding.editPassword.addTextChangedListener(new TextWatcher() {
+        mBinding.get().editPassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
             }
@@ -103,9 +99,9 @@ public class LoginFragment extends Fragment implements Injectable,
 
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int count, int after) {
-                String email = mBinding.editEmail.getText().toString();
+                String email = mBinding.get().editEmail.getText().toString();
                 if (email != null && email.length() > 0) {
-                    mBinding.btnLogin.setEnabled(charSequence != null && charSequence.length() != 0);
+                    mBinding.get().btnLogin.setEnabled(charSequence != null && charSequence.length() != 0);
                 }
             }
         });
@@ -120,16 +116,16 @@ public class LoginFragment extends Fragment implements Injectable,
             switch (resource.mState) {
                 case SUCCESS:
                     navigateHomeFragment();
-                    mBinding.progressbar.setVisibility(View.GONE);
+                    mBinding.get().progressbar.setVisibility(View.GONE);
                     break;
                 case ERROR:
                     Snackbar.make(getView(), resource.mMessage, Snackbar.LENGTH_LONG).show();
-                    mBinding.btnLogin.setVisibility(View.VISIBLE);
-                    mBinding.progressbar.setVisibility(View.GONE);
+                    mBinding.get().btnLogin.setVisibility(View.VISIBLE);
+                    mBinding.get().progressbar.setVisibility(View.GONE);
                     break;
                 case LOADING:
-                    mBinding.btnLogin.setVisibility(View.INVISIBLE);
-                    mBinding.progressbar.setVisibility(View.VISIBLE);
+                    mBinding.get().btnLogin.setVisibility(View.INVISIBLE);
+                    mBinding.get().progressbar.setVisibility(View.VISIBLE);
                     break;
             }
         });
@@ -154,23 +150,23 @@ public class LoginFragment extends Fragment implements Injectable,
 
     private void login() {
         hideSoftKeyBoard();
-        String email = mBinding.editEmail.getText().toString();
-        String password = mBinding.editPassword.getText().toString();
+        String email = mBinding.get().editEmail.getText().toString();
+        String password = mBinding.get().editPassword.getText().toString();
         mViewModel.loginUser(email, password);
     }
 
     private void showSoftKeyBoard() {
-        mBinding.editEmail.requestFocus();
-        WindowCompat.getInsetsController(getActivity().getWindow(), mBinding.editEmail)
+        mBinding.get().editEmail.requestFocus();
+        WindowCompat.getInsetsController(getActivity().getWindow(), mBinding.get().editEmail)
                 .show(WindowInsetsCompat.Type.ime());
     }
 
     private void hideSoftKeyBoard() {
-        if (mBinding.editEmail.hasFocus()) {
-            WindowCompat.getInsetsController(getActivity().getWindow(), mBinding.editEmail)
+        if (mBinding.get().editEmail.hasFocus()) {
+            WindowCompat.getInsetsController(getActivity().getWindow(), mBinding.get().editEmail)
                     .hide(WindowInsetsCompat.Type.ime());
-        } else if (mBinding.editPassword.hasFocus()) {
-            WindowCompat.getInsetsController(getActivity().getWindow(), mBinding.editPassword)
+        } else if (mBinding.get().editPassword.hasFocus()) {
+            WindowCompat.getInsetsController(getActivity().getWindow(), mBinding.get().editPassword)
                     .hide(WindowInsetsCompat.Type.ime());
         }
     }

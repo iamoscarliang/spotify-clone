@@ -27,6 +27,7 @@ import com.oscarliang.spotifyclone.ui.common.adapter.MusicAdapter;
 import com.oscarliang.spotifyclone.ui.common.bottomsheet.AddToPlaylistBottomSheet;
 import com.oscarliang.spotifyclone.ui.common.bottomsheet.MusicInfoBottomSheet;
 import com.oscarliang.spotifyclone.ui.common.dialog.CreatePlaylistWithMusicDialog;
+import com.oscarliang.spotifyclone.util.AutoClearedValue;
 import com.oscarliang.spotifyclone.util.Constants;
 import com.oscarliang.spotifyclone.util.NextPageHandler;
 import com.oscarliang.spotifyclone.util.Resource;
@@ -38,11 +39,11 @@ public class MusicSearchResultFragment extends Fragment implements Injectable,
         AddToPlaylistBottomSheet.AddToPlaylistBottomSheetCallback,
         CreatePlaylistWithMusicDialog.onCreatePlaylistWithMusicClickListener {
 
-    private static final String QUERY = "query";
+    private static final String QUERY_KEY = "query";
 
     private String mQuery;
 
-    private FragmentSearchResultMusicBinding mBinding;
+    private AutoClearedValue<FragmentSearchResultMusicBinding> mBinding;
     private MusicAdapter mAdapter;
     private MusicSearchResultViewModel mSearchResultViewModel;
     private MainViewModel mMainViewModel;
@@ -60,8 +61,9 @@ public class MusicSearchResultFragment extends Fragment implements Injectable,
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mQuery = getArguments().getString(QUERY);
+        Bundle args = getArguments();
+        if (args != null && args.containsKey(QUERY_KEY)) {
+            mQuery = args.getString(QUERY_KEY);
         }
     }
 
@@ -70,14 +72,10 @@ public class MusicSearchResultFragment extends Fragment implements Injectable,
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mBinding = FragmentSearchResultMusicBinding.inflate(inflater, container, false);
-        return mBinding.getRoot();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mBinding = null;
+        FragmentSearchResultMusicBinding viewBinding = FragmentSearchResultMusicBinding.inflate(inflater,
+                container, false);
+        mBinding = new AutoClearedValue<>(this, viewBinding);
+        return viewBinding.getRoot();
     }
 
     @Override
@@ -129,10 +127,10 @@ public class MusicSearchResultFragment extends Fragment implements Injectable,
             mMainViewModel.addMusic(music);
             mMainViewModel.toggleMusic();
         }, music -> showMusicInfoBottomSheet(music));
-        mBinding.recyclerViewSearchResult.setAdapter(mAdapter);
-        mBinding.recyclerViewSearchResult.setLayoutManager(new LinearLayoutManager(getContext(),
+        mBinding.get().recyclerViewSearchResult.setAdapter(mAdapter);
+        mBinding.get().recyclerViewSearchResult.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false));
-        mBinding.nestedScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener)
+        mBinding.get().nestedScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener)
                 (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
                     // Check is scroll to bottom
                     if (scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()) {
@@ -153,9 +151,9 @@ public class MusicSearchResultFragment extends Fragment implements Injectable,
 
                         @Override
                         protected void loadFirstPage() {
-                            mBinding.shimmerLayoutSearchResult.stopShimmer();
-                            mBinding.shimmerLayoutSearchResult.setVisibility(View.GONE);
-                            mBinding.progressbar.setVisibility(View.VISIBLE);
+                            mBinding.get().shimmerLayoutSearchResult.stopShimmer();
+                            mBinding.get().shimmerLayoutSearchResult.setVisibility(View.GONE);
+                            mBinding.get().progressbar.setVisibility(View.VISIBLE);
                         }
 
                         @Override
@@ -171,8 +169,9 @@ public class MusicSearchResultFragment extends Fragment implements Injectable,
 
                         @Override
                         protected void onQueryExhausted() {
-                            mBinding.progressbar.setVisibility(View.INVISIBLE);
-                            mBinding.nestedScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) null);
+                            mBinding.get().progressbar.setVisibility(View.INVISIBLE);
+                            mBinding.get().nestedScrollView
+                                    .setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) null);
                         }
                     }.loadPage();
                     break;
@@ -182,8 +181,8 @@ public class MusicSearchResultFragment extends Fragment implements Injectable,
                 case LOADING:
                     // Show the shimmer effect only when loading the first page
                     if (mAdapter.getItemCount() == 0) {
-                        mBinding.shimmerLayoutSearchResult.startShimmer();
-                        mBinding.shimmerLayoutSearchResult.setVisibility(View.VISIBLE);
+                        mBinding.get().shimmerLayoutSearchResult.startShimmer();
+                        mBinding.get().shimmerLayoutSearchResult.setVisibility(View.VISIBLE);
                     }
                     break;
             }

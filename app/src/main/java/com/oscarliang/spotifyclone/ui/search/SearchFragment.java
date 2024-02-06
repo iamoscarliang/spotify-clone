@@ -19,12 +19,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.oscarliang.spotifyclone.R;
 import com.oscarliang.spotifyclone.databinding.FragmentSearchBinding;
 import com.oscarliang.spotifyclone.di.Injectable;
+import com.oscarliang.spotifyclone.util.AutoClearedValue;
+
+import java.util.Collections;
 
 import javax.inject.Inject;
 
 public class SearchFragment extends Fragment implements Injectable {
 
-    private FragmentSearchBinding mBinding;
+    private AutoClearedValue<FragmentSearchBinding> mBinding;
     private CategoryAdapter mAdapter;
     private SearchViewModel mViewModel;
 
@@ -43,14 +46,9 @@ public class SearchFragment extends Fragment implements Injectable {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mBinding = FragmentSearchBinding.inflate(inflater, container, false);
-        return mBinding.getRoot();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mBinding = null;
+        FragmentSearchBinding viewBinding = FragmentSearchBinding.inflate(inflater, container, false);
+        mBinding = new AutoClearedValue<>(this, viewBinding);
+        return viewBinding.getRoot();
     }
 
     @Override
@@ -60,6 +58,7 @@ public class SearchFragment extends Fragment implements Injectable {
 
         initToolbar();
         initDrawer();
+        initSwipeRefreshLayout();
         initRecyclerView();
         subscribeObservers();
 
@@ -69,45 +68,53 @@ public class SearchFragment extends Fragment implements Injectable {
     }
 
     private void initToolbar() {
-        mBinding.toolbar.setNavigationOnClickListener(view -> mBinding.drawerLayout.open());
-        mBinding.imageSearchField.setOnClickListener(v -> navigateSearchResultFragment());
+        mBinding.get().toolbar.setNavigationOnClickListener(view -> mBinding.get().drawerLayout.open());
+        mBinding.get().imageSearchField.setOnClickListener(v -> navigateSearchResultFragment());
     }
 
     private void initDrawer() {
-        mBinding.drawer.navView.setNavigationItemSelectedListener(item -> {
+        mBinding.get().drawer.navView.setNavigationItemSelectedListener(item -> {
             if (item.getItemId() == R.id.action_logout) {
                 mAuth.signOut();
                 navigateOnboardFragment();
             }
             item.setChecked(true);
-            mBinding.drawerLayout.close();
+            mBinding.get().drawerLayout.close();
             return true;
         });
-        TextView textUser = mBinding.drawer.navView.getHeaderView(0).findViewById(R.id.text_user);
+        TextView textUser = mBinding.get().drawer.navView.getHeaderView(0).findViewById(R.id.text_user);
         textUser.setText(mAuth.getCurrentUser().getDisplayName());
+    }
+
+    private void initSwipeRefreshLayout() {
+        mBinding.get().swipeRefreshLayout.setOnRefreshListener(() -> {
+            mBinding.get().swipeRefreshLayout.setRefreshing(false);
+            mViewModel.refresh();
+        });
     }
 
     private void initRecyclerView() {
         mAdapter = new CategoryAdapter(category -> navigateCategoryFragment(category.getName()));
-        mBinding.recyclerViewCategory.setAdapter(mAdapter);
-        mBinding.recyclerViewCategory.setLayoutManager(new GridLayoutManager(getContext(),
+        mBinding.get().recyclerViewCategory.setAdapter(mAdapter);
+        mBinding.get().recyclerViewCategory.setLayoutManager(new GridLayoutManager(getContext(),
                 getResources().getInteger(R.integer.columns_count)));
     }
 
     private void subscribeObservers() {
-        mViewModel.getCategories().observe(getViewLifecycleOwner(), resource -> {
-            switch (resource.mState) {
+        mViewModel.getCategories().observe(getViewLifecycleOwner(), listResource -> {
+            switch (listResource.mState) {
                 case SUCCESS:
-                    mAdapter.submitList(resource.mData);
-                    mBinding.shimmerLayoutCategory.stopShimmer();
-                    mBinding.shimmerLayoutCategory.setVisibility(View.GONE);
+                    mAdapter.submitList(listResource.mData);
+                    mBinding.get().shimmerLayoutCategory.stopShimmer();
+                    mBinding.get().shimmerLayoutCategory.setVisibility(View.GONE);
                     break;
                 case ERROR:
-                    Snackbar.make(getView(), resource.mMessage, Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(mBinding.get().layoutContent, listResource.mMessage, Snackbar.LENGTH_LONG).show();
                     break;
                 case LOADING:
-                    mBinding.shimmerLayoutCategory.startShimmer();
-                    mBinding.shimmerLayoutCategory.setVisibility(View.VISIBLE);
+                    mAdapter.submitList(Collections.emptyList());
+                    mBinding.get().shimmerLayoutCategory.startShimmer();
+                    mBinding.get().shimmerLayoutCategory.setVisibility(View.VISIBLE);
                     break;
             }
         });

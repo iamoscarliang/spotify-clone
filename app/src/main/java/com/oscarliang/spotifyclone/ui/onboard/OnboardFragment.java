@@ -14,10 +14,11 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.oscarliang.spotifyclone.R;
 import com.oscarliang.spotifyclone.databinding.FragmentOnboardBinding;
+import com.oscarliang.spotifyclone.util.AutoClearedValue;
 
 public class OnboardFragment extends Fragment {
 
-    private FragmentOnboardBinding mBinding;
+    private AutoClearedValue<FragmentOnboardBinding> mBinding;
 
     public OnboardFragment() {
         // Required empty public constructor
@@ -28,14 +29,9 @@ public class OnboardFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mBinding = FragmentOnboardBinding.inflate(inflater, container, false);
-        return mBinding.getRoot();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mBinding = null;
+        FragmentOnboardBinding viewBinding = FragmentOnboardBinding.inflate(inflater, container, false);
+        mBinding = new AutoClearedValue<>(this, viewBinding);
+        return viewBinding.getRoot();
     }
 
     @Override
@@ -43,16 +39,17 @@ public class OnboardFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Handle the back button event
-        getActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                // We make sure not navigate back to logout page
-                getActivity().finish();
-            }
-        });
+        getActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(),
+                new OnBackPressedCallback(true) {
+                    @Override
+                    public void handleOnBackPressed() {
+                        // We make sure not navigate back to logout page
+                        getActivity().finish();
+                    }
+                });
 
-        mBinding.textSignup.setOnClickListener(v -> navigateSignupFragment());
-        mBinding.textLogin.setOnClickListener(v -> navigateLoginFragment());
+        mBinding.get().textSignup.setOnClickListener(v -> navigateSignupFragment());
+        mBinding.get().textLogin.setOnClickListener(v -> navigateLoginFragment());
     }
 
     private void navigateSignupFragment() {

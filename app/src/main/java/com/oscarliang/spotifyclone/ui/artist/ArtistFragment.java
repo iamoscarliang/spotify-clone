@@ -14,21 +14,21 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
-import com.google.android.material.snackbar.Snackbar;
 import com.oscarliang.spotifyclone.R;
 import com.oscarliang.spotifyclone.databinding.FragmentArtistBinding;
 import com.oscarliang.spotifyclone.di.Injectable;
 import com.oscarliang.spotifyclone.ui.common.adapter.AlbumAdapter;
+import com.oscarliang.spotifyclone.util.AutoClearedValue;
 
 import javax.inject.Inject;
 
 public class ArtistFragment extends Fragment implements Injectable {
 
-    private static final String ARTIST = "artist";
+    private static final String ARTIST_ID_KEY = "artist";
 
     private String mArtistId;
 
-    private FragmentArtistBinding mBinding;
+    private AutoClearedValue<FragmentArtistBinding> mBinding;
     private AlbumAdapter mAdapter;
     private ArtistViewModel mViewModel;
 
@@ -42,8 +42,9 @@ public class ArtistFragment extends Fragment implements Injectable {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mArtistId = getArguments().getString(ARTIST);
+        Bundle args = getArguments();
+        if (args != null && args.containsKey(ARTIST_ID_KEY)) {
+            mArtistId = getArguments().getString(ARTIST_ID_KEY);
         }
     }
 
@@ -52,14 +53,9 @@ public class ArtistFragment extends Fragment implements Injectable {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mBinding = FragmentArtistBinding.inflate(inflater, container, false);
-        return mBinding.getRoot();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mBinding = null;
+        FragmentArtistBinding viewBinding = FragmentArtistBinding.inflate(inflater, container, false);
+        mBinding = new AutoClearedValue<>(this, viewBinding);
+        return viewBinding.getRoot();
     }
 
     @Override
@@ -77,13 +73,13 @@ public class ArtistFragment extends Fragment implements Injectable {
     }
 
     private void initToolbar() {
-        mBinding.toolbar.setNavigationOnClickListener(v -> NavHostFragment.findNavController(this).navigateUp());
+        mBinding.get().toolbar.setNavigationOnClickListener(v -> NavHostFragment.findNavController(this).navigateUp());
     }
 
     private void initRecyclerView() {
         mAdapter = new AlbumAdapter(album -> navigateAlbumFragment(album.getId()));
-        mBinding.recyclerViewAlbum.setAdapter(mAdapter);
-        mBinding.recyclerViewAlbum.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        mBinding.get().recyclerViewAlbum.setAdapter(mAdapter);
+        mBinding.get().recyclerViewAlbum.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
     }
 
     private void subscribeObservers() {
@@ -94,38 +90,45 @@ public class ArtistFragment extends Fragment implements Injectable {
                             .load(resource.mData.getImageUrl())
                             .placeholder(R.drawable.ic_artist)
                             .error(R.drawable.ic_artist)
-                            .into(mBinding.imageArtist);
-                    mBinding.toolbar.setTitle(resource.mData.getName());
-                    mBinding.textBrowse.setVisibility(View.VISIBLE);
-                    mBinding.shimmerLayoutArtist.stopShimmer();
-                    mBinding.shimmerLayoutArtist.setVisibility(View.GONE);
+                            .into(mBinding.get().imageArtist);
+                    mBinding.get().toolbar.setTitle(resource.mData.getName());
+                    mBinding.get().textBrowse.setVisibility(View.VISIBLE);
+                    mBinding.get().shimmerLayoutArtist.stopShimmer();
+                    mBinding.get().shimmerLayoutArtist.setVisibility(View.GONE);
                     break;
                 case ERROR:
-                    Snackbar.make(getView(), resource.mMessage, Snackbar.LENGTH_LONG).show();
+                    mBinding.get().layoutLoadingStateArtist.layoutLoadingState.setVisibility(View.VISIBLE);
+                    mBinding.get().layoutLoadingStateArtist.textMessage.setText(resource.mMessage);
                     break;
                 case LOADING:
-                    mBinding.textBrowse.setVisibility(View.INVISIBLE);
-                    mBinding.shimmerLayoutArtist.startShimmer();
-                    mBinding.shimmerLayoutArtist.setVisibility(View.VISIBLE);
+                    mBinding.get().imageArtist.setImageResource(0);
+                    mBinding.get().toolbar.setTitle(" ");
+                    mBinding.get().textBrowse.setVisibility(View.INVISIBLE);
+                    mBinding.get().shimmerLayoutArtist.startShimmer();
+                    mBinding.get().shimmerLayoutArtist.setVisibility(View.VISIBLE);
+                    mBinding.get().layoutLoadingStateArtist.layoutLoadingState.setVisibility(View.GONE);
                     break;
             }
         });
-        mViewModel.getAlbums().observe(getViewLifecycleOwner(), resource -> {
-            switch (resource.mState) {
+        mViewModel.getAlbums().observe(getViewLifecycleOwner(), listResource -> {
+            switch (listResource.mState) {
                 case SUCCESS:
-                    mAdapter.submitList(resource.mData);
-                    mBinding.shimmerLayoutAlbum.stopShimmer();
-                    mBinding.shimmerLayoutAlbum.setVisibility(View.GONE);
+                    mAdapter.submitList(listResource.mData);
+                    mBinding.get().shimmerLayoutAlbum.stopShimmer();
+                    mBinding.get().shimmerLayoutAlbum.setVisibility(View.GONE);
                     break;
                 case ERROR:
-                    Snackbar.make(getView(), resource.mMessage, Snackbar.LENGTH_LONG).show();
+                    mBinding.get().layoutLoadingStateArtist.layoutLoadingState.setVisibility(View.VISIBLE);
+                    mBinding.get().layoutLoadingStateArtist.textMessage.setText(listResource.mMessage);
                     break;
                 case LOADING:
-                    mBinding.shimmerLayoutAlbum.startShimmer();
-                    mBinding.shimmerLayoutAlbum.setVisibility(View.VISIBLE);
+                    mBinding.get().shimmerLayoutAlbum.startShimmer();
+                    mBinding.get().shimmerLayoutAlbum.setVisibility(View.VISIBLE);
+                    mBinding.get().layoutLoadingStateArtist.layoutLoadingState.setVisibility(View.GONE);
                     break;
             }
         });
+        mBinding.get().layoutLoadingStateArtist.btnRetry.setOnClickListener(view -> mViewModel.retry());
     }
 
     private void navigateAlbumFragment(String albumId) {
