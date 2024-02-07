@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
@@ -16,7 +17,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/Circle" />
+        app:shapeAppearanceOverlay="@style/Circle"
+        tools:viewBindingIgnore="true" />
 
     <LinearLayout
         android:id="@+id/layout_playlist_info"
@@ -34,12 +36,14 @@
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/image_line"
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:background="@color/gray"
         app:layout_constraintBottom_toBottomOf="@+id/layout_playlist_info"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:viewBindingIgnore="true" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -47,7 +51,7 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_playlist_info">
+        app:layout_constraintTop_toBottomOf="@id/image_line">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_edit_playlist"

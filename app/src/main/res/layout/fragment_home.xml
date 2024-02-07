@@ -54,7 +54,8 @@
                         android:textColor="@color/white"
                         android:textSize="20sp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:viewBindingIgnore="true" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_view_latest_album"
@@ -114,14 +115,15 @@
                         android:textColor="@color/white"
                         android:textSize="20sp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/recycler_view_latest_album" />
+                        app:layout_constraintTop_toBottomOf="@id/recycler_view_latest_album"
+                        tools:viewBindingIgnore="true" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_view_all_album"
                         android:layout_width="0dp"
                         android:layout_height="240dp"
-                        android:layout_marginTop="5dp"
                         android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/text_all_album" />
@@ -159,14 +161,15 @@
                         android:textColor="@color/white"
                         android:textSize="20sp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/recycler_view_all_album" />
+                        app:layout_constraintTop_toBottomOf="@id/recycler_view_all_album"
+                        tools:viewBindingIgnore="true" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_view_all_artist"
                         android:layout_width="0dp"
                         android:layout_height="200dp"
-                        android:layout_marginTop="5dp"
                         android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/text_all_artist" />

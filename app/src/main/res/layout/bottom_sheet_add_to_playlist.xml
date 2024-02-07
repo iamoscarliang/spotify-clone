@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
@@ -16,7 +17,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/Circle" />
+        app:shapeAppearanceOverlay="@style/Circle"
+        tools:viewBindingIgnore="true" />
 
     <TextView
         android:id="@+id/text_title"
@@ -28,7 +30,8 @@
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/image_handler" />
+        app:layout_constraintTop_toBottomOf="@id/image_handler"
+        tools:viewBindingIgnore="true"/>
 
     <ImageView
         android:id="@+id/image_line"
@@ -38,7 +41,8 @@
         android:background="@color/gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_title" />
+        app:layout_constraintTop_toBottomOf="@+id/text_title"
+        tools:viewBindingIgnore="true"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_playlist"

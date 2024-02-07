@@ -28,7 +28,8 @@
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_back" />
+        app:layout_constraintTop_toBottomOf="@id/btn_back"
+        tools:viewBindingIgnore="true" />
 
     <EditText
         android:id="@+id/edit_email"
@@ -59,7 +60,8 @@
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edit_email" />
+        app:layout_constraintTop_toBottomOf="@id/edit_email"
+        tools:viewBindingIgnore="true" />
 
     <EditText
         android:id="@+id/edit_password"
