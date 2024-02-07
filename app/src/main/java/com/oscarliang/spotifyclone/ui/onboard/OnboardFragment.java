@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -37,16 +36,6 @@ public class OnboardFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        // Handle the back button event
-        getActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(),
-                new OnBackPressedCallback(true) {
-                    @Override
-                    public void handleOnBackPressed() {
-                        // We make sure not navigate back to logout page
-                        getActivity().finish();
-                    }
-                });
 
         mBinding.get().textSignup.setOnClickListener(v -> navigateSignupFragment());
         mBinding.get().textLogin.setOnClickListener(v -> navigateLoginFragment());

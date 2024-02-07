@@ -29,7 +29,8 @@
 
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/nav_graph" />
 
     </fragment>
 
@@ -53,7 +54,8 @@
 
         <action
             android:id="@+id/action_signupNameFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/nav_graph" />
 
     </fragment>
 
@@ -145,7 +147,8 @@
 
     <action
         android:id="@+id/action_to_onboardFragment"
-        app:destination="@id/onboardFragment" />
+        app:destination="@id/onboardFragment"
+        app:popUpTo="@id/nav_graph" />
 
     <action
         android:id="@+id/action_to_albumFragment"
