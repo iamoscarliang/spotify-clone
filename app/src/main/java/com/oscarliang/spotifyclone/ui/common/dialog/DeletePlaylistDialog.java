@@ -13,14 +13,15 @@ import androidx.fragment.app.DialogFragment;
 
 import com.oscarliang.spotifyclone.databinding.DialogDeletePlaylistBinding;
 import com.oscarliang.spotifyclone.domain.model.Playlist;
+import com.oscarliang.spotifyclone.util.AutoClearedValue;
 
 public class DeletePlaylistDialog extends DialogFragment {
 
-    private static final String PLAYLIST = "playlist";
+    private static final String PLAYLIST_KEY = "playlist";
 
     private Playlist mPlaylist;
 
-    private DialogDeletePlaylistBinding mBinding;
+    private AutoClearedValue<DialogDeletePlaylistBinding> mBinding;
     private OnConfirmDeletePlaylistClickListener mListener;
 
     public DeletePlaylistDialog() {
@@ -30,8 +31,9 @@ public class DeletePlaylistDialog extends DialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mPlaylist = getArguments().getParcelable(PLAYLIST);
+        Bundle args = getArguments();
+        if (args != null && args.containsKey(PLAYLIST_KEY)) {
+            mPlaylist = args.getParcelable(PLAYLIST_KEY);
         }
         // Verify that the host fragment implements the callback interface
         try {
@@ -54,14 +56,10 @@ public class DeletePlaylistDialog extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mBinding = DialogDeletePlaylistBinding.inflate(inflater, container, false);
-        return mBinding.getRoot();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mBinding = null;
+        DialogDeletePlaylistBinding viewBinding = DialogDeletePlaylistBinding.inflate(inflater,
+                container, false);
+        mBinding = new AutoClearedValue<>(this, viewBinding);
+        return viewBinding.getRoot();
     }
 
     @Override
@@ -71,8 +69,8 @@ public class DeletePlaylistDialog extends DialogFragment {
     }
 
     private void initDialogAction() {
-        mBinding.btnCancel.setOnClickListener(v -> dismiss());
-        mBinding.btnDelete.setOnClickListener(v -> {
+        mBinding.get().btnCancel.setOnClickListener(v -> dismiss());
+        mBinding.get().btnDelete.setOnClickListener(v -> {
             mListener.onConfirmDeletePlaylistClick(mPlaylist);
             dismiss();
         });

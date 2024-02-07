@@ -16,10 +16,11 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.DialogFragment;
 
 import com.oscarliang.spotifyclone.databinding.DialogCreatePlaylistBinding;
+import com.oscarliang.spotifyclone.util.AutoClearedValue;
 
 public class CreatePlaylistDialog extends DialogFragment {
 
-    private DialogCreatePlaylistBinding mBinding;
+    private AutoClearedValue<DialogCreatePlaylistBinding> mBinding;
     private onCreatePlaylistClickListener mListener;
 
     public CreatePlaylistDialog() {
@@ -50,14 +51,10 @@ public class CreatePlaylistDialog extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mBinding = DialogCreatePlaylistBinding.inflate(inflater, container, false);
-        return mBinding.getRoot();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mBinding = null;
+        DialogCreatePlaylistBinding viewBinding = DialogCreatePlaylistBinding.inflate(inflater,
+                container, false);
+        mBinding = new AutoClearedValue<>(this, viewBinding);
+        return viewBinding.getRoot();
     }
 
     @Override
@@ -69,7 +66,7 @@ public class CreatePlaylistDialog extends DialogFragment {
     }
 
     private void initDialogAction() {
-        mBinding.editPlaylistName.addTextChangedListener(new TextWatcher() {
+        mBinding.get().editPlaylistName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
             }
@@ -80,23 +77,23 @@ public class CreatePlaylistDialog extends DialogFragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int count, int after) {
-                mBinding.btnCreate.setEnabled(charSequence != null && charSequence.length() > 0);
+                mBinding.get().btnCreate.setEnabled(charSequence != null && charSequence.length() > 0);
             }
         });
 
 
-        mBinding.btnCancel.setOnClickListener(v -> dismiss());
-        mBinding.btnCreate.setOnClickListener(v -> {
-            mListener.onCreatePlaylistClick(mBinding.editPlaylistName.getText().toString().trim());
+        mBinding.get().btnCancel.setOnClickListener(v -> dismiss());
+        mBinding.get().btnCreate.setOnClickListener(v -> {
+            mListener.onCreatePlaylistClick(mBinding.get().editPlaylistName.getText().toString().trim());
             dismiss();
         });
-        mBinding.btnCreate.setEnabled(false);
+        mBinding.get().btnCreate.setEnabled(false);
     }
 
     private void showSoftKeyBoard() {
-        mBinding.editPlaylistName.post(() -> {
-            mBinding.editPlaylistName.requestFocus();
-            WindowCompat.getInsetsController(getActivity().getWindow(), mBinding.editPlaylistName)
+        mBinding.get().editPlaylistName.post(() -> {
+            mBinding.get().editPlaylistName.requestFocus();
+            WindowCompat.getInsetsController(getActivity().getWindow(), mBinding.get().editPlaylistName)
                     .show(WindowInsetsCompat.Type.ime());
         });
     }

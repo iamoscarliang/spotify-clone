@@ -17,14 +17,15 @@ import androidx.fragment.app.DialogFragment;
 
 import com.oscarliang.spotifyclone.databinding.DialogCreatePlaylistBinding;
 import com.oscarliang.spotifyclone.domain.model.Music;
+import com.oscarliang.spotifyclone.util.AutoClearedValue;
 
 public class CreatePlaylistWithMusicDialog extends DialogFragment {
 
-    private static final String MUSIC = "music";
+    private static final String MUSIC_KEY = "music";
 
     private Music mMusic;
 
-    private DialogCreatePlaylistBinding mBinding;
+    private AutoClearedValue<DialogCreatePlaylistBinding> mBinding;
     private onCreatePlaylistWithMusicClickListener mListener;
 
     public CreatePlaylistWithMusicDialog() {
@@ -34,8 +35,9 @@ public class CreatePlaylistWithMusicDialog extends DialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mMusic = getArguments().getParcelable(MUSIC);
+        Bundle args = getArguments();
+        if (args != null && args.containsKey(MUSIC_KEY)) {
+            mMusic = args.getParcelable(MUSIC_KEY);
         }
         // Verify that the host fragment implements the callback interface
         try {
@@ -58,14 +60,10 @@ public class CreatePlaylistWithMusicDialog extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mBinding = DialogCreatePlaylistBinding.inflate(inflater, container, false);
-        return mBinding.getRoot();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mBinding = null;
+        DialogCreatePlaylistBinding viewBinding = DialogCreatePlaylistBinding.inflate(inflater,
+                container, false);
+        mBinding = new AutoClearedValue<>(this, viewBinding);
+        return viewBinding.getRoot();
     }
 
     @Override
@@ -77,7 +75,7 @@ public class CreatePlaylistWithMusicDialog extends DialogFragment {
     }
 
     private void initDialogAction() {
-        mBinding.editPlaylistName.addTextChangedListener(new TextWatcher() {
+        mBinding.get().editPlaylistName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
             }
@@ -88,22 +86,22 @@ public class CreatePlaylistWithMusicDialog extends DialogFragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int count, int after) {
-                mBinding.btnCreate.setEnabled(charSequence != null && charSequence.length() > 0);
+                mBinding.get().btnCreate.setEnabled(charSequence != null && charSequence.length() > 0);
             }
         });
 
-        mBinding.btnCancel.setOnClickListener(v -> dismiss());
-        mBinding.btnCreate.setOnClickListener(v -> {
-            mListener.onCreatePlaylistWithMusicClick(mBinding.editPlaylistName.getText().toString().trim(), mMusic);
+        mBinding.get().btnCancel.setOnClickListener(v -> dismiss());
+        mBinding.get().btnCreate.setOnClickListener(v -> {
+            mListener.onCreatePlaylistWithMusicClick(mBinding.get().editPlaylistName.getText().toString().trim(), mMusic);
             dismiss();
         });
-        mBinding.btnCreate.setEnabled(false);
+        mBinding.get().btnCreate.setEnabled(false);
     }
 
     private void showSoftKeyBoard() {
-        mBinding.editPlaylistName.post(() -> {
-            mBinding.editPlaylistName.requestFocus();
-            WindowCompat.getInsetsController(getActivity().getWindow(), mBinding.editPlaylistName)
+        mBinding.get().editPlaylistName.post(() -> {
+            mBinding.get().editPlaylistName.requestFocus();
+            WindowCompat.getInsetsController(getActivity().getWindow(), mBinding.get().editPlaylistName)
                     .show(WindowInsetsCompat.Type.ime());
         });
     }

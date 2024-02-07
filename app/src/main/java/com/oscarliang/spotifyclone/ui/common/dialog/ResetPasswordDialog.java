@@ -16,10 +16,11 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.DialogFragment;
 
 import com.oscarliang.spotifyclone.databinding.DialogResetPasswordBinding;
+import com.oscarliang.spotifyclone.util.AutoClearedValue;
 
 public class ResetPasswordDialog extends DialogFragment {
 
-    private DialogResetPasswordBinding mBinding;
+    private AutoClearedValue<DialogResetPasswordBinding> mBinding;
     private onSendResetPasswordEmailClickListener mListener;
 
     public ResetPasswordDialog() {
@@ -50,14 +51,10 @@ public class ResetPasswordDialog extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mBinding = DialogResetPasswordBinding.inflate(inflater, container, false);
-        return mBinding.getRoot();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mBinding = null;
+        DialogResetPasswordBinding viewBinding = DialogResetPasswordBinding.inflate(inflater,
+                container, false);
+        mBinding = new AutoClearedValue<>(this, viewBinding);
+        return viewBinding.getRoot();
     }
 
     @Override
@@ -69,7 +66,7 @@ public class ResetPasswordDialog extends DialogFragment {
     }
 
     private void initDialogAction() {
-        mBinding.editEmail.addTextChangedListener(new TextWatcher() {
+        mBinding.get().editEmail.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
             }
@@ -80,22 +77,22 @@ public class ResetPasswordDialog extends DialogFragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int count, int after) {
-                mBinding.btnSend.setEnabled(charSequence != null && charSequence.length() > 0);
+                mBinding.get().btnSend.setEnabled(charSequence != null && charSequence.length() > 0);
             }
         });
 
-        mBinding.btnCancel.setOnClickListener(v -> dismiss());
-        mBinding.btnSend.setOnClickListener(v -> {
-            mListener.onSendResetPasswordEmailClick(mBinding.editEmail.getText().toString().trim());
+        mBinding.get().btnCancel.setOnClickListener(v -> dismiss());
+        mBinding.get().btnSend.setOnClickListener(v -> {
+            mListener.onSendResetPasswordEmailClick(mBinding.get().editEmail.getText().toString().trim());
             dismiss();
         });
-        mBinding.btnSend.setEnabled(false);
+        mBinding.get().btnSend.setEnabled(false);
     }
 
     private void showSoftKeyBoard() {
-        mBinding.editEmail.post(() -> {
-            mBinding.editEmail.requestFocus();
-            WindowCompat.getInsetsController(getActivity().getWindow(), mBinding.editEmail)
+        mBinding.get().editEmail.post(() -> {
+            mBinding.get().editEmail.requestFocus();
+            WindowCompat.getInsetsController(getActivity().getWindow(), mBinding.get().editEmail)
                     .show(WindowInsetsCompat.Type.ime());
         });
     }

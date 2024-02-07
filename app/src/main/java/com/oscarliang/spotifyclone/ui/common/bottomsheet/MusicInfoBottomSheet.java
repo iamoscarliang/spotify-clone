@@ -13,14 +13,15 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.oscarliang.spotifyclone.R;
 import com.oscarliang.spotifyclone.databinding.BottomSheetMusicInfoBinding;
 import com.oscarliang.spotifyclone.domain.model.Music;
+import com.oscarliang.spotifyclone.util.AutoClearedValue;
 
 public class MusicInfoBottomSheet extends BottomSheetDialogFragment {
 
-    private static final String MUSIC = "music";
+    private static final String MUSIC_KEY = "music";
 
     private Music mMusic;
 
-    private BottomSheetMusicInfoBinding mBinding;
+    private AutoClearedValue<BottomSheetMusicInfoBinding> mBinding;
     private MusicInfoBottomSheetCallback mCallback;
 
     public MusicInfoBottomSheet() {
@@ -30,8 +31,9 @@ public class MusicInfoBottomSheet extends BottomSheetDialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mMusic = getArguments().getParcelable(MUSIC);
+        Bundle args = getArguments();
+        if (args != null && args.containsKey(MUSIC_KEY)) {
+            mMusic = args.getParcelable(MUSIC_KEY);
         }
         // Verify that the host fragment implements the callback interface
         try {
@@ -48,28 +50,24 @@ public class MusicInfoBottomSheet extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mBinding = BottomSheetMusicInfoBinding.inflate(inflater, container, false);
-        return mBinding.getRoot();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mBinding = null;
+        BottomSheetMusicInfoBinding viewBinding = BottomSheetMusicInfoBinding.inflate(inflater,
+                container, false);
+        mBinding = new AutoClearedValue<>(this, viewBinding);
+        return viewBinding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mBinding.btnAddToPlaylist.setOnClickListener(v -> {
+        mBinding.get().btnAddToPlaylist.setOnClickListener(v -> {
             mCallback.onAddToPlaylistClick(mMusic);
             dismiss();
         });
-        mBinding.btnViewAlbum.setOnClickListener(v -> {
+        mBinding.get().btnViewAlbum.setOnClickListener(v -> {
             mCallback.onViewAlbumClick(mMusic);
             dismiss();
         });
-        mBinding.btnViewArtist.setOnClickListener(v -> {
+        mBinding.get().btnViewArtist.setOnClickListener(v -> {
             mCallback.onViewArtistClick(mMusic);
             dismiss();
         });
@@ -82,9 +80,9 @@ public class MusicInfoBottomSheet extends BottomSheetDialogFragment {
                 .load(mMusic.getImageUrl())
                 .placeholder(R.drawable.ic_music)
                 .error(R.drawable.ic_music)
-                .into(mBinding.layoutMusicInfoItem.imageMusic);
-        mBinding.layoutMusicInfoItem.textTitle.setText(mMusic.getTitle());
-        mBinding.layoutMusicInfoItem.textArtist.setText(mMusic.getArtist());
+                .into(mBinding.get().layoutMusicInfoItem.imageMusic);
+        mBinding.get().layoutMusicInfoItem.textTitle.setText(mMusic.getTitle());
+        mBinding.get().layoutMusicInfoItem.textArtist.setText(mMusic.getArtist());
     }
 
     public interface MusicInfoBottomSheetCallback {
