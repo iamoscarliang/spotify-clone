@@ -87,8 +87,7 @@ public class PlaylistViewModel extends ViewModel {
         }
 
         public boolean isEmpty() {
-            return mUserId == null || mUserId.isEmpty()
-                    || mPlaylist == null || mPlaylist.getId() == null || mPlaylist.getId().isEmpty();
+            return mUserId == null || mPlaylist == null || mUserId.isEmpty();
         }
 
         @Override

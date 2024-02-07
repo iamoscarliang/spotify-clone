@@ -199,16 +199,4 @@ public class PlaylistEditViewModelTest {
         verify(observer).onChanged(null);
     }
 
-    @Test
-    public void updateEmpty() {
-        mViewModel.updatePlaylist(
-                "foo",
-                TestUtil.createPlaylist(null, null),
-                "ABC",
-                TestUtil.createMusics(3, "bar"));
-        Observer<Event<Resource<Playlist>>> observer = mock(Observer.class);
-        mViewModel.getUpdatePlaylistState().observeForever(observer);
-        verify(observer).onChanged(null);
-    }
-
 }

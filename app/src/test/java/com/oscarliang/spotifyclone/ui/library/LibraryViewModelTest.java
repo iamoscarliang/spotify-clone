@@ -214,12 +214,4 @@ public class LibraryViewModelTest {
         verify(observer).onChanged(null);
     }
 
-    @Test
-    public void deleteEmpty() {
-        mViewModel.deletePlaylist("foo", TestUtil.createPlaylist(null, null));
-        Observer<Event<Resource<Playlist>>> observer = mock(Observer.class);
-        mViewModel.getDeletePlaylistState().observeForever(observer);
-        verify(observer).onChanged(null);
-    }
-
 }

@@ -92,10 +92,9 @@ public class PlaylistEditViewModel extends ViewModel {
         }
 
         public boolean isEmpty() {
-            return mUserId == null || mPlaylist == null || mPlaylist.getId() == null
+            return mUserId == null || mPlaylist == null
                     || mPlaylistName == null || mMusics == null
-                    || mUserId.isEmpty() || mPlaylist.getId().isEmpty()
-                    || mPlaylistName.isEmpty() || mMusics.isEmpty();
+                    || mUserId.isEmpty() || mPlaylistName.isEmpty();
         }
 
         @Override
