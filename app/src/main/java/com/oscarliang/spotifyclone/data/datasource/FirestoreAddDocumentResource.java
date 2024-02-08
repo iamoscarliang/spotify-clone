@@ -32,7 +32,7 @@ public abstract class FirestoreAddDocumentResource<ResultType> {
         // Add callback to observe changing from local cache
         collection.addSnapshotListener((value, error) -> {
             if (error != null) {
-                setValue(new Event<>(Resource.error(error.getMessage(), null)));
+                setValue(new Event<>(Resource.error(error.getMessage(), mData)));
                 return;
             }
             if (value != null && value.getMetadata().isFromCache()) {
@@ -47,8 +47,7 @@ public abstract class FirestoreAddDocumentResource<ResultType> {
                     } else {
                         onFetchFailed();
                         Exception e = task.getException();
-                        setValue(new Event<>(Resource.error(e != null ? e.getMessage() : "Unknown error!",
-                                null)));
+                        setValue(new Event<>(Resource.error(e != null ? e.getMessage() : "Unknown error!", mData)));
                     }
                 });
     }
