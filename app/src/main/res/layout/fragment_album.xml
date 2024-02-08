@@ -10,11 +10,14 @@
     tools:context=".ui.album.AlbumFragment">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black">
+        android:background="@color/black"
+        android:theme="@style/Theme.SpotifyClone">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:collapsedTitleTextColor="@color/white"
@@ -73,7 +76,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/text_artist"
+                android:id="@+id/text_album_artist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -84,25 +87,14 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/text_year"
+                android:id="@+id/text_album_year"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:textColor="@color/gray"
                 android:textSize="15sp"
-                app:layout_constraintStart_toStartOf="@+id/text_artist"
-                app:layout_constraintTop_toBottomOf="@+id/text_artist" />
-
-            <ImageButton
-                android:id="@+id/btn_play"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:background="@drawable/ic_play_circle"
-                app:backgroundTint="@drawable/tint_green_selector"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="@+id/text_album_artist"
+                app:layout_constraintTop_toBottomOf="@+id/text_album_artist" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_music"
@@ -112,7 +104,7 @@
                 android:nestedScrollingEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_play" />
+                app:layout_constraintTop_toBottomOf="@+id/text_album_year" />
 
             <com.facebook.shimmer.ShimmerFrameLayout
                 android:id="@+id/shimmer_layout_music"
@@ -140,6 +132,19 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:backgroundTint="@color/green"
+        android:elevation="20dp"
+        android:src="@drawable/ic_play"
+        app:borderWidth="0dp"
+        app:layout_anchor="@id/appbar"
+        app:layout_anchorGravity="right|bottom"
+        app:tint="@color/black" />
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmer_layout_album"

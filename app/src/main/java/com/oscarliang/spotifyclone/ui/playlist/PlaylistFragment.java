@@ -211,8 +211,7 @@ public class PlaylistFragment extends Fragment implements Injectable,
         mPlaylistViewModel.getPlaylistMusics().observe(getViewLifecycleOwner(), resource -> {
             if (resource == null) {
                 // Handler the case when returning absent livedata from an empty playlist
-                mBinding.get().btnPlay.setVisibility(View.INVISIBLE);
-                mBinding.get().btnPlay.setVisibility(View.INVISIBLE);
+                mBinding.get().fabPlay.setVisibility(View.INVISIBLE);
                 mBinding.get().shimmerLayoutMusic.stopShimmer();
                 mBinding.get().shimmerLayoutMusic.setVisibility(View.GONE);
                 return;
@@ -221,8 +220,8 @@ public class PlaylistFragment extends Fragment implements Injectable,
                 case SUCCESS:
                     List<Music> sortedMusics = MusicSorter.sort(resource.mData, mPlaylist.getMusicIds());
                     mAdapter.submitList(sortedMusics);
-                    mBinding.get().btnPlay.setVisibility(View.VISIBLE);
-                    mBinding.get().btnPlay.setOnClickListener(view -> {
+                    mBinding.get().fabPlay.setVisibility(View.VISIBLE);
+                    mBinding.get().fabPlay.setOnClickListener(view -> {
                         mMainViewModel.addPlaylist(sortedMusics, mPlaylist.getId());
                         mMainViewModel.toggleMusic();
                     });
@@ -234,7 +233,7 @@ public class PlaylistFragment extends Fragment implements Injectable,
                     mBinding.get().layoutLoadingStatePlaylist.textMessage.setText(resource.mMessage);
                     break;
                 case LOADING:
-                    mBinding.get().btnPlay.setVisibility(View.INVISIBLE);
+                    mBinding.get().fabPlay.setVisibility(View.INVISIBLE);
                     mBinding.get().shimmerLayoutMusic.startShimmer();
                     mBinding.get().shimmerLayoutMusic.setVisibility(View.VISIBLE);
                     mBinding.get().layoutLoadingStatePlaylist.layoutLoadingState.setVisibility(View.GONE);
@@ -274,7 +273,7 @@ public class PlaylistFragment extends Fragment implements Injectable,
             // Check is current playlist equal user's playlist
             if (mMainViewModel.getPlaylistMetadata() != null
                     && Objects.equals(mMainViewModel.getPlaylistMetadata().title, mPlaylist.getId())) {
-                mBinding.get().btnPlay.setBackgroundResource(isPlaying ? R.drawable.ic_pause_circle : R.drawable.ic_play_circle);
+                mBinding.get().fabPlay.setImageResource(isPlaying ? R.drawable.ic_pause : R.drawable.ic_play);
             }
         });
         mBinding.get().layoutLoadingStatePlaylist.btnRetry.setOnClickListener(view -> mPlaylistViewModel.retry());

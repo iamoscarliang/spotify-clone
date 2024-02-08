@@ -73,13 +73,15 @@ public class ArtistFragment extends Fragment implements Injectable {
     }
 
     private void initToolbar() {
-        mBinding.get().toolbar.setNavigationOnClickListener(v -> NavHostFragment.findNavController(this).navigateUp());
+        mBinding.get().toolbar.setNavigationOnClickListener(v ->
+                NavHostFragment.findNavController(this).navigateUp());
     }
 
     private void initRecyclerView() {
         mAdapter = new AlbumAdapter(album -> navigateAlbumFragment(album.getId()));
         mBinding.get().recyclerViewAlbum.setAdapter(mAdapter);
-        mBinding.get().recyclerViewAlbum.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        mBinding.get().recyclerViewAlbum.setLayoutManager(new LinearLayoutManager(getContext(),
+                LinearLayoutManager.VERTICAL, false));
     }
 
     private void subscribeObservers() {
@@ -91,7 +93,7 @@ public class ArtistFragment extends Fragment implements Injectable {
                             .placeholder(R.drawable.ic_artist)
                             .error(R.drawable.ic_artist)
                             .into(mBinding.get().imageArtist);
-                    mBinding.get().toolbar.setTitle(resource.mData.getName());
+                    mBinding.get().collapsingToolbar.setTitle(resource.mData.getName());
                     mBinding.get().textBrowse.setVisibility(View.VISIBLE);
                     mBinding.get().shimmerLayoutArtist.stopShimmer();
                     mBinding.get().shimmerLayoutArtist.setVisibility(View.GONE);
@@ -102,7 +104,7 @@ public class ArtistFragment extends Fragment implements Injectable {
                     break;
                 case LOADING:
                     mBinding.get().imageArtist.setImageResource(0);
-                    mBinding.get().toolbar.setTitle(" ");
+                    mBinding.get().collapsingToolbar.setTitle("");
                     mBinding.get().textBrowse.setVisibility(View.INVISIBLE);
                     mBinding.get().shimmerLayoutArtist.startShimmer();
                     mBinding.get().shimmerLayoutArtist.setVisibility(View.VISIBLE);

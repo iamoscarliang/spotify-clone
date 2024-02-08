@@ -165,7 +165,7 @@ public class CategoryFragment extends Fragment implements Injectable,
                                         .error(R.drawable.ic_music)
                                         .into(mBinding.get().imageCategory);
                             }
-                            mBinding.get().toolbar.setTitle(mCategory);
+                            mBinding.get().collapsingToolbar.setTitle(mCategory);
                             mBinding.get().textBrowse.setVisibility(View.VISIBLE);
                             mBinding.get().shimmerLayoutCategory.stopShimmer();
                             mBinding.get().shimmerLayoutCategory.setVisibility(View.GONE);
@@ -201,6 +201,8 @@ public class CategoryFragment extends Fragment implements Injectable,
                 case LOADING:
                     // Show the shimmer effect only when loading the first page
                     if (mAdapter.getItemCount() == 0) {
+                        mBinding.get().imageCategory.setImageResource(0);
+                        mBinding.get().collapsingToolbar.setTitle("");
                         mBinding.get().textBrowse.setVisibility(View.INVISIBLE);
                         mBinding.get().shimmerLayoutCategory.startShimmer();
                         mBinding.get().shimmerLayoutCategory.setVisibility(View.VISIBLE);

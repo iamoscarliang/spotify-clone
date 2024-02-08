@@ -131,7 +131,8 @@ public class AlbumFragment extends Fragment implements Injectable,
     }
 
     private void initToolbar() {
-        mBinding.get().toolbar.setNavigationOnClickListener(view -> NavHostFragment.findNavController(this).navigateUp());
+        mBinding.get().toolbar.setNavigationOnClickListener(view ->
+                NavHostFragment.findNavController(this).navigateUp());
     }
 
     private void initRecyclerView() {
@@ -176,9 +177,9 @@ public class AlbumFragment extends Fragment implements Injectable,
                                 }
                             })
                             .into(mBinding.get().imageAlbum);
-                    mBinding.get().toolbar.setTitle(resource.mData.getTitle());
-                    mBinding.get().textArtist.setText(resource.mData.getArtist());
-                    mBinding.get().textYear.setText("Album • " + resource.mData.getYear());
+                    mBinding.get().collapsingToolbar.setTitle(resource.mData.getTitle());
+                    mBinding.get().textAlbumArtist.setText(resource.mData.getArtist());
+                    mBinding.get().textAlbumYear.setText(getResources().getString(R.string.album_year, resource.mData.getYear()));
                     mBinding.get().shimmerLayoutAlbum.stopShimmer();
                     mBinding.get().shimmerLayoutAlbum.setVisibility(View.GONE);
                     break;
@@ -188,9 +189,9 @@ public class AlbumFragment extends Fragment implements Injectable,
                     break;
                 case LOADING:
                     mBinding.get().imageAlbum.setImageResource(0);
-                    mBinding.get().toolbar.setTitle(" ");
-                    mBinding.get().textArtist.setText("");
-                    mBinding.get().textYear.setText("");
+                    mBinding.get().collapsingToolbar.setTitle("");
+                    mBinding.get().textAlbumArtist.setText("");
+                    mBinding.get().textAlbumYear.setText("");
                     mBinding.get().shimmerLayoutAlbum.startShimmer();
                     mBinding.get().shimmerLayoutAlbum.setVisibility(View.VISIBLE);
                     mBinding.get().layoutLoadingStateAlbum.layoutLoadingState.setVisibility(View.GONE);
@@ -201,8 +202,8 @@ public class AlbumFragment extends Fragment implements Injectable,
             switch (listResource.mState) {
                 case SUCCESS:
                     mAdapter.submitList(listResource.mData);
-                    mBinding.get().btnPlay.setVisibility(View.VISIBLE);
-                    mBinding.get().btnPlay.setOnClickListener(view -> {
+                    mBinding.get().fabPlay.setVisibility(View.VISIBLE);
+                    mBinding.get().fabPlay.setOnClickListener(view -> {
                         mMainViewModel.addPlaylist(listResource.mData, mAlbumId);
                         mMainViewModel.toggleMusic();
                     });
@@ -214,7 +215,7 @@ public class AlbumFragment extends Fragment implements Injectable,
                     mBinding.get().layoutLoadingStateAlbum.textMessage.setText(listResource.mMessage);
                     break;
                 case LOADING:
-                    mBinding.get().btnPlay.setVisibility(View.INVISIBLE);
+                    mBinding.get().fabPlay.setVisibility(View.INVISIBLE);
                     mBinding.get().shimmerLayoutMusic.startShimmer();
                     mBinding.get().shimmerLayoutMusic.setVisibility(View.VISIBLE);
                     mBinding.get().layoutLoadingStateAlbum.layoutLoadingState.setVisibility(View.GONE);
@@ -228,7 +229,8 @@ public class AlbumFragment extends Fragment implements Injectable,
             }
             switch (resource.mState) {
                 case SUCCESS:
-                    Snackbar.make(mBinding.get().layoutContent, "Added to " + resource.mData.getName(), Snackbar.LENGTH_LONG)
+                    String msg = getResources().getString(R.string.playlist_add, resource.mData.getName());
+                    Snackbar.make(mBinding.get().layoutContent, msg, Snackbar.LENGTH_LONG)
                             .setAction("VIEW", view -> navigatePlaylistFragment(resource.mData))
                             .setActionTextColor(ResourcesCompat.getColor(getResources(), R.color.dark_green, null))
                             .show();
@@ -267,7 +269,7 @@ public class AlbumFragment extends Fragment implements Injectable,
             // Check is current playlist equal album's playlist
             if (mMainViewModel.getPlaylistMetadata() != null
                     && Objects.equals(mMainViewModel.getPlaylistMetadata().title, mAlbumId)) {
-                mBinding.get().btnPlay.setBackgroundResource(isPlaying ? R.drawable.ic_pause_circle : R.drawable.ic_play_circle);
+                mBinding.get().fabPlay.setImageResource(isPlaying ? R.drawable.ic_pause : R.drawable.ic_play);
             }
         });
         mBinding.get().layoutLoadingStateAlbum.btnRetry.setOnClickListener(view -> mAlbumViewModel.retry());
