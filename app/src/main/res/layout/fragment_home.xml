@@ -6,6 +6,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:theme="@style/Theme.SpotifyClone"
     tools:context=".ui.home.HomeFragment"
     tools:openDrawer="start">
 
@@ -197,6 +198,16 @@
                         </LinearLayout>
 
                     </com.facebook.shimmer.ShimmerFrameLayout>
+
+                    <TextView
+                        android:id="@+id/text_exhausted"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/recycler_view_all_artist"
+                        tools:viewBindingIgnore="true" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
