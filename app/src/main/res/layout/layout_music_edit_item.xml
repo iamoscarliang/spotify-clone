@@ -1,62 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="70dp">
+    android:layout_height="70dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardBackgroundColor="@android:color/transparent"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="20dp">
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/color_black_item_selector"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/RoundedRectangle" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/color_black_item_selector">
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/image_music"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/RoundedRectangle" />
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/image_music"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/RoundedRectangle" />
 
-    <TextView
-        android:id="@+id/text_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:text="Music Title"
-        android:textColor="@color/white"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@id/text_artist"
-        app:layout_constraintStart_toEndOf="@+id/image_music"
-        app:layout_constraintTop_toTopOf="@id/image_music" />
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="Music Title"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toTopOf="@id/text_artist"
+            app:layout_constraintStart_toEndOf="@+id/image_music"
+            app:layout_constraintTop_toTopOf="@id/image_music" />
 
-    <TextView
-        android:id="@+id/text_artist"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Artist"
-        android:textColor="@color/gray"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@id/image_music"
-        app:layout_constraintStart_toStartOf="@+id/text_title"
-        app:layout_constraintTop_toBottomOf="@id/text_title" />
+        <TextView
+            android:id="@+id/text_artist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Artist"
+            android:textColor="@color/gray"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/image_music"
+            app:layout_constraintStart_toStartOf="@+id/text_title"
+            app:layout_constraintTop_toBottomOf="@id/text_title" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginEnd="20dp"
-        android:src="@drawable/ic_drag_handle"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/ic_drag_handle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
