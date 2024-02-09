@@ -41,6 +41,7 @@ import com.oscarliang.spotifyclone.util.AutoClearedValue;
 import com.oscarliang.spotifyclone.util.Resource;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Locale;
 
 import javax.inject.Inject;
@@ -180,13 +181,25 @@ public class MusicFragment extends Fragment implements Injectable,
                         // Create custom theme from album image
                         Palette palette = Palette.from(((BitmapDrawable) resource).getBitmap()).generate();
                         Palette.Swatch vibrantSwatch = palette.getVibrantSwatch();
-                        if (vibrantSwatch != null) {
-                            int startColor = vibrantSwatch.getRgb();
-                            int endColor = ResourcesCompat.getColor(getResources(), R.color.black, null);
-                            int[] colors = {startColor, endColor, endColor};
-                            GradientDrawable gradient = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors);
-                            getView().setBackground(gradient);
+                        if (vibrantSwatch == null) {
+                            // In case palette fail to find a proper color from bitmap
+                            // Manually find the color with the largest population from all swatch
+                            List<Palette.Swatch> vibrantSwatches = palette.getSwatches();
+                            Palette.Swatch maxSwatch = null;
+                            int maxPopulation = 0;
+                            for (Palette.Swatch swatch : vibrantSwatches) {
+                                if (swatch.getPopulation() > maxPopulation) {
+                                    maxPopulation = swatch.getPopulation();
+                                    maxSwatch = swatch;
+                                }
+                            }
+                            vibrantSwatch = maxSwatch;
                         }
+                        int startColor = vibrantSwatch.getRgb();
+                        int endColor = ResourcesCompat.getColor(getResources(), R.color.black, null);
+                        int[] colors = {startColor, endColor, endColor};
+                        GradientDrawable gradient = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors);
+                        getView().setBackground(gradient);
                         return false;
                     }
                 })
