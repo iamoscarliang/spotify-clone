@@ -220,14 +220,14 @@ public class CategoryFragment extends Fragment implements Injectable,
             }
             switch (resource.mState) {
                 case SUCCESS:
-                    Snackbar.make(mBinding.get().layoutContent, "Added to " + resource.mData.getName(), Snackbar.LENGTH_LONG)
+                    String msg = getString(R.string.playlist_add, resource.mData.getName());
+                    Snackbar.make(mBinding.get().layoutContent, msg, Snackbar.LENGTH_LONG)
                             .setAction("VIEW", view -> navigatePlaylistFragment(resource.mData))
                             .setActionTextColor(ResourcesCompat.getColor(getResources(), R.color.dark_green, null))
                             .show();
                     break;
                 case ERROR:
-                    Snackbar.make(mBinding.get().layoutContent, "Error added to " + resource.mData.getName(),
-                            Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(mBinding.get().layoutContent, resource.mMessage, Snackbar.LENGTH_LONG).show();
                     break;
                 case LOADING:
                     // Ignore
@@ -241,14 +241,14 @@ public class CategoryFragment extends Fragment implements Injectable,
             }
             switch (resource.mState) {
                 case SUCCESS:
-                    Snackbar.make(mBinding.get().layoutContent, "Create playlist " + resource.mData.getName(), Snackbar.LENGTH_LONG)
+                    String msg = getString(R.string.playlist_add, resource.mData.getName());
+                    Snackbar.make(mBinding.get().layoutContent, msg, Snackbar.LENGTH_LONG)
                             .setAction("VIEW", view -> navigatePlaylistFragment(resource.mData))
                             .setActionTextColor(ResourcesCompat.getColor(getResources(), R.color.dark_green, null))
                             .show();
                     break;
                 case ERROR:
-                    Snackbar.make(mBinding.get().layoutContent, "Error create playlist " + resource.mData.getName(),
-                            Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(mBinding.get().layoutContent, resource.mMessage, Snackbar.LENGTH_LONG).show();
                     break;
                 case LOADING:
                     // Ignore

@@ -40,7 +40,7 @@ public class SignupNameViewModelTest {
 
     @Test
     public void testNull() {
-        assertNotNull(mViewModel.getUpdateProfileState());
+        assertNotNull(mViewModel.getUpdateNameState());
         verify(mUseCase, never()).execute(anyString());
     }
 
@@ -54,7 +54,7 @@ public class SignupNameViewModelTest {
     public void fetchWhenObserved() {
         ArgumentCaptor<String> name = ArgumentCaptor.forClass(String.class);
 
-        mViewModel.getUpdateProfileState().observeForever(mock(Observer.class));
+        mViewModel.getUpdateNameState().observeForever(mock(Observer.class));
         mViewModel.setName("foo");
 
         verify(mUseCase, times(1)).execute(name.capture());
@@ -66,7 +66,7 @@ public class SignupNameViewModelTest {
         mViewModel.setName("foo");
         mViewModel.setName(null);
         Observer<Event<Resource<Void>>> observer = mock(Observer.class);
-        mViewModel.getUpdateProfileState().observeForever(observer);
+        mViewModel.getUpdateNameState().observeForever(observer);
         verify(observer).onChanged(null);
     }
 

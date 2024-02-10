@@ -3,6 +3,12 @@
     <string name="menu_home">Home</string>
     <string name="menu_search">Search</string>
     <string name="menu_library">Library</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="album_year">Album • %s</string>
+
+    <string name="playlist_add">Add to %s</string>
+    <string name="playlist_create">Create playlist  %s</string>
+    <string name="playlist_delete">Delete playlist  %s</string>
+
+    <string name="send_reset_email">"Send reset email"</string>
 </resources>

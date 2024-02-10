@@ -32,7 +32,7 @@ public class UpdatePlaylistUseCaseTest {
                 "foo",
                 TestUtil.createPlaylist("bar", "boo", "BAR1", Arrays.asList("FOO1")),
                 "boo",
-                TestUtil.createMusics(3, "FOO", "BAR"));
+                TestUtil.createMusicsWithImage(3, "FOO", "BAR"));
         verify(mRepository).updatePlaylist(
                 "foo",
                 TestUtil.createPlaylist("bar", "boo", "BAR1", Arrays.asList("FOO1", "FOO2", "FOO3")));
@@ -44,7 +44,7 @@ public class UpdatePlaylistUseCaseTest {
                 "foo",
                 TestUtil.createPlaylist("bar", "boo", "BAR1", Collections.emptyList()),
                 "boo",
-                TestUtil.createMusics(3, "FOO", "BAR"));
+                TestUtil.createMusicsWithImage(3, "FOO", "BAR"));
         verify(mRepository).updatePlaylist(
                 "foo",
                 TestUtil.createPlaylist("bar", "boo", "BAR1", Arrays.asList("FOO1", "FOO2", "FOO3")));
@@ -56,7 +56,7 @@ public class UpdatePlaylistUseCaseTest {
                 "foo",
                 TestUtil.createPlaylist("bar", "boo", "BAR1", Arrays.asList("FOO1", "FOO2", "FOO3")),
                 "boo",
-                TestUtil.createMusics(2, "FOO", "BAR"));
+                TestUtil.createMusicsWithImage(2, "FOO", "BAR"));
         verify(mRepository).updatePlaylist(
                 "foo",
                 TestUtil.createPlaylist("bar", "boo", "BAR1", Arrays.asList("FOO1", "FOO2")));
@@ -80,7 +80,7 @@ public class UpdatePlaylistUseCaseTest {
                 "foo",
                 TestUtil.createPlaylist("bar", "boo", "BAR2", Arrays.asList("FOO2", "FOO1", "FOO3")),
                 "boo",
-                TestUtil.createMusics(3, "FOO", "BAR"));
+                TestUtil.createMusicsWithImage(3, "FOO", "BAR"));
         verify(mRepository).updatePlaylist(
                 "foo",
                 TestUtil.createPlaylist("bar", "boo", "BAR1", Arrays.asList("FOO1", "FOO2", "FOO3")));
@@ -92,7 +92,7 @@ public class UpdatePlaylistUseCaseTest {
                 "foo",
                 TestUtil.createPlaylist("bar", "boo", "BAR2", Arrays.asList("FOO2", "FOO1", "FOO3")),
                 "BOO",
-                TestUtil.createMusics(3, "FOO", "BAR"));
+                TestUtil.createMusicsWithImage(3, "FOO", "BAR"));
         verify(mRepository).updatePlaylist(
                 "foo",
                 TestUtil.createPlaylist("bar", "BOO", "BAR1", Arrays.asList("FOO1", "FOO2", "FOO3")));

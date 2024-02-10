@@ -53,13 +53,18 @@ public class SignupNameFragment extends Fragment implements Injectable {
         super.onViewCreated(view, savedInstanceState);
         mViewModel = new ViewModelProvider(this, mFactory).get(SignupNameViewModel.class);
 
-        mBinding.get().btnBack.setOnClickListener(v -> NavHostFragment.findNavController(this).navigateUp());
         mBinding.get().btnSignup.setOnClickListener(v -> signupName());
         mBinding.get().btnSignup.setEnabled(false);
 
+        initToolbar();
         initEditText();
         subscribeObservers();
         showSoftKeyBoard();
+    }
+
+    private void initToolbar() {
+        mBinding.get().toolbar.setNavigationOnClickListener(view ->
+                NavHostFragment.findNavController(this).navigateUp());
     }
 
     private void initEditText() {
@@ -80,7 +85,7 @@ public class SignupNameFragment extends Fragment implements Injectable {
     }
 
     private void subscribeObservers() {
-        mViewModel.getUpdateProfileState().observe(getViewLifecycleOwner(), event -> {
+        mViewModel.getUpdateNameState().observe(getViewLifecycleOwner(), event -> {
             Resource<Void> resource = event.getContentIfNotHandled();
             if (resource == null) {
                 return;
@@ -91,7 +96,7 @@ public class SignupNameFragment extends Fragment implements Injectable {
                     mBinding.get().progressbar.setVisibility(View.GONE);
                     break;
                 case ERROR:
-                    Snackbar.make(getView(), resource.mMessage, Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(mBinding.get().layoutContent, resource.mMessage, Snackbar.LENGTH_LONG).show();
                     mBinding.get().btnSignup.setVisibility(View.VISIBLE);
                     mBinding.get().progressbar.setVisibility(View.GONE);
                     break;

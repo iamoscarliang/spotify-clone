@@ -43,7 +43,7 @@ public class SignupViewModelTest {
 
     @Test
     public void testNull() {
-        assertNotNull(mViewModel.getCreateUserState());
+        assertNotNull(mViewModel.getSignupState());
         verify(mUseCase, never()).execute(anyString(), anyString());
     }
 
@@ -57,7 +57,7 @@ public class SignupViewModelTest {
     public void fetchWhenObserved() {
         ArgumentCaptor<String> id = ArgumentCaptor.forClass(String.class);
 
-        mViewModel.getCreateUserState().observeForever(mock(Observer.class));
+        mViewModel.getSignupState().observeForever(mock(Observer.class));
         mViewModel.signup("foo", "bar");
 
         verify(mUseCase, times(1)).execute(id.capture(), id.capture());
@@ -69,7 +69,7 @@ public class SignupViewModelTest {
         mViewModel.signup("foo", "bar");
         mViewModel.signup(null, null);
         Observer<Event<Resource<AuthResult>>> observer = mock(Observer.class);
-        mViewModel.getCreateUserState().observeForever(observer);
+        mViewModel.getSignupState().observeForever(observer);
         verify(observer).onChanged(null);
     }
 

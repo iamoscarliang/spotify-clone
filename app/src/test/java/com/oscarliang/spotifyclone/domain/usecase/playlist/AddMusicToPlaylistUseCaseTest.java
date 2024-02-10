@@ -32,7 +32,7 @@ public class AddMusicToPlaylistUseCaseTest {
         mUseCase.execute(
                 "foo",
                 TestUtil.createPlaylist("bar", "abc", "cba", new ArrayList<>(Arrays.asList("a", "b", "c"))),
-                TestUtil.createMusic("FOO", "BAR"));
+                TestUtil.createMusicWithImage("FOO", "BAR"));
         verify(mRepository).updatePlaylist(
                 "foo",
                 TestUtil.createPlaylist("bar", "abc", "cba", new ArrayList<>(Arrays.asList("a", "b", "c", "FOO"))));
@@ -42,7 +42,7 @@ public class AddMusicToPlaylistUseCaseTest {
     public void executeEmpty() {
         mUseCase.execute("foo",
                 TestUtil.createPlaylist(null, "bar", null, new ArrayList<>()),
-                TestUtil.createMusic("FOO", "BAR"));
+                TestUtil.createMusicWithImage("FOO", "BAR"));
         verify(mRepository).updatePlaylist("foo",
                 TestUtil.createPlaylist(null, "bar", "BAR", Collections.singletonList("FOO")));
     }

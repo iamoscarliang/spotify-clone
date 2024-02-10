@@ -46,7 +46,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     @Override
     public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
         Category category = mDiffer.getCurrentList().get(position);
-        holder.mBinding.imageCategory.setBackgroundColor(Color.parseColor(category.getColor()));
+        if (category.getColor() != null) {
+            holder.mBinding.imageCategory.setBackgroundColor(Color.parseColor(category.getColor()));
+        }
         holder.mBinding.textCategory.setText(category.getName());
         holder.itemView.setOnClickListener(view -> mOnCategoryClickListener.onCategoryClick(category));
     }

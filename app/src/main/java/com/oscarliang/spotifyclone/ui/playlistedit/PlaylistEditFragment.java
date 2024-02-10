@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -32,7 +33,8 @@ public class PlaylistEditFragment extends Fragment implements Injectable {
 
     private static final String PLAYLIST_KEY = "playlist";
 
-    private Playlist mPlaylist;
+    @VisibleForTesting
+    Playlist mPlaylist;
 
     private AutoClearedValue<FragmentPlaylistEditBinding> mBinding;
     private MusicEditAdapter mAdapter;
@@ -167,8 +169,7 @@ public class PlaylistEditFragment extends Fragment implements Injectable {
                         break;
                     case ERROR:
                         mBinding.get().progressbar.setVisibility(View.GONE);
-                        Snackbar.make(mBinding.get().layoutContent, "Error saving playlist " + resource.mData.getName(),
-                                Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(mBinding.get().layoutContent, resource.mMessage, Snackbar.LENGTH_LONG).show();
                         break;
                     case LOADING:
                         mBinding.get().progressbar.setVisibility(View.VISIBLE);

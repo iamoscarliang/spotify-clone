@@ -18,14 +18,14 @@ import javax.inject.Inject;
 
 public class SignupViewModel extends ViewModel {
 
-    private final LiveData<Event<Resource<AuthResult>>> mCreateUserState;
+    private final LiveData<Event<Resource<AuthResult>>> mSignupState;
 
     @VisibleForTesting
     final MutableLiveData<UserId> mUserId = new MutableLiveData<>();
 
     @Inject
     public SignupViewModel(SignupUseCase signupUseCase) {
-        mCreateUserState = Transformations.switchMap(mUserId, userId -> {
+        mSignupState = Transformations.switchMap(mUserId, userId -> {
             if (userId == null || userId.isEmpty()) {
                 return AbsentLiveData.create();
             } else {
@@ -34,8 +34,8 @@ public class SignupViewModel extends ViewModel {
         });
     }
 
-    public LiveData<Event<Resource<AuthResult>>> getCreateUserState() {
-        return mCreateUserState;
+    public LiveData<Event<Resource<AuthResult>>> getSignupState() {
+        return mSignupState;
     }
 
     public void signup(String email, String password) {

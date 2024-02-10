@@ -13,7 +13,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.oscarliang.spotifyclone.util.SpotifyTestRunner"
     }
 
     buildTypes {
@@ -36,22 +36,21 @@ android {
 }
 
 dependencies {
-
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.11.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    // Palette
+    implementation 'androidx.palette:palette:1.0.0'
+
+    // Shimmer effect
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
+    // Swipe refresh layout
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
     // Glide
     implementation 'com.github.bumptech.glide:glide:4.16.0'
-
-    // Nav component
-    def nav_version = "2.3.5"
-    implementation "androidx.navigation:navigation-fragment:$nav_version"
-    implementation "androidx.navigation:navigation-ui:$nav_version"
-    androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
 
     // Firebase
     implementation 'com.google.firebase:firebase-firestore:24.10.0'
@@ -73,14 +72,20 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:$dagger_version"
     annotationProcessor "com.google.dagger:dagger-android-processor:$dagger_version"
 
-    // Palette
-    implementation 'androidx.palette:palette:1.0.0'
+    // Nav component
+    def nav_version = "2.3.5"
+    implementation "androidx.navigation:navigation-fragment:$nav_version"
+    implementation "androidx.navigation:navigation-ui:$nav_version"
+    androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
 
-    // Shimmer effect
-    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+    // Unit test
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
 
-    // Swipe refresh layout
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+    // Espresso test
+    def espresso_version = "3.3.0"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espresso_version"
 
     // Mockito test
     def mockito_version = "3.3.3"
@@ -91,4 +96,8 @@ dependencies {
     def androidx_arch_test_version = "2.2.0"
     testImplementation "androidx.arch.core:core-testing:$androidx_arch_test_version"
     androidTestImplementation "androidx.arch.core:core-testing:$androidx_arch_test_version"
+
+    // Fragment test
+    def fragment_version = "1.6.2"
+    debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
 }

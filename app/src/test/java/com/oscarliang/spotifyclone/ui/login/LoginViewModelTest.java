@@ -46,7 +46,7 @@ public class LoginViewModelTest {
 
     @Test
     public void testNull() {
-        assertNotNull(mViewModel.getLoginUserState());
+        assertNotNull(mViewModel.getLoginState());
         assertNotNull(mViewModel.getResetPasswordState());
         verify(mLoginUseCase, never()).execute(anyString(), anyString());
         verify(mResetPasswordUseCase, never()).execute(anyString());
@@ -65,7 +65,7 @@ public class LoginViewModelTest {
         ArgumentCaptor<String> id = ArgumentCaptor.forClass(String.class);
         ArgumentCaptor<String> email = ArgumentCaptor.forClass(String.class);
 
-        mViewModel.getLoginUserState().observeForever(mock(Observer.class));
+        mViewModel.getLoginState().observeForever(mock(Observer.class));
         mViewModel.login("foo", "bar");
         mViewModel.getResetPasswordState().observeForever(mock(Observer.class));
         mViewModel.resetPassword("abc");
@@ -81,7 +81,7 @@ public class LoginViewModelTest {
         mViewModel.login("foo", "bar");
         mViewModel.login(null, null);
         Observer<Event<Resource<AuthResult>>> observer = mock(Observer.class);
-        mViewModel.getLoginUserState().observeForever(observer);
+        mViewModel.getLoginState().observeForever(observer);
         verify(observer).onChanged(null);
     }
 

@@ -180,7 +180,7 @@ public class MusicSearchResultFragment extends Fragment implements Injectable,
                 case ERROR:
                     // Clear all result, so the loading state will be triggered
                     mAdapter.submitList(Collections.emptyList());
-                    Snackbar.make(getView(), resource.mMessage, Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(mBinding.get().layoutContent, resource.mMessage, Snackbar.LENGTH_LONG).show();
                     break;
                 case LOADING:
                     // Show the shimmer effect only when loading the first page
@@ -198,14 +198,14 @@ public class MusicSearchResultFragment extends Fragment implements Injectable,
             }
             switch (resource.mState) {
                 case SUCCESS:
-                    Snackbar.make(getView(), "Added to " + resource.mData.getName(), Snackbar.LENGTH_LONG)
+                    String msg = getString(R.string.playlist_add, resource.mData.getName());
+                    Snackbar.make(mBinding.get().layoutContent, msg, Snackbar.LENGTH_LONG)
                             .setAction("VIEW", view -> navigatePlaylistFragment(resource.mData))
                             .setActionTextColor(ResourcesCompat.getColor(getResources(), R.color.dark_green, null))
                             .show();
                     break;
                 case ERROR:
-                    Snackbar.make(getView(), "Error added to " + resource.mData.getName(),
-                            Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(mBinding.get().layoutContent, resource.mMessage, Snackbar.LENGTH_LONG).show();
                     break;
                 case LOADING:
                     // Ignore
@@ -219,14 +219,14 @@ public class MusicSearchResultFragment extends Fragment implements Injectable,
             }
             switch (resource.mState) {
                 case SUCCESS:
-                    Snackbar.make(getView(), "Create playlist " + resource.mData.getName(), Snackbar.LENGTH_LONG)
+                    String msg = getString(R.string.playlist_add, resource.mData.getName());
+                    Snackbar.make(mBinding.get().layoutContent, msg, Snackbar.LENGTH_LONG)
                             .setAction("VIEW", view -> navigatePlaylistFragment(resource.mData))
                             .setActionTextColor(ResourcesCompat.getColor(getResources(), R.color.dark_green, null))
                             .show();
                     break;
                 case ERROR:
-                    Snackbar.make(getView(), "Error create playlist " + resource.mData.getName(),
-                            Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(mBinding.get().layoutContent, resource.mMessage, Snackbar.LENGTH_LONG).show();
                     break;
                 case LOADING:
                     // Ignore

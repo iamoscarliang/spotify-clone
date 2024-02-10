@@ -69,7 +69,7 @@ public class SearchFragment extends Fragment implements Injectable {
 
     private void initToolbar() {
         mBinding.get().toolbar.setNavigationOnClickListener(view -> mBinding.get().drawerLayout.open());
-        mBinding.get().imageSearchField.setOnClickListener(v -> navigateSearchResultFragment());
+        mBinding.get().imageSearchField.setOnClickListener(view -> navigateSearchResultFragment());
     }
 
     private void initDrawer() {

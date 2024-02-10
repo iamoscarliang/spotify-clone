@@ -1,6 +1,5 @@
 package com.oscarliang.spotifyclone.ui.playlist;
 
-import android.content.res.Configuration;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -11,6 +10,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -56,7 +56,8 @@ public class PlaylistFragment extends Fragment implements Injectable,
 
     private static final String PLAYLIST_KEY = "playlist";
 
-    private Playlist mPlaylist;
+    @VisibleForTesting
+    Playlist mPlaylist;
 
     private AutoClearedValue<FragmentPlaylistBinding> mBinding;
     private MusicAdapter mAdapter;
@@ -183,11 +184,12 @@ public class PlaylistFragment extends Fragment implements Injectable,
                 })
                 .into(mBinding.get().imagePlaylist);
         mBinding.get().toolbar.setTitle(mPlaylist.getName());
-        mBinding.get().textMusicCount.setText("Playlist • " + mPlaylist.getMusicIds().size() + " musics");
+        int musicCount = mPlaylist.getMusicIds() != null ? mPlaylist.getMusicIds().size() : 0;
+        mBinding.get().textMusicCount.setText("Playlist • " + musicCount + " musics");
     }
 
     private void initToolbar() {
-        mBinding.get().toolbar.setNavigationOnClickListener(v -> NavHostFragment.findNavController(this).navigateUp());
+        mBinding.get().toolbar.setNavigationOnClickListener(view -> navigateUp());
         mBinding.get().toolbar.inflateMenu(R.menu.menu_playlist);
         mBinding.get().toolbar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.action_more) {
@@ -222,7 +224,9 @@ public class PlaylistFragment extends Fragment implements Injectable,
                     mAdapter.submitList(sortedMusics);
                     mBinding.get().fabPlay.setVisibility(View.VISIBLE);
                     mBinding.get().fabPlay.setOnClickListener(view -> {
-                        mMainViewModel.addPlaylist(sortedMusics, mPlaylist.getId());
+                        if (!isPlayingCurrentPlaylist()) {
+                            mMainViewModel.addPlaylist(sortedMusics, mPlaylist.getId());
+                        }
                         mMainViewModel.toggleMusic();
                     });
                     mBinding.get().shimmerLayoutMusic.stopShimmer();
@@ -248,21 +252,11 @@ public class PlaylistFragment extends Fragment implements Injectable,
             switch (resource.mState) {
                 case SUCCESS:
                     mBinding.get().progressbar.setVisibility(View.GONE);
-                    NavHostFragment.findNavController(this).navigateUp();
-                    // Since we pop up this page, we show the snackbar in parent view
-                    Snackbar snackbar = Snackbar.make(getActivity().findViewById(android.R.id.content),
-                            "Delete playlist " + resource.mData.getName(),
-                            Snackbar.LENGTH_LONG);
-                    // Anchor the snackbar in portrait mode
-                    if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                        snackbar.setAnchorView(R.id.image_pager_bg);
-                    }
-                    snackbar.show();
+                    navigateUp();
                     break;
                 case ERROR:
                     mBinding.get().progressbar.setVisibility(View.GONE);
-                    Snackbar.make(mBinding.get().layoutContent, "Error delete playlist " + resource.mData.getName(),
-                            Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(mBinding.get().layoutContent, resource.mMessage, Snackbar.LENGTH_LONG).show();
                     break;
                 case LOADING:
                     mBinding.get().progressbar.setVisibility(View.VISIBLE);
@@ -271,9 +265,10 @@ public class PlaylistFragment extends Fragment implements Injectable,
         });
         mMainViewModel.getPlaying().observe(getViewLifecycleOwner(), isPlaying -> {
             // Check is current playlist equal user's playlist
-            if (mMainViewModel.getPlaylistMetadata() != null
-                    && Objects.equals(mMainViewModel.getPlaylistMetadata().title, mPlaylist.getId())) {
-                mBinding.get().fabPlay.setImageResource(isPlaying ? R.drawable.ic_pause : R.drawable.ic_play);
+            if (isPlayingCurrentPlaylist()) {
+                int resId = isPlaying ? R.drawable.ic_pause : R.drawable.ic_play;
+                mBinding.get().fabPlay.setImageResource(resId);
+                mBinding.get().fabPlay.setTag(resId);   // Visible for testing
             }
         });
         mBinding.get().layoutLoadingStatePlaylist.btnRetry.setOnClickListener(view -> mPlaylistViewModel.retry());
@@ -338,6 +333,15 @@ public class PlaylistFragment extends Fragment implements Injectable,
         bundle.putParcelable("playlist", playlist);
         NavController navController = NavHostFragment.findNavController(this);
         navController.navigate(R.id.action_playlistFragment_to_playlistEditFragment, bundle);
+    }
+
+    private void navigateUp() {
+        NavHostFragment.findNavController(this).navigateUp();
+    }
+
+    private boolean isPlayingCurrentPlaylist() {
+        return mMainViewModel.getPlaylistMetadata() != null
+                && Objects.equals(mMainViewModel.getPlaylistMetadata().title, mPlaylist.getId());
     }
 
 }

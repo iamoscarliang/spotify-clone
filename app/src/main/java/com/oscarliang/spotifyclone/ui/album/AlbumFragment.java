@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -50,7 +51,8 @@ public class AlbumFragment extends Fragment implements Injectable,
 
     private static final String ALBUM_ID_KEY = "album";
 
-    private String mAlbumId;
+    @VisibleForTesting
+    String mAlbumId;
 
     private AutoClearedValue<FragmentAlbumBinding> mBinding;
     private MusicAdapter mAdapter;
@@ -202,6 +204,7 @@ public class AlbumFragment extends Fragment implements Injectable,
                     break;
                 case LOADING:
                     mBinding.get().imageAlbum.setImageResource(0);
+                    mBinding.get().imageAlbumBg.setBackgroundResource(R.color.black);
                     mBinding.get().collapsingToolbar.setTitle("");
                     mBinding.get().textAlbumArtist.setText("");
                     mBinding.get().textAlbumYear.setText("");
@@ -217,7 +220,9 @@ public class AlbumFragment extends Fragment implements Injectable,
                     mAdapter.submitList(listResource.mData);
                     mBinding.get().fabPlay.setVisibility(View.VISIBLE);
                     mBinding.get().fabPlay.setOnClickListener(view -> {
-                        mMainViewModel.addPlaylist(listResource.mData, mAlbumId);
+                        if (!isPlayingCurrentAlbum()) {
+                            mMainViewModel.addPlaylist(listResource.mData, mAlbumId);
+                        }
                         mMainViewModel.toggleMusic();
                     });
                     mBinding.get().shimmerLayoutMusic.stopShimmer();
@@ -242,15 +247,14 @@ public class AlbumFragment extends Fragment implements Injectable,
             }
             switch (resource.mState) {
                 case SUCCESS:
-                    String msg = getResources().getString(R.string.playlist_add, resource.mData.getName());
+                    String msg = getString(R.string.playlist_add, resource.mData.getName());
                     Snackbar.make(mBinding.get().layoutContent, msg, Snackbar.LENGTH_LONG)
                             .setAction("VIEW", view -> navigatePlaylistFragment(resource.mData))
                             .setActionTextColor(ResourcesCompat.getColor(getResources(), R.color.dark_green, null))
                             .show();
                     break;
                 case ERROR:
-                    Snackbar.make(mBinding.get().layoutContent, "Error added to " + resource.mData.getName(),
-                            Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(mBinding.get().layoutContent, resource.mMessage, Snackbar.LENGTH_LONG).show();
                     break;
                 case LOADING:
                     // Ignore
@@ -264,14 +268,14 @@ public class AlbumFragment extends Fragment implements Injectable,
             }
             switch (resource.mState) {
                 case SUCCESS:
-                    Snackbar.make(mBinding.get().layoutContent, "Create playlist " + resource.mData.getName(), Snackbar.LENGTH_LONG)
+                    String msg = getString(R.string.playlist_add, resource.mData.getName());
+                    Snackbar.make(mBinding.get().layoutContent, msg, Snackbar.LENGTH_LONG)
                             .setAction("VIEW", view -> navigatePlaylistFragment(resource.mData))
                             .setActionTextColor(ResourcesCompat.getColor(getResources(), R.color.dark_green, null))
                             .show();
                     break;
                 case ERROR:
-                    Snackbar.make(mBinding.get().layoutContent, "Error create playlist " + resource.mData.getName(),
-                            Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(mBinding.get().layoutContent, resource.mMessage, Snackbar.LENGTH_LONG).show();
                     break;
                 case LOADING:
                     // Ignore
@@ -280,9 +284,10 @@ public class AlbumFragment extends Fragment implements Injectable,
         });
         mMainViewModel.getPlaying().observe(getViewLifecycleOwner(), isPlaying -> {
             // Check is current playlist equal album's playlist
-            if (mMainViewModel.getPlaylistMetadata() != null
-                    && Objects.equals(mMainViewModel.getPlaylistMetadata().title, mAlbumId)) {
-                mBinding.get().fabPlay.setImageResource(isPlaying ? R.drawable.ic_pause : R.drawable.ic_play);
+            if (isPlayingCurrentAlbum()) {
+                int resId = isPlaying ? R.drawable.ic_pause : R.drawable.ic_play;
+                mBinding.get().fabPlay.setImageResource(resId);
+                mBinding.get().fabPlay.setTag(resId);   // Visible for testing
             }
         });
         mBinding.get().layoutLoadingStateAlbum.btnRetry.setOnClickListener(view -> mAlbumViewModel.retry());
@@ -331,6 +336,11 @@ public class AlbumFragment extends Fragment implements Injectable,
         bundle.putParcelable("playlist", playlist);
         NavController navController = NavHostFragment.findNavController(this);
         navController.navigate(R.id.action_to_playlistFragment, bundle);
+    }
+
+    private boolean isPlayingCurrentAlbum() {
+        return mMainViewModel.getPlaylistMetadata() != null
+                && Objects.equals(mMainViewModel.getPlaylistMetadata().title, mAlbumId);
     }
 
 }

@@ -199,7 +199,7 @@ public class MusicFragment extends Fragment implements Injectable,
                         int endColor = ResourcesCompat.getColor(getResources(), R.color.black, null);
                         int[] colors = {startColor, endColor, endColor};
                         GradientDrawable gradient = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors);
-                        getView().setBackground(gradient);
+                        mBinding.get().layoutContent.setBackground(gradient);
                         return false;
                     }
                 })
@@ -228,8 +228,11 @@ public class MusicFragment extends Fragment implements Injectable,
             mBinding.get().textDuration.setText(dateFormat.format(duration));
             mBinding.get().seekbar.setMax(duration.intValue());
         });
-        mMainViewModel.getPlaying().observe(getViewLifecycleOwner(), isPlaying ->
-                mBinding.get().btnPlay.setBackgroundResource(isPlaying ? R.drawable.ic_pause_circle : R.drawable.ic_play_circle));
+        mMainViewModel.getPlaying().observe(getViewLifecycleOwner(), isPlaying -> {
+            int resId = isPlaying ? R.drawable.ic_pause_circle : R.drawable.ic_play_circle;
+            mBinding.get().btnPlay.setBackgroundResource(resId);
+            mBinding.get().btnPlay.setTag(resId);
+        });
         mMainViewModel.getAddToPlaylistState().observe(getViewLifecycleOwner(), event -> {
             Resource<Playlist> resource = event.getContentIfNotHandled();
             if (resource == null) {
@@ -237,14 +240,14 @@ public class MusicFragment extends Fragment implements Injectable,
             }
             switch (resource.mState) {
                 case SUCCESS:
-                    Snackbar.make(getView(), "Added to " + resource.mData.getName(), Snackbar.LENGTH_LONG)
+                    String msg = getString(R.string.playlist_add, resource.mData.getName());
+                    Snackbar.make(mBinding.get().layoutContent, msg, Snackbar.LENGTH_LONG)
                             .setAction("VIEW", view -> navigatePlaylistFragment(resource.mData))
                             .setActionTextColor(ResourcesCompat.getColor(getResources(), R.color.dark_green, null))
                             .show();
                     break;
                 case ERROR:
-                    Snackbar.make(getView(), "Error added to " + resource.mData.getName(),
-                            Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(mBinding.get().layoutContent, resource.mMessage, Snackbar.LENGTH_LONG).show();
                     break;
                 case LOADING:
                     // Ignore
@@ -258,14 +261,14 @@ public class MusicFragment extends Fragment implements Injectable,
             }
             switch (resource.mState) {
                 case SUCCESS:
-                    Snackbar.make(getView(), "Create playlist " + resource.mData.getName(), Snackbar.LENGTH_LONG)
+                    String msg = getString(R.string.playlist_add, resource.mData.getName());
+                    Snackbar.make(mBinding.get().layoutContent, msg, Snackbar.LENGTH_LONG)
                             .setAction("VIEW", view -> navigatePlaylistFragment(resource.mData))
                             .setActionTextColor(ResourcesCompat.getColor(getResources(), R.color.dark_green, null))
                             .show();
                     break;
                 case ERROR:
-                    Snackbar.make(getView(), "Error create playlist " + resource.mData.getName(),
-                            Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(mBinding.get().layoutContent, resource.mMessage, Snackbar.LENGTH_LONG).show();
                     break;
                 case LOADING:
                     // Ignore
@@ -281,7 +284,8 @@ public class MusicFragment extends Fragment implements Injectable,
 
     private void setShuffleMode(boolean shuffleEnable) {
         mMainViewModel.setShuffleModeEnabled(shuffleEnable);
-        mBinding.get().btnShuffle.setBackgroundResource(shuffleEnable ? R.drawable.ic_shuffle_on : R.drawable.ic_shuffle_off);
+        mBinding.get().btnShuffle
+                .setBackgroundResource(shuffleEnable ? R.drawable.ic_shuffle_on : R.drawable.ic_shuffle_off);
     }
 
     private void setRepeatMode(int repeatMode) {

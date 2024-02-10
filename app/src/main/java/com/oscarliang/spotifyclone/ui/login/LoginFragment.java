@@ -55,11 +55,11 @@ public class LoginFragment extends Fragment implements Injectable,
         super.onViewCreated(view, savedInstanceState);
         mViewModel = new ViewModelProvider(this, mFactory).get(LoginViewModel.class);
 
-        mBinding.get().btnBack.setOnClickListener(v -> NavHostFragment.findNavController(this).navigateUp());
         mBinding.get().textForgotPassword.setOnClickListener(v -> showResetPasswordDialog());
         mBinding.get().btnLogin.setOnClickListener(v -> login());
         mBinding.get().btnLogin.setEnabled(false);
 
+        initToolbar();
         initEditText();
         subscribeObservers();
         showSoftKeyBoard();
@@ -68,6 +68,11 @@ public class LoginFragment extends Fragment implements Injectable,
     @Override
     public void onSendResetPasswordEmailClick(String email) {
         mViewModel.resetPassword(email);
+    }
+
+    private void initToolbar() {
+        mBinding.get().toolbar.setNavigationOnClickListener(view ->
+                NavHostFragment.findNavController(this).navigateUp());
     }
 
     private void initEditText() {
@@ -108,7 +113,7 @@ public class LoginFragment extends Fragment implements Injectable,
     }
 
     private void subscribeObservers() {
-        mViewModel.getLoginUserState().observe(getViewLifecycleOwner(), event -> {
+        mViewModel.getLoginState().observe(getViewLifecycleOwner(), event -> {
             Resource<AuthResult> resource = event.getContentIfNotHandled();
             if (resource == null) {
                 return;
@@ -119,7 +124,7 @@ public class LoginFragment extends Fragment implements Injectable,
                     mBinding.get().progressbar.setVisibility(View.GONE);
                     break;
                 case ERROR:
-                    Snackbar.make(getView(), resource.mMessage, Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(mBinding.get().layoutContent, resource.mMessage, Snackbar.LENGTH_LONG).show();
                     mBinding.get().btnLogin.setVisibility(View.VISIBLE);
                     mBinding.get().progressbar.setVisibility(View.GONE);
                     break;
@@ -136,10 +141,11 @@ public class LoginFragment extends Fragment implements Injectable,
             }
             switch (resource.mState) {
                 case SUCCESS:
-                    Snackbar.make(getView(), "Send reset email", Snackbar.LENGTH_LONG).show();
+                    String msg = getString(R.string.send_reset_email);
+                    Snackbar.make(mBinding.get().layoutContent, msg, Snackbar.LENGTH_LONG).show();
                     break;
                 case ERROR:
-                    Snackbar.make(getView(), resource.mMessage, Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(mBinding.get().layoutContent, resource.mMessage, Snackbar.LENGTH_LONG).show();
                     break;
                 case LOADING:
                     // Ignore

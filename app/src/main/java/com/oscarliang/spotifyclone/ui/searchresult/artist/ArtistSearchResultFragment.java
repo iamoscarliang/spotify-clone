@@ -130,7 +130,7 @@ public class ArtistSearchResultFragment extends Fragment implements Injectable {
                 case ERROR:
                     // Clear all result, so the loading state will be triggered
                     mAdapter.submitList(Collections.emptyList());
-                    Snackbar.make(getView(), resource.mMessage, Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(mBinding.get().layoutContent, resource.mMessage, Snackbar.LENGTH_LONG).show();
                     break;
                 case LOADING:
                     // Show the shimmer effect only when loading the first page

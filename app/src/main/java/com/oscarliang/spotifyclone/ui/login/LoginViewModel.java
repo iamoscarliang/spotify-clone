@@ -19,7 +19,7 @@ import javax.inject.Inject;
 
 public class LoginViewModel extends ViewModel {
 
-    private final LiveData<Event<Resource<AuthResult>>> mLoginUserState;
+    private final LiveData<Event<Resource<AuthResult>>> mLoginState;
     private final LiveData<Event<Resource<Void>>> mResetPasswordState;
 
     @VisibleForTesting
@@ -31,7 +31,7 @@ public class LoginViewModel extends ViewModel {
     @Inject
     public LoginViewModel(LoginUseCase loginUseCase,
                           ResetPasswordUseCase resetPasswordUseCase) {
-        mLoginUserState = Transformations.switchMap(mUserId, userId -> {
+        mLoginState = Transformations.switchMap(mUserId, userId -> {
             if (userId == null || userId.isEmpty()) {
                 return AbsentLiveData.create();
             } else {
@@ -47,8 +47,8 @@ public class LoginViewModel extends ViewModel {
         });
     }
 
-    public LiveData<Event<Resource<AuthResult>>> getLoginUserState() {
-        return mLoginUserState;
+    public LiveData<Event<Resource<AuthResult>>> getLoginState() {
+        return mLoginState;
     }
 
     public LiveData<Event<Resource<Void>>> getResetPasswordState() {

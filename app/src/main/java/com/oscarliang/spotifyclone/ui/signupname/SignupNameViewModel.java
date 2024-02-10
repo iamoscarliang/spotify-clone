@@ -15,14 +15,14 @@ import javax.inject.Inject;
 
 public class SignupNameViewModel extends ViewModel {
 
-    private final LiveData<Event<Resource<Void>>> mUpdateProfileState;
+    private final LiveData<Event<Resource<Void>>> mUpdateNameState;
 
     @VisibleForTesting
     final MutableLiveData<String> mName = new MutableLiveData<>();
 
     @Inject
     public SignupNameViewModel(UpdateUserNameUseCase updateUserNameUseCase) {
-        mUpdateProfileState = Transformations.switchMap(mName, name -> {
+        mUpdateNameState = Transformations.switchMap(mName, name -> {
             if (name == null || name.isEmpty()) {
                 return AbsentLiveData.create();
             } else {
@@ -31,8 +31,8 @@ public class SignupNameViewModel extends ViewModel {
         });
     }
 
-    public LiveData<Event<Resource<Void>>> getUpdateProfileState() {
-        return mUpdateProfileState;
+    public LiveData<Event<Resource<Void>>> getUpdateNameState() {
+        return mUpdateNameState;
     }
 
     public void setName(String name) {
