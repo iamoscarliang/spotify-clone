@@ -3,13 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="@dimen/layout_playlist_item_height"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
     app:cardBackgroundColor="@android:color/transparent"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="20dp">
+    app:cardCornerRadius="@dimen/margin_10"
+    app:cardElevation="@dimen/margin_20">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
             android:id="@+id/image_playlist"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_margin="10dp"
+            android:layout_margin="@dimen/margin_10"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,10 +31,10 @@
             android:id="@+id/text_playlist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="@dimen/margin_10"
             android:text="Playlist Name"
             android:textColor="@color/white"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size_18"
             app:layout_constraintBottom_toTopOf="@id/text_music_count"
             app:layout_constraintStart_toEndOf="@+id/image_playlist"
             app:layout_constraintTop_toTopOf="@id/image_playlist" />
@@ -45,16 +45,16 @@
             android:layout_height="wrap_content"
             android:text="0 musics"
             android:textColor="@color/gray"
-            android:textSize="12sp"
+            android:textSize="@dimen/text_size_12"
             app:layout_constraintBottom_toBottomOf="@id/image_playlist"
             app:layout_constraintStart_toStartOf="@+id/text_playlist"
             app:layout_constraintTop_toBottomOf="@id/text_playlist" />
 
         <ImageButton
             android:id="@+id/btn_more"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="20dp"
+            android:layout_width="@dimen/btn_small_width"
+            android:layout_height="@dimen/btn_small_width"
+            android:layout_marginEnd="@dimen/margin_20"
             android:background="@drawable/ic_more"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

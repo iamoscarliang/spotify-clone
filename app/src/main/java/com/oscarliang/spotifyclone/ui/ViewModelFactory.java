@@ -1,5 +1,6 @@
 package com.oscarliang.spotifyclone.ui;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -26,8 +27,9 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
     //--------------------------------------------------------
     // Overriding methods
     //--------------------------------------------------------
+    @NonNull
     @Override
-    public <T extends ViewModel> T create(Class<T> modelClass) {
+    public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         Provider<? extends ViewModel> creator = mCreators.get(modelClass);
         if (creator == null) {
 

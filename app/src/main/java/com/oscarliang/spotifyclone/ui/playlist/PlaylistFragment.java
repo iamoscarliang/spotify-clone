@@ -185,7 +185,7 @@ public class PlaylistFragment extends Fragment implements Injectable,
                 .into(mBinding.get().imagePlaylist);
         mBinding.get().toolbar.setTitle(mPlaylist.getName());
         int musicCount = mPlaylist.getMusicIds() != null ? mPlaylist.getMusicIds().size() : 0;
-        mBinding.get().textMusicCount.setText("Playlist • " + musicCount + " musics");
+        mBinding.get().textMusicCount.setText(getString(R.string.playlist_count, String.valueOf(musicCount)));
     }
 
     private void initToolbar() {

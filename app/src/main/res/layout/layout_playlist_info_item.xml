@@ -3,14 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="@dimen/layout_playlist_item_height"
     android:background="@color/dark_gray">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/image_playlist"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/margin_10"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,10 +21,10 @@
         android:id="@+id/text_playlist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="@dimen/margin_10"
         android:text="Playlist Name"
         android:textColor="@color/white"
-        android:textSize="18sp"
+        android:textSize="@dimen/text_size_18"
         app:layout_constraintBottom_toTopOf="@id/text_music_count"
         app:layout_constraintStart_toEndOf="@+id/image_playlist"
         app:layout_constraintTop_toTopOf="@id/image_playlist" />
@@ -33,9 +33,9 @@
         android:id="@+id/text_music_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0 musics"
+        android:text="Playlist • 0 musics"
         android:textColor="@color/gray"
-        android:textSize="12sp"
+        android:textSize="@dimen/text_size_12"
         app:layout_constraintBottom_toBottomOf="@id/image_playlist"
         app:layout_constraintStart_toStartOf="@+id/text_playlist"
         app:layout_constraintTop_toBottomOf="@id/text_playlist" />

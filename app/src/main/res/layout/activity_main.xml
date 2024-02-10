@@ -22,7 +22,7 @@
     <ImageView
         android:id="@+id/image_pager_bg"
         android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_height="@dimen/layout_music_bar_height"
         android:background="@color/dark_gray"
         app:layout_constraintBottom_toTopOf="@id/bottom_nav"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,8 +32,8 @@
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pager"
         android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_margin="10dp"
+        android:layout_height="@dimen/layout_music_bar_item_height"
+        android:layout_margin="@dimen/margin_10"
         app:layout_constraintBottom_toBottomOf="@+id/image_pager_bg"
         app:layout_constraintEnd_toStartOf="@id/btn_play"
         app:layout_constraintStart_toStartOf="@+id/image_pager_bg"
@@ -41,9 +41,9 @@
 
     <ImageButton
         android:id="@+id/btn_play"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_margin="10dp"
+        android:layout_width="@dimen/btn_music_bar_width"
+        android:layout_height="@dimen/btn_music_bar_width"
+        android:layout_margin="@dimen/margin_10"
         android:background="@drawable/ic_play"
         app:backgroundTint="@drawable/tint_white_selector"
         app:layout_constraintBottom_toBottomOf="@+id/image_pager_bg"

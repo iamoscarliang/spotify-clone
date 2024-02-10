@@ -16,6 +16,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.oscarliang.spotifyclone.R;
 import com.oscarliang.spotifyclone.databinding.FragmentSearchResultBinding;
 import com.oscarliang.spotifyclone.di.Injectable;
 import com.oscarliang.spotifyclone.ui.searchresult.album.AlbumSearchResultFragment;
@@ -121,13 +122,13 @@ public class SearchResultFragment extends Fragment implements Injectable {
                 true, false, (tab, position) -> {
             switch (position) {
                 case 0:
-                    tab.setText("Music");
+                    tab.setText(getString(R.string.music));
                     break;
                 case 1:
-                    tab.setText("Artist");
+                    tab.setText(getString(R.string.artist));
                     break;
                 case 2:
-                    tab.setText("Album");
+                    tab.setText(getString(R.string.album));
                     break;
             }
         }).attach();

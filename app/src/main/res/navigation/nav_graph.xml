@@ -13,11 +13,19 @@
 
         <action
             android:id="@+id/action_onboardFragment_to_signupFragment"
-            app:destination="@id/signupFragment" />
+            app:destination="@id/signupFragment"
+            app:enterAnim="@anim/slide_in_horizontal"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_horizontal" />
 
         <action
             android:id="@+id/action_onboardFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/slide_in_horizontal"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_horizontal" />
 
     </fragment>
 
@@ -30,6 +38,10 @@
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment"
+            app:enterAnim="@anim/slide_in_horizontal"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_horizontal"
             app:popUpTo="@id/nav_graph" />
 
     </fragment>
@@ -42,7 +54,11 @@
 
         <action
             android:id="@+id/action_signupFragment_to_signupNameFragment"
-            app:destination="@id/signupNameFragment" />
+            app:destination="@id/signupNameFragment"
+            app:enterAnim="@anim/slide_in_horizontal"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_horizontal" />
 
     </fragment>
 
@@ -55,6 +71,10 @@
         <action
             android:id="@+id/action_signupNameFragment_to_homeFragment"
             app:destination="@id/homeFragment"
+            app:enterAnim="@anim/slide_in_horizontal"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_horizontal"
             app:popUpTo="@id/nav_graph" />
 
     </fragment>
@@ -165,7 +185,7 @@
     <action
         android:id="@+id/action_to_musicFragment"
         app:destination="@id/musicFragment"
-        app:enterAnim="@anim/slide_in"
-        app:popExitAnim="@anim/slide_out" />
+        app:enterAnim="@anim/slide_in_vertical"
+        app:popExitAnim="@anim/slide_out_vertical" />
 
 </navigation>

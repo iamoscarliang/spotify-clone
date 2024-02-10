@@ -8,8 +8,8 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/image_music"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/layout_music_bar_item_height"
+        android:layout_height="@dimen/layout_music_bar_item_height"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -19,10 +19,10 @@
         android:id="@+id/text_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="@dimen/margin_10"
         android:text="Music Title"
         android:textColor="@color/white"
-        android:textSize="15sp"
+        android:textSize="@dimen/text_size_15"
         app:layout_constraintBottom_toTopOf="@id/text_artist"
         app:layout_constraintStart_toEndOf="@+id/image_music"
         app:layout_constraintTop_toTopOf="@id/image_music" />
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:text="Artist"
         android:textColor="@color/gray"
-        android:textSize="12sp"
+        android:textSize="@dimen/text_size_12"
         app:layout_constraintBottom_toBottomOf="@id/image_music"
         app:layout_constraintStart_toStartOf="@+id/text_title"
         app:layout_constraintTop_toBottomOf="@id/text_title" />

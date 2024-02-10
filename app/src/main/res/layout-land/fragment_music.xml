@@ -16,9 +16,9 @@
 
         <ImageButton
             android:id="@+id/btn_back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_margin="20dp"
+            android:layout_width="@dimen/btn_small_width"
+            android:layout_height="@dimen/btn_small_width"
+            android:layout_margin="@dimen/margin_20"
             android:background="@drawable/ic_arrow_down"
             app:backgroundTint="@drawable/tint_white_selector"
             app:layout_constraintStart_toStartOf="parent"
@@ -26,9 +26,9 @@
 
         <ImageButton
             android:id="@+id/btn_more"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_margin="20dp"
+            android:layout_width="@dimen/btn_small_width"
+            android:layout_height="@dimen/btn_small_width"
+            android:layout_margin="@dimen/margin_20"
             android:background="@drawable/ic_more"
             app:backgroundTint="@drawable/tint_white_selector"
             app:layout_constraintEnd_toStartOf="@id/image_music"
@@ -36,9 +36,9 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image_music"
-            android:layout_width="350dp"
-            android:layout_height="350dp"
-            android:layout_margin="20dp"
+            android:layout_width="@dimen/layout_music_showcase_height"
+            android:layout_height="@dimen/layout_music_showcase_height"
+            android:layout_margin="@dimen/margin_20"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -48,11 +48,11 @@
             android:id="@+id/text_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginStart="@dimen/margin_20"
+            android:layout_marginTop="@dimen/margin_50"
             android:text="Music Title"
             android:textColor="@color/white"
-            android:textSize="30sp"
+            android:textSize="@dimen/text_size_30"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_back" />
 
@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:text="Artist"
             android:textColor="@color/gray"
-            android:textSize="20sp"
+            android:textSize="@dimen/text_size_20"
             app:layout_constraintStart_toStartOf="@+id/text_title"
             app:layout_constraintTop_toBottomOf="@+id/text_title" />
 
@@ -70,7 +70,7 @@
             android:id="@+id/seekbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_margin="@dimen/margin_20"
             app:layout_constraintEnd_toStartOf="@+id/image_music"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_artist" />
@@ -79,10 +79,10 @@
             android:id="@+id/text_current_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="@dimen/margin_10"
             android:text="00:00"
             android:textColor="@color/white"
-            android:textSize="12sp"
+            android:textSize="@dimen/text_size_12"
             app:layout_constraintStart_toStartOf="@+id/seekbar"
             app:layout_constraintTop_toBottomOf="@+id/seekbar" />
 
@@ -90,10 +90,10 @@
             android:id="@+id/text_duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="@dimen/margin_10"
             android:text="00:00"
             android:textColor="@color/white"
-            android:textSize="12sp"
+            android:textSize="@dimen/text_size_12"
             app:layout_constraintEnd_toEndOf="@id/seekbar"
             app:layout_constraintTop_toBottomOf="@+id/seekbar" />
 
@@ -101,7 +101,7 @@
             android:id="@+id/btn_play"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/margin_20"
             android:background="@drawable/ic_pause_circle"
             app:backgroundTint="@drawable/tint_white_selector"
             app:layout_constraintEnd_toEndOf="@+id/seekbar"
@@ -110,9 +110,9 @@
 
         <ImageButton
             android:id="@+id/btn_skip_previous"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="20dp"
+            android:layout_width="@dimen/btn_width"
+            android:layout_height="@dimen/btn_width"
+            android:layout_margin="@dimen/margin_20"
             android:background="@drawable/ic_skip_previous"
             app:backgroundTint="@drawable/tint_white_selector"
             app:layout_constraintBottom_toBottomOf="@+id/btn_play"
@@ -121,9 +121,9 @@
 
         <ImageButton
             android:id="@+id/btn_skip_next"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="20dp"
+            android:layout_width="@dimen/btn_width"
+            android:layout_height="@dimen/btn_width"
+            android:layout_margin="@dimen/margin_20"
             android:background="@drawable/ic_skip_next"
             app:backgroundTint="@drawable/tint_white_selector"
             app:layout_constraintBottom_toBottomOf="@+id/btn_play"
@@ -132,8 +132,8 @@
 
         <ImageButton
             android:id="@+id/btn_shuffle"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/btn_width"
+            android:layout_height="@dimen/btn_width"
             android:background="@drawable/ic_shuffle_off"
             app:backgroundTint="@drawable/tint_white_selector"
             app:layout_constraintBottom_toBottomOf="@+id/btn_play"
@@ -142,8 +142,8 @@
 
         <ImageButton
             android:id="@+id/btn_repeat"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/btn_width"
+            android:layout_height="@dimen/btn_width"
             android:background="@drawable/ic_repeat_off"
             app:backgroundTint="@drawable/tint_white_selector"
             app:layout_constraintBottom_toBottomOf="@+id/btn_play"

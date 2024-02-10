@@ -32,17 +32,17 @@
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pager"
         android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="5dp"
+        android:layout_height="@dimen/layout_music_bar_item_height"
+        android:layout_marginBottom="@dimen/margin_10"
         app:layout_constraintBottom_toTopOf="@id/btn_play"
         app:layout_constraintEnd_toEndOf="@id/image_pager_bg"
         app:layout_constraintStart_toStartOf="@+id/image_pager_bg" />
 
     <ImageButton
         android:id="@+id/btn_play"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="10dp"
+        android:layout_width="@dimen/btn_music_bar_width"
+        android:layout_height="@dimen/btn_music_bar_width"
+        android:layout_marginBottom="@dimen/margin_10"
         android:background="@drawable/ic_play_circle"
         app:backgroundTint="@drawable/tint_white_selector"
         app:layout_constraintBottom_toBottomOf="@id/image_pager_bg"
@@ -51,7 +51,7 @@
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
-        android:layout_width="200dp"
+        android:layout_width="@dimen/layout_navigate_view_width"
         android:layout_height="0dp"
         android:background="@color/dark_gray"
         app:itemIconTint="@drawable/nav_selector"

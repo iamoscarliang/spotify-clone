@@ -27,7 +27,7 @@
                 android:layout_height="?attr/actionBarSize"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:navigationIcon="@drawable/ic_menu"
-                app:title="Home"
+                app:title="@string/menu_home"
                 app:titleTextColor="@color/white" />
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -50,10 +50,10 @@
                         android:id="@+id/text_latest_album"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="20dp"
-                        android:text="News Releases"
+                        android:layout_margin="@dimen/margin_20"
+                        android:text="@string/new_releases"
                         android:textColor="@color/white"
-                        android:textSize="20sp"
+                        android:textSize="@dimen/text_size_20"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:viewBindingIgnore="true" />
@@ -61,8 +61,8 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_view_latest_album"
                         android:layout_width="0dp"
-                        android:layout_height="120dp"
-                        android:layout_margin="10dp"
+                        android:layout_height="@dimen/layout_latest_album_showcase_height"
+                        android:layout_margin="@dimen/margin_10"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/text_latest_album" />
@@ -111,10 +111,10 @@
                         android:id="@+id/text_all_album"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="20dp"
-                        android:text="All Albums"
+                        android:layout_margin="@dimen/margin_20"
+                        android:text="@string/all_albums"
                         android:textColor="@color/white"
-                        android:textSize="20sp"
+                        android:textSize="@dimen/text_size_20"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/recycler_view_latest_album"
                         tools:viewBindingIgnore="true" />
@@ -122,9 +122,9 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_view_all_album"
                         android:layout_width="0dp"
-                        android:layout_height="240dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_height="@dimen/layout_all_album_showcase_height"
+                        android:layout_marginStart="@dimen/margin_10"
+                        android:layout_marginTop="@dimen/margin_5"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/text_all_album" />
@@ -157,10 +157,10 @@
                         android:id="@+id/text_all_artist"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="20dp"
-                        android:text="All Artists"
+                        android:layout_margin="@dimen/margin_20"
+                        android:text="@string/all_artists"
                         android:textColor="@color/white"
-                        android:textSize="20sp"
+                        android:textSize="@dimen/text_size_20"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/recycler_view_all_album"
                         tools:viewBindingIgnore="true" />
@@ -168,9 +168,9 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_view_all_artist"
                         android:layout_width="0dp"
-                        android:layout_height="200dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_height="@dimen/layout_all_artist_showcase_height"
+                        android:layout_marginStart="@dimen/margin_10"
+                        android:layout_marginTop="@dimen/margin_5"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/text_all_artist" />
@@ -203,7 +203,7 @@
                         android:id="@+id/text_exhausted"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="@dimen/margin_20"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/recycler_view_all_artist"

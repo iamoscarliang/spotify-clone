@@ -27,18 +27,18 @@
                 android:layout_height="?attr/actionBarSize"
                 app:layout_scrollFlags="scroll"
                 app:navigationIcon="@drawable/ic_menu"
-                app:title="Search"
+                app:title="@string/menu_search"
                 app:titleTextColor="@color/white" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="70dp">
+                android:layout_height="@dimen/layout_search_field_height">
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/image_search_field"
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_margin="20dp"
+                    android:layout_height="@dimen/image_search_field_height"
+                    android:layout_margin="@dimen/margin_20"
                     android:background="@color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -48,9 +48,9 @@
 
                 <ImageView
                     android:id="@+id/image_search"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="20dp"
+                    android:layout_width="@dimen/btn_small_width"
+                    android:layout_height="@dimen/btn_small_width"
+                    android:layout_marginStart="@dimen/margin_20"
                     android:src="@drawable/ic_search"
                     app:layout_constraintBottom_toBottomOf="@+id/image_search_field"
                     app:layout_constraintStart_toStartOf="@+id/image_search_field"
@@ -62,9 +62,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:text="Search Music..."
+                    android:text="@string/search_music"
                     android:textColor="@color/gray"
-                    android:textSize="15sp"
+                    android:textSize="@dimen/text_size_15"
                     app:layout_constraintBottom_toBottomOf="@+id/image_search_field"
                     app:layout_constraintStart_toEndOf="@id/image_search"
                     app:layout_constraintTop_toTopOf="@+id/image_search_field" />
@@ -91,11 +91,11 @@
                         android:id="@+id/text_browse"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Browse all"
+                        android:layout_marginStart="@dimen/margin_20"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:text="@string/browse_all"
                         android:textColor="@color/white"
-                        android:textSize="20sp"
+                        android:textSize="@dimen/text_size_20"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:viewBindingIgnore="true" />
@@ -104,7 +104,7 @@
                         android:id="@+id/recycler_view_category"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
+                        android:layout_margin="@dimen/margin_10"
                         android:nestedScrollingEnabled="false"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

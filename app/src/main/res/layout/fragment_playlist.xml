@@ -21,13 +21,13 @@
             android:layout_height="wrap_content"
             app:collapsedTitleTextColor="@color/white"
             app:contentScrim="@color/dark_gray"
-            app:expandedTitleMarginStart="20dp"
+            app:expandedTitleMarginStart="@dimen/margin_20"
             app:expandedTitleTextColor="@color/white"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="350dp"
+                android:layout_height="@dimen/layout_playlist_showcase_bg_height"
                 app:layout_collapseMode="parallax">
 
                 <ImageView
@@ -41,9 +41,9 @@
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/image_playlist"
-                    android:layout_width="250dp"
-                    android:layout_height="250dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_width="@dimen/layout_playlist_showcase_height"
+                    android:layout_height="@dimen/layout_playlist_showcase_height"
+                    android:layout_marginTop="@dimen/margin_20"
                     android:scaleType="centerCrop"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -78,10 +78,10 @@
                 android:id="@+id/text_music_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginStart="@dimen/margin_20"
+                android:layout_marginTop="@dimen/margin_10"
                 android:textColor="@color/white"
-                android:textSize="18sp"
+                android:textSize="@dimen/text_size_18"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -89,7 +89,7 @@
                 android:id="@+id/recycler_view_music"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_margin="@dimen/margin_10"
                 android:nestedScrollingEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -126,9 +126,9 @@
         android:id="@+id/fab_play"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="@dimen/margin_20"
         android:backgroundTint="@color/green"
-        android:elevation="20dp"
+        android:elevation="@dimen/margin_20"
         android:src="@drawable/ic_play"
         app:borderWidth="0dp"
         app:layout_anchor="@id/appbar"

@@ -3,13 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="100dp">
+    android:layout_height="@dimen/layout_playlist_item_height">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/image_playlist"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/margin_10"
         android:background="@color/gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
@@ -19,21 +19,23 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/text_playlist"
-        android:layout_width="150dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="10dp"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/margin_20"
+        android:layout_marginStart="@dimen/margin_10"
         android:background="@color/gray"
         app:layout_constraintBottom_toTopOf="@id/text_user"
+        app:layout_constraintDimensionRatio="8:1"
         app:layout_constraintStart_toEndOf="@+id/image_playlist"
         app:layout_constraintTop_toTopOf="@id/image_playlist"
         app:shapeAppearanceOverlay="@style/RoundedRectangle" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/text_user"
-        android:layout_width="100dp"
-        android:layout_height="20dp"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/margin_20"
         android:background="@color/gray"
         app:layout_constraintBottom_toBottomOf="@id/image_playlist"
+        app:layout_constraintDimensionRatio="5:1"
         app:layout_constraintStart_toStartOf="@+id/text_playlist"
         app:layout_constraintTop_toBottomOf="@id/text_playlist"
         app:shapeAppearanceOverlay="@style/RoundedRectangle" />

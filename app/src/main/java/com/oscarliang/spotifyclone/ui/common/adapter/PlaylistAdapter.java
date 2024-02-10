@@ -57,7 +57,8 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
                 .into(holder.mBinding.imagePlaylist);
         holder.mBinding.textPlaylist.setText(playlist.getName());
         int musicCount = playlist.getMusicIds() != null ? playlist.getMusicIds().size() : 0;
-        holder.mBinding.textMusicCount.setText("Playlist • " + musicCount + " musics");
+        holder.mBinding.textMusicCount.setText(holder.itemView.getContext().getString(R.string.playlist_count,
+                String.valueOf(musicCount)));
         holder.mBinding.btnMore.setOnClickListener(view -> mOnPlaylistMoreClickListener.onMoreClick(playlist));
         holder.itemView.setOnClickListener(view -> mOnPlaylistClickListener.onPlaylistClick(playlist));
         holder.itemView.setOnLongClickListener(view -> {

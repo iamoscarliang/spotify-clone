@@ -54,7 +54,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
                 .into(holder.mBinding.imageAlbum);
         holder.mBinding.textAlbum.setText(album.getTitle());
         holder.mBinding.textArtist.setText(album.getArtist());
-        holder.mBinding.textYear.setText("Album • " + album.getYear());
+        holder.mBinding.textYear.setText(holder.itemView.getContext().getString(R.string.album_year, album.getYear()));
         holder.itemView.setOnClickListener(view -> mOnAlbumClickListener.onAlbumClick(album));
     }
 

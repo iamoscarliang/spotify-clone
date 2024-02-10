@@ -78,7 +78,9 @@ public class PlaylistInfoBottomSheet extends BottomSheetDialogFragment {
                 .error(R.drawable.ic_music)
                 .into(mBinding.get().layoutPlaylistInfoItem.imagePlaylist);
         mBinding.get().layoutPlaylistInfoItem.textPlaylist.setText(mPlaylist.getName());
-        mBinding.get().layoutPlaylistInfoItem.textMusicCount.setText(mPlaylist.getMusicIds().size() + " musics");
+        int musicCount = mPlaylist.getMusicIds() != null ? mPlaylist.getMusicIds().size() : 0;
+        mBinding.get().layoutPlaylistInfoItem.textMusicCount.setText(getString(R.string.playlist_count,
+                String.valueOf(musicCount)));
     }
 
     public interface PlaylistInfoBottomSheetCallback {

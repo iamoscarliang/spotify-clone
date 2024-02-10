@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="layout_latest_album_item_width">360dp</dimen>
+    <dimen name="layout_latest_album_item_height">100dp</dimen>
+    <dimen name="layout_all_album_item_width">360dp</dimen>
+    <dimen name="layout_all_album_item_height">480dp</dimen>
+    <dimen name="layout_all_artist_item_width">300dp</dimen>
+    <dimen name="layout_all_artist_item_height">400dp</dimen>
+    <dimen name="layout_category_item_width">360dp</dimen>
+    <dimen name="layout_category_item_height">200dp</dimen>
+    <dimen name="layout_album_item_height">240dp</dimen>
+    <dimen name="layout_artist_item_height">200dp</dimen>
+    <dimen name="layout_playlist_item_height">200dp</dimen>
+    <dimen name="layout_music_item_height">140dp</dimen>
+    <dimen name="layout_music_bar_height">120dp</dimen>
+    <dimen name="layout_music_bar_item_height">100dp</dimen>
+    <dimen name="layout_navigate_view_width">400dp</dimen>
+    <dimen name="layout_dialog_width">700dp</dimen>
+    <dimen name="layout_music_showcase_height">600dp</dimen>
+    <dimen name="layout_playlist_showcase_height">500dp</dimen>
+    <dimen name="layout_playlist_showcase_bg_height">700dp</dimen>
+    <dimen name="layout_album_showcase_height">500dp</dimen>
+    <dimen name="layout_album_showcase_bg_height">700dp</dimen>
+    <dimen name="layout_artist_showcase_height">800dp</dimen>
+    <dimen name="layout_category_showcase_height">500dp</dimen>
+    <dimen name="layout_latest_album_showcase_height">240dp</dimen>
+    <dimen name="layout_all_album_showcase_height">480dp</dimen>
+    <dimen name="layout_all_artist_showcase_height">400dp</dimen>
+    <dimen name="layout_edit_text_field_height">100dp</dimen>
+    <dimen name="layout_search_field_height">140dp</dimen>
+    <dimen name="layout_search_tab_width">160dp</dimen>
+    <dimen name="layout_search_tab_height">60dp</dimen>
+
+    <dimen name="image_handler_width">100dp</dimen>
+    <dimen name="image_line_width">2dp</dimen>
+    <dimen name="image_search_field_height">100dp</dimen>
+    <dimen name="image_spotify_width">200dp</dimen>
+
+    <dimen name="btn_music_bar_width">80dp</dimen>
+    <dimen name="btn_small_width">60dp</dimen>
+    <dimen name="btn_width">80dp</dimen>
+    <dimen name="btn_large_width">120dp</dimen>
+    <dimen name="btn_xlarge_width">160dp</dimen>
+
+    <dimen name="text_size_12">24sp</dimen>
+    <dimen name="text_size_15">30sp</dimen>
+    <dimen name="text_size_18">36sp</dimen>
+    <dimen name="text_size_20">40sp</dimen>
+    <dimen name="text_size_30">60sp</dimen>
+
+    <dimen name="margin_5">10dp</dimen>
+    <dimen name="margin_10">20dp</dimen>
+    <dimen name="margin_20">40dp</dimen>
+    <dimen name="margin_50">100dp</dimen>
+</resources>

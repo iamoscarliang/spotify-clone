@@ -141,7 +141,7 @@ public class LoginFragment extends Fragment implements Injectable,
             }
             switch (resource.mState) {
                 case SUCCESS:
-                    String msg = getString(R.string.send_reset_email);
+                    String msg = getString(R.string.send_reset_password_email);
                     Snackbar.make(mBinding.get().layoutContent, msg, Snackbar.LENGTH_LONG).show();
                     break;
                 case ERROR:

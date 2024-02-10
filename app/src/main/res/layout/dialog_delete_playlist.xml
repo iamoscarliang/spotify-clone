@@ -2,15 +2,18 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_gravity="center">
+    android:layout_gravity="center"
+    tools:context=".ui.common.dialog.DeletePlaylistDialog">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:layout_width="350dp"
-        android:layout_height="200dp"
+        android:layout_width="@dimen/layout_dialog_width"
+        android:layout_height="0dp"
         android:background="@color/dark_gray"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="2:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -19,23 +22,23 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:text="Delete this playlist ?"
+        android:layout_margin="@dimen/margin_20"
+        android:text="@string/delete_this_playlist"
         android:textColor="@color/white"
-        android:textSize="30sp"
+        android:textSize="@dimen/text_size_30"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/btn_cancel"
         android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="10dp"
+        android:layout_height="@dimen/btn_width"
+        android:layout_marginEnd="@dimen/margin_10"
         android:background="@drawable/button_negative_selector"
         android:gravity="center"
-        android:text="Cancel"
+        android:text="@string/cancel"
         android:textColor="@color/white"
-        android:textSize="12sp"
+        android:textSize="@dimen/text_size_12"
         app:layout_constraintBottom_toBottomOf="@+id/btn_delete"
         app:layout_constraintDimensionRatio="2:1"
         app:layout_constraintEnd_toStartOf="@+id/btn_delete" />
@@ -43,13 +46,13 @@
     <TextView
         android:id="@+id/btn_delete"
         android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_margin="20dp"
+        android:layout_height="@dimen/btn_width"
+        android:layout_margin="@dimen/margin_20"
         android:background="@drawable/button_positive_selector"
         android:gravity="center"
-        android:text="Delete"
+        android:text="@string/delete"
         android:textColor="@color/black"
-        android:textSize="12sp"
+        android:textSize="@dimen/text_size_12"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="2:1"
         app:layout_constraintEnd_toEndOf="parent" />

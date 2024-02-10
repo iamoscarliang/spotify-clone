@@ -11,9 +11,9 @@
 
     <ImageView
         android:id="@+id/image_spotify"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginBottom="50dp"
+        android:layout_width="@dimen/image_spotify_width"
+        android:layout_height="@dimen/image_spotify_width"
+        android:layout_marginBottom="@dimen/margin_50"
         android:src="@drawable/spotify"
         app:layout_constraintBottom_toTopOf="@id/text_spotify"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,15 +25,15 @@
         android:id="@+id/text_spotify"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Millions of musics.\n   Free on Spotify."
+        android:text="@string/spotify_description"
         android:textColor="@color/white"
-        android:textSize="30sp"
+        android:textSize="@dimen/text_size_30"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/text_signup"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.75" />
+        app:layout_constraintVertical_bias="0.6" />
 
     <TextView
         android:id="@+id/text_signup"
@@ -42,28 +42,28 @@
         android:background="@drawable/ic_button_positive"
         android:backgroundTint="@drawable/tint_green_selector"
         android:gravity="center"
-        android:text="Sign up free"
+        android:text="@string/sign_up_free"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="@dimen/text_size_20"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="5:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.85" />
+        app:layout_constraintTop_toBottomOf="@id/text_spotify" />
 
     <TextView
         android:id="@+id/text_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Log in"
+        android:text="@string/log_in"
         android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textSize="@dimen/text_size_20"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_signup" />
+        app:layout_constraintTop_toBottomOf="@+id/text_signup"
+        app:layout_constraintVertical_bias="0.25" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

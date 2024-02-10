@@ -88,7 +88,7 @@ public class LoginFragmentTest {
     public void testResetPassword() {
         mResetPasswordState.postValue(new Event<>(Resource.success(null)));
         onView(withId(com.google.android.material.R.id.snackbar_text))
-                .check(matches(withText(getString(R.string.send_reset_email))));
+                .check(matches(withText(getString(R.string.send_reset_password_email))));
     }
 
     @Test
