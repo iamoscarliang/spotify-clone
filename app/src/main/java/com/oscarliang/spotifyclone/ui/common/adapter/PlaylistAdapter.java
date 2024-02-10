@@ -13,7 +13,6 @@ import com.oscarliang.spotifyclone.R;
 import com.oscarliang.spotifyclone.databinding.LayoutPlaylistItemBinding;
 import com.oscarliang.spotifyclone.domain.model.Playlist;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -57,7 +56,8 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
                 .error(R.drawable.ic_music)
                 .into(holder.mBinding.imagePlaylist);
         holder.mBinding.textPlaylist.setText(playlist.getName());
-        holder.mBinding.textMusicCount.setText("Playlist • " + playlist.getMusicIds().size() + " musics");
+        int musicCount = playlist.getMusicIds() != null ? playlist.getMusicIds().size() : 0;
+        holder.mBinding.textMusicCount.setText("Playlist • " + musicCount + " musics");
         holder.mBinding.btnMore.setOnClickListener(view -> mOnPlaylistMoreClickListener.onMoreClick(playlist));
         holder.itemView.setOnClickListener(view -> mOnPlaylistClickListener.onPlaylistClick(playlist));
         holder.itemView.setOnLongClickListener(view -> {
@@ -72,24 +72,6 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
     }
 
     public void submitList(List<Playlist> playlists) {
-        mDiffer.submitList(playlists);
-    }
-
-    public void addToList(Playlist playlist) {
-        if (mDiffer.getCurrentList().contains(playlist)) {
-            return;
-        }
-        List<Playlist> playlists = new ArrayList<>(mDiffer.getCurrentList());
-        playlists.add(playlist);
-        mDiffer.submitList(playlists);
-    }
-
-    public void removeFromList(Playlist playlist) {
-        if (!mDiffer.getCurrentList().contains(playlist)) {
-            return;
-        }
-        List<Playlist> playlists = new ArrayList<>(mDiffer.getCurrentList());
-        playlists.remove(playlist);
         mDiffer.submitList(playlists);
     }
 

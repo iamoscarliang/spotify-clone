@@ -134,7 +134,8 @@ public class LibraryFragment extends Fragment implements Injectable,
                 playlist -> navigatePlaylistFragment(playlist),
                 playlist -> showPlaylistInfoBottomSheet(playlist));
         mBinding.get().recyclerViewPlaylist.setAdapter(mAdapter);
-        mBinding.get().recyclerViewPlaylist.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        mBinding.get().recyclerViewPlaylist.setLayoutManager(new LinearLayoutManager(getContext(),
+                LinearLayoutManager.VERTICAL, false));
     }
 
     private void subscribeObservers() {
@@ -160,13 +161,12 @@ public class LibraryFragment extends Fragment implements Injectable,
             if (resource != null) {
                 switch (resource.mState) {
                     case SUCCESS:
-                        mAdapter.addToList(resource.mData);
-                        Snackbar.make(mBinding.get().layoutContent, "Create playlist " + resource.mData.getName(),
-                                Snackbar.LENGTH_LONG).show();
+                        mViewModel.refresh();
+                        String msg = getString(R.string.playlist_create, resource.mData.getName());
+                        Snackbar.make(mBinding.get().layoutContent, msg, Snackbar.LENGTH_LONG).show();
                         break;
                     case ERROR:
-                        Snackbar.make(mBinding.get().layoutContent, "Error creating playlist " + resource.mData.getName(),
-                                Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(mBinding.get().layoutContent, resource.mMessage, Snackbar.LENGTH_LONG).show();
                         break;
                     case LOADING:
                         // Ignore
@@ -179,13 +179,12 @@ public class LibraryFragment extends Fragment implements Injectable,
             if (resource != null) {
                 switch (resource.mState) {
                     case SUCCESS:
-                        mAdapter.removeFromList(resource.mData);
-                        Snackbar.make(mBinding.get().layoutContent, "Delete playlist " + resource.mData.getName(),
-                                Snackbar.LENGTH_LONG).show();
+                        mViewModel.refresh();
+                        String msg = getString(R.string.playlist_delete, resource.mData.getName());
+                        Snackbar.make(mBinding.get().layoutContent, msg, Snackbar.LENGTH_LONG).show();
                         break;
                     case ERROR:
-                        Snackbar.make(mBinding.get().layoutContent, "Error deleting playlist " + resource.mData.getName(),
-                                Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(mBinding.get().layoutContent, resource.mMessage, Snackbar.LENGTH_LONG).show();
                         break;
                     case LOADING:
                         // Ignore
