@@ -1,5 +1,8 @@
 <div align="center">
 <img src="https://github.com/iamoscarliang/spotify-clone/assets/152960326/56f85464-be82-44cf-bb88-3b5332f1fe6a.png" width="600">
+  
+![minSdk](https://img.shields.io/badge/minSdk-21-brightgreen)
+[![license](https://img.shields.io/badge/license-MIT-brightgreen)](https://github.com/iamoscarliang/spotify-clone/blob/master/LICENSE)
 
 **Spotify clone app made with [Android Studio](https://developer.android.com/studio) & [Firebase](https://firebase.google.com/)**
 </div>
