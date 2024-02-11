@@ -28,6 +28,9 @@ Search                     | Search result             |  Library               
 - :bar_chart: [Junit](https://developer.android.com/training/testing/local-tests) & [Mockito](https://github.com/mockito/mockito) for Unit test
 - :iphone: [Espresso](https://developer.android.com/training/testing/espresso) for UI test
 
+## :gear: Architecture
+![arch](https://github.com/iamoscarliang/spotify-clone/assets/152960326/0aa6725f-7916-4564-a292-e59d44a441cf)
+
 ## :handshake: Credit
 Music provided by the [Free Music Archive](https://freemusicarchive.org) under [CC BY](https://creativecommons.org/licenses/by/4.0/)
 - [Atypical](https://freemusicarchive.org/music/jen-msumba/atypical) by Jen Msumba
