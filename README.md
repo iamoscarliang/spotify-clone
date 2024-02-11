@@ -4,7 +4,7 @@
 ## :pushpin: Features
 Welcome                    | Home                      |  Album detail             |   Artist detail
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
-<img src="https://github.com/iamoscarliang/spotify-clone/assets/152960326/ce079e90-97b8-4d9e-a460-795617cce25e.png" width="200">|<img src="https://github.com/iamoscarliang/spotify-clone/assets/152960326/83485d6e-a570-4630-afed-9f6d656c9744.png" width="200">|<img src="https://github.com/iamoscarliang/spotify-clone/assets/152960326/6fc850b3-d6b8-4111-ae80-406e0d1bdede.png" width="200">|<img src="https://github.com/iamoscarliang/spotify-clone/assets/152960326/953bfb0b-c00c-4c05-a523-9965bc380820.png" width="200">
+<img src="https://github.com/iamoscarliang/spotify-clone/assets/152960326/a948d2c4-d5cd-4b96-a7ee-1808e1f81ee9.png" width="200">|<img src="https://github.com/iamoscarliang/spotify-clone/assets/152960326/83485d6e-a570-4630-afed-9f6d656c9744.png" width="200">|<img src="https://github.com/iamoscarliang/spotify-clone/assets/152960326/6fc850b3-d6b8-4111-ae80-406e0d1bdede.png" width="200">|<img src="https://github.com/iamoscarliang/spotify-clone/assets/152960326/953bfb0b-c00c-4c05-a523-9965bc380820.png" width="200">
 
 Search                     | Search result             |  Library                  |   Playlist detail
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
