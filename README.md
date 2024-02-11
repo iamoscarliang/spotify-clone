@@ -18,6 +18,14 @@ Search                     | Search result             |  Library               
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
 <img src="https://github.com/iamoscarliang/spotify-clone/blob/master/screenshot/search.png" width="200">|<img src="https://github.com/iamoscarliang/spotify-clone/blob/master/screenshot/search_result.png" width="200">|<img src="https://github.com/iamoscarliang/spotify-clone/blob/master/screenshot/library.png" width="200">|<img src="https://github.com/iamoscarliang/spotify-clone/blob/master/screenshot/playlist_detail.png" width="200">
 
+## :film_projector: Demo
+<details>
+     <summary> Click to expand </summary>
+  
+https://github.com/iamoscarliang/spotify-clone/assets/152960326/32371298-0836-40b2-85d5-d716423d226d
+
+</details>
+
 ## :books: Tech Stack
 - :cloud: Firebase [Firestore](https://firebase.google.com/docs/firestore) & [Cloud Storage](https://firebase.google.com/docs/storage)
 - :wrench: Architecture Component with [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel), [Livedata](https://developer.android.com/topic/libraries/architecture/livedata) & [View Binding](https://developer.android.com/topic/libraries/view-binding)
