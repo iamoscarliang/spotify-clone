@@ -10,13 +10,20 @@ Search                     | Search result             |  Library               
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
 <img src="https://github.com/iamoscarliang/spotify-clone/assets/152960326/c10e18ef-22f7-4cbb-920b-b7d02229ab4a.png" width="200">|<img src="https://github.com/iamoscarliang/spotify-clone/assets/152960326/cccad063-066e-47d3-8c1a-b4f1ba4c2345.png" width="200">|<img src="https://github.com/iamoscarliang/spotify-clone/assets/152960326/c7bf19f1-4c87-435b-8ef3-8b3951de9bb1.png" width="200">|<img src="https://github.com/iamoscarliang/spotify-clone/assets/152960326/6588ea29-0d57-4e47-b35b-60ed8ee452af.png" width="200">
 
-## :gear: Tech Stack
-- Firebase [Firestore](https://firebase.google.com/docs/firestore) & [Cloud Storage](https://firebase.google.com/docs/storage)
-- Architecture Component with [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) & [Livedata](https://developer.android.com/topic/libraries/architecture/livedata)
-- [Media3](https://developer.android.com/media/media3) & [ExoPlayer](https://developer.android.com/media/media3/exoplayer) for audio streaming
-- [Navigation Component](https://developer.android.com/guide/navigation)
-- [View Binding](https://developer.android.com/topic/libraries/view-binding)
-- [Dagger](https://developer.android.com/training/dependency-injection/dagger-basics) for dependency injection
-- [Glide](https://github.com/bumptech/glide) for image loading
-- [Junit](https://developer.android.com/training/testing/local-tests) & [Mockito](https://github.com/mockito/mockito) for Unit test
-- [Espresso](https://developer.android.com/training/testing/espresso) for UI test
+## :books: Tech Stack
+- :cloud: Firebase [Firestore](https://firebase.google.com/docs/firestore) & [Cloud Storage](https://firebase.google.com/docs/storage)
+- :wrench: Architecture Component with [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel), [Livedata](https://developer.android.com/topic/libraries/architecture/livedata) & [View Binding](https://developer.android.com/topic/libraries/view-binding)
+- :musical_note: [Media3](https://developer.android.com/media/media3) & [ExoPlayer](https://developer.android.com/media/media3/exoplayer) for audio streaming
+- :ship: [Navigation Component](https://developer.android.com/guide/navigation) for UI navigation
+- :syringe: [Dagger](https://developer.android.com/training/dependency-injection/dagger-basics) for dependency injection
+- :framed_picture: [Glide](https://github.com/bumptech/glide) for image loading
+- :bar_chart: [Junit](https://developer.android.com/training/testing/local-tests) & [Mockito](https://github.com/mockito/mockito) for Unit test
+- :iphone: [Espresso](https://developer.android.com/training/testing/espresso) for UI test
+
+## :handshake: Credit
+Music provided by the [Free Music Archive](https://freemusicarchive.org) under [CC BY](https://creativecommons.org/licenses/by/4.0/)
+- [Atypical](https://freemusicarchive.org/music/jen-msumba/atypical) by Jen Msumba
+- [Deserted](https://freemusicarchive.org/music/ethos/deserted) by Ethos
+- [Project Gauss](https://freemusicarchive.org/music/ethos/project-gauss) by Ethos
+- [Gleam](https://freemusicarchive.org/music/serat/gleam) by Serat
+- [Route (remastered)](https://freemusicarchive.org/music/serat/route-remastered) by Serat
