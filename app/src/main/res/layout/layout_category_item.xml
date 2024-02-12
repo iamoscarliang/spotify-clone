@@ -2,6 +2,7 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="@dimen/layout_category_item_width"
     android:layout_height="@dimen/layout_category_item_height"
     android:layout_margin="@dimen/margin_10"
@@ -23,8 +24,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_10"
-        android:text="Category"
         android:textColor="@color/white"
-        android:textSize="@dimen/text_size_20" />
+        android:textSize="@dimen/text_size_20"
+        tool:text="Category" />
 
 </androidx.cardview.widget.CardView>

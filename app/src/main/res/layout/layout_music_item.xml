@@ -2,6 +2,7 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/layout_music_item_height"
     android:clickable="true"
@@ -33,24 +34,26 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_10"
             android:layout_marginEnd="@dimen/margin_10"
-            android:text="Music Title"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_15"
             app:layout_constraintBottom_toTopOf="@id/text_artist"
             app:layout_constraintEnd_toStartOf="@id/btn_more"
             app:layout_constraintStart_toEndOf="@+id/image_music"
-            app:layout_constraintTop_toTopOf="@id/image_music" />
+            app:layout_constraintTop_toTopOf="@id/image_music"
+            tool:text="Music Title" />
 
         <TextView
             android:id="@+id/text_artist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Artist"
             android:textColor="@color/gray"
             android:textSize="@dimen/text_size_12"
             app:layout_constraintBottom_toBottomOf="@id/image_music"
             app:layout_constraintStart_toStartOf="@+id/text_title"
-            app:layout_constraintTop_toBottomOf="@id/text_title" />
+            app:layout_constraintTop_toBottomOf="@id/text_title"
+            tool:text="Artist" />
 
         <ImageButton
             android:id="@+id/btn_more"

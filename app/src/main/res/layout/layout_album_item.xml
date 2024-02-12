@@ -2,6 +2,7 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/layout_album_item_height"
     android:clickable="true"
@@ -32,34 +33,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_10"
-            android:text="Album Title"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_20"
             app:layout_constraintBottom_toTopOf="@id/text_artist"
             app:layout_constraintStart_toEndOf="@+id/image_album"
-            app:layout_constraintTop_toTopOf="@+id/image_album" />
+            app:layout_constraintTop_toTopOf="@+id/image_album"
+            tool:text="Album Title" />
 
         <TextView
             android:id="@+id/text_artist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Artist Name"
             android:textColor="@color/gray"
             android:textSize="@dimen/text_size_15"
             app:layout_constraintBottom_toTopOf="@id/text_year"
             app:layout_constraintStart_toStartOf="@+id/text_album"
-            app:layout_constraintTop_toBottomOf="@id/text_album" />
+            app:layout_constraintTop_toBottomOf="@id/text_album"
+            tool:text="Artist Name" />
 
         <TextView
             android:id="@+id/text_year"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Year"
             android:textColor="@color/gray"
             android:textSize="@dimen/text_size_15"
             app:layout_constraintBottom_toBottomOf="@+id/image_album"
             app:layout_constraintStart_toStartOf="@+id/text_artist"
-            app:layout_constraintTop_toBottomOf="@id/text_artist" />
+            app:layout_constraintTop_toBottomOf="@id/text_artist"
+            tool:text="Year" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
