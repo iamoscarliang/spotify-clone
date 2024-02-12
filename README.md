@@ -1,5 +1,5 @@
 <div align="center">
-<img src="https://github.com/iamoscarliang/spotify-clone/assets/152960326/56f85464-be82-44cf-bb88-3b5332f1fe6a.png" width="600">
+<img src="https://github.com/iamoscarliang/spotify-clone/blob/master/screenshot/feature_graph.png" width="600">
   
 ![minSdk](https://img.shields.io/badge/minSdk-21-brightgreen)
 [![license](https://img.shields.io/badge/license-MIT-brightgreen)](https://github.com/iamoscarliang/spotify-clone/blob/master/LICENSE)
@@ -12,11 +12,19 @@
 ## :pushpin: Features
 Welcome                    | Home                      |  Album detail             |   Artist detail
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
-<img src="https://github.com/iamoscarliang/spotify-clone/assets/152960326/a948d2c4-d5cd-4b96-a7ee-1808e1f81ee9.png" width="200">|<img src="https://github.com/iamoscarliang/spotify-clone/assets/152960326/03525b00-325d-4bc4-a153-0d11bf3b556f.png" width="200">|<img src="https://github.com/iamoscarliang/spotify-clone/assets/152960326/c52d9928-32db-4fd1-86cb-b924b3d8b37b.png" width="200">|<img src="https://github.com/iamoscarliang/spotify-clone/assets/152960326/410d6b4d-b2b6-48c1-97a0-16f70e0cb669.png" width="200">
+<img src="https://github.com/iamoscarliang/spotify-clone/blob/master/screenshot/welcome.png" width="200">|<img src="https://github.com/iamoscarliang/spotify-clone/blob/master/screenshot/home.png" width="200">|<img src="https://github.com/iamoscarliang/spotify-clone/blob/master/screenshot/album_detail.png" width="200">|<img src="https://github.com/iamoscarliang/spotify-clone/blob/master/screenshot/artist_detail.png" width="200">
 
 Search                     | Search result             |  Library                  |   Playlist detail
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
-<img src="https://github.com/iamoscarliang/spotify-clone/assets/152960326/c10e18ef-22f7-4cbb-920b-b7d02229ab4a.png" width="200">|<img src="https://github.com/iamoscarliang/spotify-clone/assets/152960326/cccad063-066e-47d3-8c1a-b4f1ba4c2345.png" width="200">|<img src="https://github.com/iamoscarliang/spotify-clone/assets/152960326/c7bf19f1-4c87-435b-8ef3-8b3951de9bb1.png" width="200">|<img src="https://github.com/iamoscarliang/spotify-clone/assets/152960326/6588ea29-0d57-4e47-b35b-60ed8ee452af.png" width="200">
+<img src="https://github.com/iamoscarliang/spotify-clone/blob/master/screenshot/search.png" width="200">|<img src="https://github.com/iamoscarliang/spotify-clone/blob/master/screenshot/search_result.png" width="200">|<img src="https://github.com/iamoscarliang/spotify-clone/blob/master/screenshot/library.png" width="200">|<img src="https://github.com/iamoscarliang/spotify-clone/blob/master/screenshot/playlist_detail.png" width="200">
+
+## :film_projector: Demo
+<details>
+     <summary> Click to expand </summary>
+  
+https://github.com/iamoscarliang/spotify-clone/assets/152960326/32371298-0836-40b2-85d5-d716423d226d
+
+</details>
 
 ## :books: Tech Stack
 - :cloud: Firebase [Firestore](https://firebase.google.com/docs/firestore) & [Cloud Storage](https://firebase.google.com/docs/storage)
