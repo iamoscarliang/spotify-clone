@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_musicinfo"
+    android:label="@string/feature_music_info"
+    app:startDestination="@id/musicInfoBottomSheet">
+
+    <dialog
+        android:id="@+id/musicInfoBottomSheet"
+        android:name="com.oscarliang.spotifyclone.feature.musicinfo.MusicInfoBottomSheet"
+        tools:layout="@layout/bottom_sheet_music_info">
+
+        <deepLink app:uri="android-app://musicInfoBottomSheet/{musicId}" />
+
+    </dialog>
+
+</navigation>

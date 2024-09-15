@@ -1,25 +1,25 @@
 package com.oscarliang.spotifyclone.di;
 
 import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.oscarliang.spotifyclone.ui.MainViewModel;
-import com.oscarliang.spotifyclone.ui.ViewModelFactory;
-import com.oscarliang.spotifyclone.ui.album.AlbumViewModel;
-import com.oscarliang.spotifyclone.ui.artist.ArtistViewModel;
-import com.oscarliang.spotifyclone.ui.category.CategoryViewModel;
-import com.oscarliang.spotifyclone.ui.home.HomeViewModel;
-import com.oscarliang.spotifyclone.ui.library.LibraryViewModel;
-import com.oscarliang.spotifyclone.ui.login.LoginViewModel;
-import com.oscarliang.spotifyclone.ui.playlist.PlaylistViewModel;
-import com.oscarliang.spotifyclone.ui.playlistedit.PlaylistEditViewModel;
-import com.oscarliang.spotifyclone.ui.search.SearchViewModel;
-import com.oscarliang.spotifyclone.ui.searchresult.SearchResultViewModel;
-import com.oscarliang.spotifyclone.ui.searchresult.album.AlbumSearchResultViewModel;
-import com.oscarliang.spotifyclone.ui.searchresult.artist.ArtistSearchResultViewModel;
-import com.oscarliang.spotifyclone.ui.searchresult.music.MusicSearchResultViewModel;
-import com.oscarliang.spotifyclone.ui.signup.SignupViewModel;
-import com.oscarliang.spotifyclone.ui.signupname.SignupNameViewModel;
+import com.oscarliang.spotifyclone.feature.album.AlbumViewModel;
+import com.oscarliang.spotifyclone.feature.artist.ArtistViewModel;
+import com.oscarliang.spotifyclone.feature.category.CategoryViewModel;
+import com.oscarliang.spotifyclone.feature.home.HomeViewModel;
+import com.oscarliang.spotifyclone.feature.library.LibraryViewModel;
+import com.oscarliang.spotifyclone.feature.login.LoginViewModel;
+import com.oscarliang.spotifyclone.feature.musicinfo.MusicInfoViewModel;
+import com.oscarliang.spotifyclone.feature.player.PlayerViewModel;
+import com.oscarliang.spotifyclone.feature.playlist.PlaylistViewModel;
+import com.oscarliang.spotifyclone.feature.playlistedit.PlaylistEditViewModel;
+import com.oscarliang.spotifyclone.feature.playlistinfo.PlaylistInfoViewModel;
+import com.oscarliang.spotifyclone.feature.playlistselect.PlaylistSelectViewModel;
+import com.oscarliang.spotifyclone.feature.search.SearchViewModel;
+import com.oscarliang.spotifyclone.feature.searchresult.AlbumResultViewModel;
+import com.oscarliang.spotifyclone.feature.searchresult.ArtistResultViewModel;
+import com.oscarliang.spotifyclone.feature.searchresult.MusicResultViewModel;
+import com.oscarliang.spotifyclone.feature.searchresult.SearchResultViewModel;
+import com.oscarliang.spotifyclone.feature.signup.SignupViewModel;
 
 import dagger.Binds;
 import dagger.Module;
@@ -28,13 +28,10 @@ import dagger.multibindings.IntoMap;
 @Module
 public abstract class ViewModelModule {
 
-    //--------------------------------------------------------
-    // Methods
-    //--------------------------------------------------------
     @Binds
     @IntoMap
-    @ViewModelKey(MainViewModel.class)
-    public abstract ViewModel bindMainViewModel(MainViewModel viewModel);
+    @ViewModelKey(LoginViewModel.class)
+    public abstract ViewModel bindLoginViewModel(LoginViewModel viewModel);
 
     @Binds
     @IntoMap
@@ -43,18 +40,18 @@ public abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(SignupNameViewModel.class)
-    public abstract ViewModel bindSignupNameViewModel(SignupNameViewModel viewModel);
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(LoginViewModel.class)
-    public abstract ViewModel bindLoginViewModel(LoginViewModel viewModel);
-
-    @Binds
-    @IntoMap
     @ViewModelKey(HomeViewModel.class)
     public abstract ViewModel bindHomeViewModel(HomeViewModel viewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SearchViewModel.class)
+    public abstract ViewModel bindSearchViewModel(SearchViewModel viewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(LibraryViewModel.class)
+    public abstract ViewModel bindLibraryViewModel(LibraryViewModel viewModel);
 
     @Binds
     @IntoMap
@@ -68,11 +65,6 @@ public abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(SearchViewModel.class)
-    public abstract ViewModel bindSearchViewModel(SearchViewModel viewModel);
-
-    @Binds
-    @IntoMap
     @ViewModelKey(CategoryViewModel.class)
     public abstract ViewModel bindCategoryViewModel(CategoryViewModel viewModel);
 
@@ -83,23 +75,18 @@ public abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(MusicSearchResultViewModel.class)
-    public abstract ViewModel bindMusicSearchResultViewModel(MusicSearchResultViewModel viewModel);
+    @ViewModelKey(MusicResultViewModel.class)
+    public abstract ViewModel bindMusicSearchResultViewModel(MusicResultViewModel viewModel);
 
     @Binds
     @IntoMap
-    @ViewModelKey(ArtistSearchResultViewModel.class)
-    public abstract ViewModel bindArtistSearchResultViewModel(ArtistSearchResultViewModel viewModel);
+    @ViewModelKey(AlbumResultViewModel.class)
+    public abstract ViewModel bindAlbumSearchResultViewModel(AlbumResultViewModel viewModel);
 
     @Binds
     @IntoMap
-    @ViewModelKey(AlbumSearchResultViewModel.class)
-    public abstract ViewModel bindAlbumSearchResultViewModel(AlbumSearchResultViewModel viewModel);
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(LibraryViewModel.class)
-    public abstract ViewModel bindLibraryViewModel(LibraryViewModel viewModel);
+    @ViewModelKey(ArtistResultViewModel.class)
+    public abstract ViewModel bindArtistSearchResultViewModel(ArtistResultViewModel viewModel);
 
     @Binds
     @IntoMap
@@ -112,7 +99,23 @@ public abstract class ViewModelModule {
     public abstract ViewModel bindPlaylistEditViewModel(PlaylistEditViewModel viewModel);
 
     @Binds
-    public abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelFactory viewModelFactory);
-    //========================================================
+    @IntoMap
+    @ViewModelKey(PlaylistSelectViewModel.class)
+    public abstract ViewModel bindPlaylistSelectViewModel(PlaylistSelectViewModel viewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(PlaylistInfoViewModel.class)
+    public abstract ViewModel bindPlaylistInfoViewModel(PlaylistInfoViewModel viewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MusicInfoViewModel.class)
+    public abstract ViewModel bindMusicInfoViewModel(MusicInfoViewModel viewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(PlayerViewModel.class)
+    public abstract ViewModel bindPlayerViewModel(PlayerViewModel viewModel);
 
 }

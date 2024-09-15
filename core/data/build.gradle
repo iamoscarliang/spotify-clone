@@ -1,0 +1,27 @@
+plugins {
+    alias libs.plugins.android.library
+}
+
+android {
+    namespace 'com.oscarliang.spotifyclone.core.data'
+    compileSdk 34
+    defaultConfig {
+        minSdk 21
+    }
+}
+
+dependencies {
+    implementation(project(":core:auth"))
+    implementation(project(':core:database'))
+    implementation(project(':core:network'))
+    implementation(project(":core:model"))
+    implementation(project(":core:common"))
+    implementation(project(":core:testing"))
+
+    implementation libs.firebase.firestore
+    implementation libs.dagger.core
+    implementation libs.rxjava
+
+    testImplementation libs.junit
+    testImplementation libs.mockito.core
+}

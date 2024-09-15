@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_category"
+    android:label="@string/feature_category"
+    app:startDestination="@id/categoryFragment">
+
+    <fragment
+        android:id="@+id/categoryFragment"
+        android:name="com.oscarliang.spotifyclone.feature.category.CategoryFragment"
+        tools:layout="@layout/fragment_category">
+
+        <deepLink app:uri="android-app://categoryFragment/{categoryId}" />
+
+    </fragment>
+
+</navigation>

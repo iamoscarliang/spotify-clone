@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Widget.MaterialComponents.BottomSheet.Modal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|center"
+    android:background="?attr/colorSurface"
+    android:theme="@style/Theme.Spotify">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/image_handler"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:background="?attr/colorSecondaryVariant"
+        app:layout_constraintDimensionRatio="10:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/Circle" />
+
+    <include
+        android:id="@+id/layout_playlist_info_item"
+        layout="@layout/layout_playlist_info_item"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_large"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginEnd="@dimen/margin_large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image_handler" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="@dimen/padding_small"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:background="?attr/colorSecondaryVariant"
+        android:contentDescription="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_playlist_info_item" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_large"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_playlist_info_item">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_playlist"
+            style="@style/IconTextButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/icon_medium"
+            android:text="@string/playlist_edit"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_body_medium"
+            app:icon="@drawable/ic_edit" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_delete_playlist"
+            style="@style/IconTextButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/icon_medium"
+            android:text="@string/playlist_delete"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_body_medium"
+            app:icon="@drawable/ic_delete" />
+
+    </LinearLayout>
+
+    <include
+        android:id="@+id/layout_loading"
+        layout="@layout/layout_loading_fg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

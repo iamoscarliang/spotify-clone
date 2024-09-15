@@ -1,0 +1,109 @@
+<resources>
+    <!-- Base theme -->
+    <style name="Theme.Base" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/gray_900</item>
+        <!-- Navigation bar color. -->
+        <item name="android:navigationBarColor">@color/gray_900</item>
+    </style>
+
+    <!-- Splash screen theme -->
+    <style name="Theme.Splash" parent="Theme.Base">
+        <item name="android:colorBackground">@color/black</item>
+    </style>
+
+    <!-- The final theme we use -->
+    <style name="Theme.Spotify" parent="Theme.Base">
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryVariant">@color/gray_700</item>
+        <item name="colorOnPrimary">@color/green_200</item>
+        <item name="colorSecondary">@color/white</item>
+        <item name="colorSecondaryVariant">@color/gray_500</item>
+        <item name="colorOnSecondary">@color/green_500</item>
+        <item name="colorSurface">@color/gray_900</item>
+        <item name="snackbarStyle">@style/SnackbarTheme</item>
+        <item name="snackbarTextViewStyle">@style/SnackbarTextViewTheme</item>
+        <item name="snackbarButtonStyle">@style/SnackbarTextButtonTheme</item>
+    </style>
+
+    <!-- Round corner image theme -->
+    <style name="RoundedRectangle">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8%</item>
+    </style>
+
+    <!-- Circle image theme -->
+    <style name="Circle">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <!-- SearchView theme -->
+    <style name="SearchView" parent="Widget.AppCompat.Light.SearchView">
+        <item name="android:editTextColor">@color/white</item>
+        <item name="android:textColorHint">@color/gray_500</item>
+    </style>
+
+    <!-- SeekBar theme -->
+    <style name="SeekBar" parent="Widget.AppCompat.SeekBar">
+        <item name="android:progressBackgroundTint">@color/gray_500</item>
+        <item name="android:progressTint">@color/white</item>
+        <item name="android:thumbTint">@color/white</item>
+        <item name="android:padding">0dp</item>
+    </style>
+
+    <!-- Button theme -->
+    <style name="IconButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="iconPadding">0dp</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconTint">@color/white</item>
+        <item name="rippleColor">@color/gray_700</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="shapeAppearanceOverlay">@style/Circle</item>
+    </style>
+    <style name="TextButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="rippleColor">@color/gray_700</item>
+        <item name="shapeAppearanceOverlay">@style/Circle</item>
+    </style>
+    <style name="IconTextButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="android:gravity">start|center_vertical</item>
+        <item name="iconPadding">@dimen/margin_large</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconTint">@color/white</item>
+        <item name="rippleColor">@color/gray_700</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+    </style>
+    <style name="OutlinedTextButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="strokeColor">@color/gray_500</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="rippleColor">@color/gray_700</item>
+        <item name="shapeAppearanceOverlay">@style/Circle</item>
+    </style>
+
+
+    <style name="SnackbarTheme" parent="@style/Widget.MaterialComponents.Snackbar">
+        <item name="android:backgroundTint">@color/gray_900</item>
+    </style>
+    <style name="SnackbarTextViewTheme" parent="@style/Widget.MaterialComponents.Snackbar.TextView">
+        <item name="android:textColor">@color/gray_500</item>
+    </style>
+    <style name="SnackbarTextButtonTheme" parent="@style/Widget.MaterialComponents.Button.TextButton.Snackbar">
+        <item name="android:textColor">@color/green_500</item>
+    </style>
+</resources>

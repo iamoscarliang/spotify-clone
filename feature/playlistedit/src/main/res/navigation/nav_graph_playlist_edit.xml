@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_playlist_edit"
+    android:label="@string/feature_playlist_edit"
+    app:startDestination="@id/playlistEditFragment">
+
+    <fragment
+        android:id="@+id/playlistEditFragment"
+        android:name="com.oscarliang.spotifyclone.feature.playlistedit.PlaylistEditFragment"
+        tools:layout="@layout/fragment_playlist_edit">
+
+        <deepLink app:uri="android-app://playlistEditFragment/{playlistId}" />
+
+    </fragment>
+
+</navigation>

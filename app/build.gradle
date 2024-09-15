@@ -1,6 +1,6 @@
 plugins {
-    id 'com.android.application'
-    id 'com.google.gms.google-services'
+    alias libs.plugins.android.application
+    alias libs.plugins.google.services
 }
 
 android {
@@ -13,7 +13,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "com.oscarliang.spotifyclone.util.SpotifyTestRunner"
+        testInstrumentationRunner "com.oscarliang.spotifyclone.core.testing.SpotifyTestRunner"
     }
 
     buildTypes {
@@ -27,8 +27,8 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     sourceSets {
-        androidTest.java.srcDirs += "src/test-common/java"
-        test.java.srcDirs += "src/test-common/java"
+//        androidTest.java.srcDirs += "src/test-common/java"
+//        test.java.srcDirs += "src/test-common/java"
     }
     buildFeatures {
         viewBinding true
@@ -36,68 +36,72 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.11.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation(project(":feature:welcome"))
+    implementation(project(":feature:login"))
+    implementation(project(":feature:signup"))
+    implementation(project(":feature:home"))
+    implementation(project(":feature:search"))
+    implementation(project(":feature:library"))
+    implementation(project(":feature:album"))
+    implementation(project(":feature:artist"))
+    implementation(project(":feature:category"))
+    implementation(project(":feature:searchresult"))
+    implementation(project(":feature:playlist"))
+    implementation(project(":feature:playlistedit"))
+    implementation(project(":feature:playlistselect"))
+    implementation(project(":feature:playlistInfo"))
+    implementation(project(":feature:musicinfo"))
+    implementation(project(':feature:player'))
 
-    // Palette
-    implementation 'androidx.palette:palette:1.0.0'
+    implementation(project(":core:ui"))
+    implementation(project(":core:auth"))
+    implementation(project(":core:data"))
+    implementation(project(":core:domain"))
+    implementation(project(":core:database"))
+    implementation(project(":core:model"))
+    implementation(project(":core:common"))
+    implementation(project(':core:network'))
+    implementation(project(':core:player'))
 
-    // Shimmer effect
-    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.constraintlayout
+    implementation libs.androidx.media3.exoplayer
+    implementation libs.androidx.media3.session
+    implementation libs.androidx.navigation.fragment
+    implementation libs.androidx.navigation.ui
+    implementation libs.firebase.firestore
+    implementation libs.firebase.auth
+    implementation libs.dagger.core
+    implementation libs.dagger.android.core
+    implementation libs.dagger.android.support
+    implementation libs.rxjava
+    implementation libs.rxandroid
+    implementation libs.material
+    implementation libs.glide
 
-    // Swipe refresh layout
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+    annotationProcessor libs.dagger.compiler
+    annotationProcessor libs.dagger.android.processor
 
-    // Glide
-    implementation 'com.github.bumptech.glide:glide:4.16.0'
-
-    // Firebase
-    implementation 'com.google.firebase:firebase-firestore:24.10.0'
-    implementation 'com.google.firebase:firebase-storage:20.3.0'
-    implementation 'com.google.firebase:firebase-auth:22.3.1'
-
-    // Media3
-    def media3_version = "1.2.0"
-    implementation "androidx.media3:media3-exoplayer:$media3_version"
-    implementation "androidx.media3:media3-session:$media3_version"
-
-    // Dagger
-    def dagger_version = "2.35.1"
-    implementation "com.google.dagger:dagger:$dagger_version"
-    annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
-
-    // Dagger android
-    implementation "com.google.dagger:dagger-android:$dagger_version"
-    implementation "com.google.dagger:dagger-android-support:$dagger_version"
-    annotationProcessor "com.google.dagger:dagger-android-processor:$dagger_version"
-
-    // Nav component
-    def nav_version = "2.3.5"
-    implementation "androidx.navigation:navigation-fragment:$nav_version"
-    implementation "androidx.navigation:navigation-ui:$nav_version"
-    androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
-
-    // Unit test
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-
-    // Espresso test
-    def espresso_version = "3.3.0"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
-    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espresso_version"
-
-    // Mockito test
-    def mockito_version = "3.3.3"
-    testImplementation "org.mockito:mockito-core:$mockito_version"
-    androidTestImplementation "org.mockito:mockito-android:$mockito_version"
-
-    // Architecture components test
-    def androidx_arch_test_version = "2.2.0"
-    testImplementation "androidx.arch.core:core-testing:$androidx_arch_test_version"
-    androidTestImplementation "androidx.arch.core:core-testing:$androidx_arch_test_version"
-
-    // Fragment test
-    def fragment_version = "1.6.2"
-    debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
+//    // Unit test
+//    testImplementation 'junit:junit:4.13.2'
+//    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+//
+//    // Espresso test
+//    def espresso_version = "3.3.0"
+//    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
+//    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espresso_version"
+//
+//    // Mockito test
+//    def mockito_version = "3.3.3"
+//    testImplementation "org.mockito:mockito-core:$mockito_version"
+//    androidTestImplementation "org.mockito:mockito-android:$mockito_version"
+//
+//    // Architecture components test
+//    def androidx_arch_test_version = "2.2.0"
+//    testImplementation "androidx.arch.core:core-testing:$androidx_arch_test_version"
+//    androidTestImplementation "androidx.arch.core:core-testing:$androidx_arch_test_version"
+//
+//    // Fragment test
+//    def fragment_version = "1.6.2"
+//    debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
 }

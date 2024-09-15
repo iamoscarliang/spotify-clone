@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorPrimary"
+    android:theme="@style/Theme.Spotify">
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:shimmer_base_alpha="1"
+        app:shimmer_dropoff="0.8"
+        app:shimmer_highlight_alpha="0.8"
+        app:shimmer_tilt="0">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/image_album"
+                android:layout_width="225dp"
+                android:layout_height="225dp"
+                android:layout_marginStart="@dimen/interval_large"
+                android:layout_marginTop="@dimen/interval_medium"
+                android:background="?attr/colorPrimaryVariant"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/RoundedRectangle"
+                tools:ignore="ImageContrastCheck" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/text_album_title"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/interval_large"
+                android:layout_marginStart="@dimen/margin_large"
+                android:layout_marginBottom="@dimen/margin_medium"
+                android:background="?attr/colorPrimaryVariant"
+                app:layout_constraintBottom_toTopOf="@+id/text_album_artist"
+                app:layout_constraintDimensionRatio="5:1"
+                app:layout_constraintStart_toEndOf="@id/image_album"
+                app:shapeAppearanceOverlay="@style/RoundedRectangle"
+                tools:ignore="ImageContrastCheck" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/text_album_artist"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/interval_small"
+                android:layout_marginBottom="@dimen/margin_medium"
+                android:background="?attr/colorPrimaryVariant"
+                app:layout_constraintBottom_toTopOf="@+id/text_album_year"
+                app:layout_constraintDimensionRatio="10:1"
+                app:layout_constraintStart_toStartOf="@+id/text_album_title"
+                app:shapeAppearanceOverlay="@style/RoundedRectangle"
+                tools:ignore="ImageContrastCheck" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/text_album_year"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/interval_small"
+                android:background="?attr/colorPrimaryVariant"
+                app:layout_constraintBottom_toBottomOf="@id/image_album"
+                app:layout_constraintDimensionRatio="6:1"
+                app:layout_constraintStart_toStartOf="@id/text_album_artist"
+                app:shapeAppearanceOverlay="@style/RoundedRectangle"
+                tools:ignore="ImageContrastCheck" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/interval_large"
+                android:layout_marginTop="@dimen/interval_large"
+                android:layout_marginEnd="@dimen/interval_large"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_album_year">
+
+                <include layout="@layout/layout_music_item_shimmer" />
+
+                <include layout="@layout/layout_music_item_shimmer" />
+
+                <include layout="@layout/layout_music_item_shimmer" />
+
+                <include layout="@layout/layout_music_item_shimmer" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+</FrameLayout>

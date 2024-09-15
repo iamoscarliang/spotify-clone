@@ -1,22 +1,24 @@
 package com.oscarliang.spotifyclone.di;
 
-import com.oscarliang.spotifyclone.ui.album.AlbumFragment;
-import com.oscarliang.spotifyclone.ui.artist.ArtistFragment;
-import com.oscarliang.spotifyclone.ui.category.CategoryFragment;
-import com.oscarliang.spotifyclone.ui.common.bottomsheet.AddToPlaylistBottomSheet;
-import com.oscarliang.spotifyclone.ui.home.HomeFragment;
-import com.oscarliang.spotifyclone.ui.library.LibraryFragment;
-import com.oscarliang.spotifyclone.ui.login.LoginFragment;
-import com.oscarliang.spotifyclone.ui.music.MusicFragment;
-import com.oscarliang.spotifyclone.ui.playlist.PlaylistFragment;
-import com.oscarliang.spotifyclone.ui.playlistedit.PlaylistEditFragment;
-import com.oscarliang.spotifyclone.ui.search.SearchFragment;
-import com.oscarliang.spotifyclone.ui.searchresult.album.AlbumSearchResultFragment;
-import com.oscarliang.spotifyclone.ui.searchresult.artist.ArtistSearchResultFragment;
-import com.oscarliang.spotifyclone.ui.searchresult.music.MusicSearchResultFragment;
-import com.oscarliang.spotifyclone.ui.searchresult.SearchResultFragment;
-import com.oscarliang.spotifyclone.ui.signup.SignupFragment;
-import com.oscarliang.spotifyclone.ui.signupname.SignupNameFragment;
+import com.oscarliang.spotifyclone.feature.album.AlbumFragment;
+import com.oscarliang.spotifyclone.feature.artist.ArtistFragment;
+import com.oscarliang.spotifyclone.feature.category.CategoryFragment;
+import com.oscarliang.spotifyclone.feature.home.HomeFragment;
+import com.oscarliang.spotifyclone.feature.library.LibraryFragment;
+import com.oscarliang.spotifyclone.feature.login.LoginFragment;
+import com.oscarliang.spotifyclone.feature.musicinfo.MusicInfoBottomSheet;
+import com.oscarliang.spotifyclone.feature.player.MiniPlayerFragment;
+import com.oscarliang.spotifyclone.feature.player.PlayerFragment;
+import com.oscarliang.spotifyclone.feature.playlist.PlaylistFragment;
+import com.oscarliang.spotifyclone.feature.playlistedit.PlaylistEditFragment;
+import com.oscarliang.spotifyclone.feature.playlistinfo.PlaylistInfoBottomSheet;
+import com.oscarliang.spotifyclone.feature.playlistselect.PlaylistSelectFragment;
+import com.oscarliang.spotifyclone.feature.search.SearchFragment;
+import com.oscarliang.spotifyclone.feature.searchresult.AlbumResultFragment;
+import com.oscarliang.spotifyclone.feature.searchresult.ArtistResultFragment;
+import com.oscarliang.spotifyclone.feature.searchresult.MusicResultFragment;
+import com.oscarliang.spotifyclone.feature.searchresult.SearchResultFragment;
+import com.oscarliang.spotifyclone.feature.signup.SignupFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -24,20 +26,20 @@ import dagger.android.ContributesAndroidInjector;
 @Module
 public abstract class FragmentBuildersModule {
 
-    //--------------------------------------------------------
-    // Methods
-    //--------------------------------------------------------
-    @ContributesAndroidInjector
-    abstract SignupFragment contributeSignupFragment();
-
-    @ContributesAndroidInjector
-    abstract SignupNameFragment contributeSignupNameFragment();
-
     @ContributesAndroidInjector
     abstract LoginFragment contributeLoginFragment();
 
     @ContributesAndroidInjector
+    abstract SignupFragment contributeSignupFragment();
+
+    @ContributesAndroidInjector
     abstract HomeFragment contributeHomeFragment();
+
+    @ContributesAndroidInjector
+    abstract SearchFragment contributeSearchFragment();
+
+    @ContributesAndroidInjector
+    abstract LibraryFragment contributeLibraryFragment();
 
     @ContributesAndroidInjector
     abstract AlbumFragment contributeAlbumFragment();
@@ -46,28 +48,19 @@ public abstract class FragmentBuildersModule {
     abstract ArtistFragment contributeArtistFragment();
 
     @ContributesAndroidInjector
-    abstract MusicFragment contributeMusicFragment();
-
-    @ContributesAndroidInjector
-    abstract SearchFragment contributeSearchFragment();
-
-    @ContributesAndroidInjector
     abstract CategoryFragment contributeCategoryFragment();
 
     @ContributesAndroidInjector
     abstract SearchResultFragment contributeSearchResultFragment();
 
     @ContributesAndroidInjector
-    abstract MusicSearchResultFragment contributeMusicSearchResultFragment();
+    abstract MusicResultFragment contributeMusicSearchResultFragment();
 
     @ContributesAndroidInjector
-    abstract ArtistSearchResultFragment contributeArtistSearchResultFragment();
+    abstract AlbumResultFragment contributeAlbumSearchResultFragment();
 
     @ContributesAndroidInjector
-    abstract AlbumSearchResultFragment contributeAlbumSearchResultFragment();
-
-    @ContributesAndroidInjector
-    abstract LibraryFragment contributeLibraryFragment();
+    abstract ArtistResultFragment contributeArtistSearchResultFragment();
 
     @ContributesAndroidInjector
     abstract PlaylistFragment contributePlaylistFragment();
@@ -76,7 +69,18 @@ public abstract class FragmentBuildersModule {
     abstract PlaylistEditFragment contributePlaylistEditFragment();
 
     @ContributesAndroidInjector
-    abstract AddToPlaylistBottomSheet contributeAddToPlaylistBottomSheet();
-    //========================================================
+    abstract PlaylistSelectFragment contributePlaylistSelectFragment();
+
+    @ContributesAndroidInjector
+    abstract PlaylistInfoBottomSheet contributePlaylistInfoBottomSheet();
+
+    @ContributesAndroidInjector
+    abstract MusicInfoBottomSheet contributeMusicInfoBottomSheet();
+
+    @ContributesAndroidInjector
+    abstract PlayerFragment contributePlayerFragment();
+
+    @ContributesAndroidInjector
+    abstract MiniPlayerFragment contributeMiniPlayerFragment();
 
 }

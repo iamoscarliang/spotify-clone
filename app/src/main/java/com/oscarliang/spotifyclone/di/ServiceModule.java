@@ -7,7 +7,7 @@ import androidx.media3.session.MediaController;
 import androidx.media3.session.SessionToken;
 
 import com.google.common.util.concurrent.ListenableFuture;
-import com.oscarliang.spotifyclone.ui.SpotifyService;
+import com.oscarliang.spotifyclone.SpotifyService;
 
 import javax.inject.Singleton;
 
@@ -25,13 +25,19 @@ public class ServiceModule {
 
     @Singleton
     @Provides
-    public SessionToken provideSessionToken(Application application, ComponentName componentName) {
+    public SessionToken provideSessionToken(
+            Application application,
+            ComponentName componentName
+    ) {
         return new SessionToken(application, componentName);
     }
 
     @Singleton
     @Provides
-    public ListenableFuture<MediaController> provideMediaController(Application application, SessionToken sessionToken) {
+    public ListenableFuture<MediaController> provideMediaController(
+            Application application,
+            SessionToken sessionToken
+    ) {
         return new MediaController.Builder(application, sessionToken).buildAsync();
     }
 

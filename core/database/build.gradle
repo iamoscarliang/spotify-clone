@@ -1,0 +1,26 @@
+plugins {
+    alias libs.plugins.android.library
+}
+
+android {
+    namespace 'com.oscarliang.spotifyclone.core.database'
+    compileSdk 34
+    defaultConfig {
+        minSdk 21
+        testInstrumentationRunner "com.oscarliang.spotifyclone.core.testing.SpotifyTestRunner"
+    }
+}
+
+dependencies {
+    implementation(project(":core:testing"))
+
+    implementation libs.androidx.room.runtime
+    implementation libs.androidx.room.rxjava3
+    implementation libs.dagger.core
+    implementation libs.rxjava
+
+    annotationProcessor libs.androidx.room.compiler
+    annotationProcessor libs.dagger.compiler
+
+    androidTestImplementation libs.androidx.test.ext
+}

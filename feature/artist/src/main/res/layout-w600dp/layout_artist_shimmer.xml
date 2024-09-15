@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorPrimary"
+    android:theme="@style/Theme.Spotify">
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:shimmer_base_alpha="1"
+        app:shimmer_dropoff="0.8"
+        app:shimmer_highlight_alpha="0.8"
+        app:shimmer_tilt="0">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/image_artist_bg"
+                android:layout_width="0dp"
+                android:layout_height="250dp"
+                android:background="?attr/colorPrimaryVariant"
+                android:contentDescription="@string/content_description_artist"
+                android:src="@drawable/gradient_50"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/image_artist"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginStart="@dimen/interval_large"
+                android:background="?attr/colorPrimaryVariant"
+                app:layout_constraintBottom_toBottomOf="@id/image_artist_bg"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/image_artist_bg"
+                app:shapeAppearanceOverlay="@style/Circle"
+                tools:ignore="ImageContrastCheck" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/text_artist_name"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/interval_medium"
+                android:layout_marginStart="@dimen/margin_large"
+                android:background="?attr/colorPrimaryVariant"
+                app:layout_constraintBottom_toBottomOf="@+id/image_artist"
+                app:layout_constraintDimensionRatio="4:1"
+                app:layout_constraintStart_toEndOf="@id/image_artist"
+                app:layout_constraintTop_toTopOf="@id/image_artist"
+                app:shapeAppearanceOverlay="@style/RoundedRectangle"
+                tools:ignore="ImageContrastCheck" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/interval_large"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginEnd="@dimen/interval_large"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/image_artist_bg">
+
+                <include layout="@layout/layout_album_item_shimmer" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+</FrameLayout>

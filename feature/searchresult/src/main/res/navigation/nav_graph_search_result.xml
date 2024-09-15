@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_search_result"
+    android:label="@string/feature_search_result"
+    app:startDestination="@id/searchResultFragment">
+
+    <fragment
+        android:id="@+id/searchResultFragment"
+        android:name="com.oscarliang.spotifyclone.feature.searchresult.SearchResultFragment"
+        tools:layout="@layout/fragment_search_result">
+
+        <deepLink app:uri="android-app://searchResultFragment" />
+
+    </fragment>
+
+</navigation>

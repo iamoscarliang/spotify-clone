@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/colorPrimary"
+    android:paddingVertical="@dimen/padding_large"
+    android:theme="@style/Theme.Spotify">
+
+    <TextView
+        android:id="@+id/text_label_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/icon_large"
+        android:text="@string/label_name"
+        android:textAllCaps="true"
+        android:textColor="?attr/colorSecondaryVariant"
+        android:textSize="@dimen/text_title_small"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/text_label_music"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_label_music"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/icon_small"
+        android:text="@string/label_music"
+        android:textAllCaps="true"
+        android:textColor="?attr/colorSecondaryVariant"
+        android:textSize="@dimen/text_title_small"
+        app:layout_constraintBottom_toBottomOf="@id/text_label_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/text_label_name"
+        app:layout_constraintTop_toTopOf="@id/text_label_name" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

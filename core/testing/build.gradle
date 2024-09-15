@@ -1,0 +1,20 @@
+plugins {
+    alias libs.plugins.android.library
+}
+
+android {
+    namespace 'com.oscarliang.spotifyclone.core.testing'
+    compileSdk 34
+    defaultConfig {
+        minSdk 21
+    }
+}
+
+dependencies {
+    implementation(project(":core:model"))
+
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.test.espresso
+    implementation libs.androidx.test.runner
+    implementation libs.material
+}

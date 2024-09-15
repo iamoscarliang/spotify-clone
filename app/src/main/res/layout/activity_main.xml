@@ -1,65 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.drawerlayout.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
-    tools:context=".ui.MainActivity">
+    android:theme="@style/Theme.Spotify"
+    tools:context=".MainActivity"
+    tools:openDrawer="end">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/nav_host_fragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:defaultNavHost="true"
-        app:layout_constraintBottom_toTopOf="@id/image_pager_bg"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/colorPrimary">
 
-    <ImageView
-        android:id="@+id/image_pager_bg"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/layout_music_bar_height"
-        android:background="@color/dark_gray"
-        app:layout_constraintBottom_toTopOf="@id/bottom_nav"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:shapeAppearanceOverlay="@style/RoundedRectangle" />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/ic_menu"
+            app:titleTextColor="?attr/colorSecondary"
+            tools:title="Home" />
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/pager"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/layout_music_bar_item_height"
-        android:layout_margin="@dimen/margin_10"
-        app:layout_constraintBottom_toBottomOf="@+id/image_pager_bg"
-        app:layout_constraintEnd_toStartOf="@id/btn_play"
-        app:layout_constraintStart_toStartOf="@+id/image_pager_bg"
-        app:layout_constraintTop_toTopOf="@+id/image_pager_bg" />
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:defaultNavHost="true"
+            app:layout_constraintBottom_toTopOf="@id/mini_player_host_fragment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            tools:layout="@layout/fragment_home" />
 
-    <ImageButton
-        android:id="@+id/btn_play"
-        android:layout_width="@dimen/btn_music_bar_width"
-        android:layout_height="@dimen/btn_music_bar_width"
-        android:layout_margin="@dimen/margin_10"
-        android:background="@drawable/ic_play"
-        app:backgroundTint="@drawable/tint_white_selector"
-        app:layout_constraintBottom_toBottomOf="@+id/image_pager_bg"
-        app:layout_constraintEnd_toEndOf="@+id/image_pager_bg"
-        app:layout_constraintTop_toTopOf="@+id/image_pager_bg" />
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/mini_player_host_fragment"
+            android:name="com.oscarliang.spotifyclone.feature.player.MiniPlayerFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/bottom_nav"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout="@layout/fragment_mini_player" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_nav"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/dark_gray"
-        app:itemIconTint="@drawable/nav_selector"
-        app:itemTextColor="@drawable/nav_selector"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/menu_nav" />
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_nav"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorSurface"
+            app:itemIconTint="@drawable/selector_nav"
+            app:itemTextColor="@drawable/selector_nav"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:menu="@menu/menu_nav" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <include
+        android:id="@+id/drawer"
+        layout="@layout/drawer" />
+
+</androidx.drawerlayout.widget.DrawerLayout>

@@ -1,0 +1,23 @@
+plugins {
+    alias libs.plugins.android.library
+}
+
+android {
+    namespace 'com.oscarliang.spotifyclone.core.domain'
+    compileSdk 34
+    defaultConfig {
+        minSdk 21
+    }
+}
+
+dependencies {
+    implementation(project(":core:data"))
+    implementation(project(":core:model"))
+    implementation(project(":core:testing"))
+
+    implementation libs.dagger.core
+    implementation libs.rxjava
+
+    testImplementation libs.junit
+    testImplementation libs.mockito.core
+}

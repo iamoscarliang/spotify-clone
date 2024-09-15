@@ -1,0 +1,37 @@
+plugins {
+    alias libs.plugins.android.library
+}
+
+android {
+    namespace 'com.oscarliang.spotifyclone.feature.welcome'
+    compileSdk 34
+    defaultConfig {
+        minSdk 21
+        testInstrumentationRunner "com.oscarliang.spotifyclone.core.testing.SpotifyTestRunner"
+    }
+    testOptions {
+        animationsDisabled = true
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+    implementation(project(":core:ui"))
+    implementation(project(":core:data"))
+
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.constraintlayout
+    implementation libs.androidx.navigation.fragment
+    implementation libs.androidx.navigation.ui
+    implementation libs.dagger.core
+    implementation libs.rxjava
+    implementation libs.rxandroid
+    implementation libs.material
+
+    androidTestImplementation libs.androidx.test.ext
+    androidTestImplementation libs.androidx.test.espresso
+    androidTestImplementation libs.androidx.fragment.testing
+    androidTestImplementation libs.mockito.android
+}

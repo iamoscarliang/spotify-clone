@@ -12,21 +12,17 @@ import javax.inject.Inject;
 public class SpotifyApp extends Application implements HasAndroidInjector {
 
     @Inject
-    DispatchingAndroidInjector<Object> fragmentDispatchingAndroidInjector;
+    DispatchingAndroidInjector<Object> androidInjector;
 
-    //--------------------------------------------------------
-    // Overriding methods
-    //--------------------------------------------------------
+    @Override
+    public AndroidInjector<Object> androidInjector() {
+        return androidInjector;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
         AppInjector.init(this);
     }
-
-    @Override
-    public AndroidInjector<Object> androidInjector() {
-        return fragmentDispatchingAndroidInjector;
-    }
-    //========================================================
 
 }
