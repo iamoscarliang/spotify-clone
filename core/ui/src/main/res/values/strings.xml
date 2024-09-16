@@ -79,6 +79,7 @@
     <string name="content_description_delete">Delete</string>
     <string name="content_description_edit">Edit</string>
     <string name="content_description_clear">Clear</string>
+    <string name="content_description_menu">Menu</string>
     <string name="content_description_back">Back</string>
     <string name="content_description_more">More</string>
     <string name="content_description_play">Play</string>

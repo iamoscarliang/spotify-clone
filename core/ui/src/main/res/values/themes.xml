@@ -52,6 +52,17 @@
         <item name="android:padding">0dp</item>
     </style>
 
+    <!-- Snackbar theme -->
+    <style name="SnackbarTheme" parent="@style/Widget.MaterialComponents.Snackbar">
+        <item name="android:backgroundTint">@color/gray_900</item>
+    </style>
+    <style name="SnackbarTextViewTheme" parent="@style/Widget.MaterialComponents.Snackbar.TextView">
+        <item name="android:textColor">@color/gray_500</item>
+    </style>
+    <style name="SnackbarTextButtonTheme" parent="@style/Widget.MaterialComponents.Button.TextButton.Snackbar">
+        <item name="android:textColor">@color/green_500</item>
+    </style>
+
     <!-- Button theme -->
     <style name="IconButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="android:insetTop">0dp</item>
@@ -94,16 +105,5 @@
         <item name="strokeWidth">1dp</item>
         <item name="rippleColor">@color/gray_700</item>
         <item name="shapeAppearanceOverlay">@style/Circle</item>
-    </style>
-
-
-    <style name="SnackbarTheme" parent="@style/Widget.MaterialComponents.Snackbar">
-        <item name="android:backgroundTint">@color/gray_900</item>
-    </style>
-    <style name="SnackbarTextViewTheme" parent="@style/Widget.MaterialComponents.Snackbar.TextView">
-        <item name="android:textColor">@color/gray_500</item>
-    </style>
-    <style name="SnackbarTextButtonTheme" parent="@style/Widget.MaterialComponents.Button.TextButton.Snackbar">
-        <item name="android:textColor">@color/green_500</item>
     </style>
 </resources>

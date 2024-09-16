@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements HasAndroidInjecto
     }
 
     private void initToolbar() {
-        binding.toolbar.setNavigationOnClickListener(view -> binding.drawerLayout.open());
+        binding.btnMenu.setOnClickListener(view -> binding.drawerLayout.open());
     }
 
     private void initDrawer() {
