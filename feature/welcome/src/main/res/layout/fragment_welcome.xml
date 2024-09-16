@@ -42,7 +42,7 @@
         android:id="@+id/btn_signup"
         style="@style/TextButton"
         android:layout_width="0dp"
-        android:layout_height="@dimen/icon_medium"
+        android:layout_height="60dp"
         android:text="@string/sign_up_free"
         android:textAllCaps="false"
         android:textColor="?attr/colorPrimary"

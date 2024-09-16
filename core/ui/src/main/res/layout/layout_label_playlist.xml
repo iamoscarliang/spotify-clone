@@ -12,7 +12,7 @@
         android:id="@+id/text_label_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/icon_large"
+        android:layout_marginEnd="@dimen/icon_medium"
         android:text="@string/label_name"
         android:textAllCaps="true"
         android:textColor="?attr/colorSecondaryVariant"

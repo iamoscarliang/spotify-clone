@@ -108,11 +108,11 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_play"
         style="@style/IconButton"
-        android:layout_width="@dimen/icon_large"
-        android:layout_height="@dimen/icon_large"
+        android:layout_width="@dimen/icon_medium"
+        android:layout_height="@dimen/icon_medium"
         android:contentDescription="@string/content_description_play"
         app:icon="@drawable/ic_pause_circle"
-        app:iconSize="@dimen/icon_large"
+        app:iconSize="@dimen/icon_medium"
         app:layout_constraintEnd_toEndOf="@+id/seekbar"
         app:layout_constraintStart_toStartOf="@+id/seekbar"
         app:layout_constraintTop_toBottomOf="@+id/text_current_time" />
