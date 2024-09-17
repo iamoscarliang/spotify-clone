@@ -14,9 +14,9 @@
 <img src="https://github.com/iamoscarliang/spotify-clone/blob/master/screenshots/screenshot.png" width="800">
 
 ## :books: Tech Stack
-- :cloud: Firebase [Firestore](https://firebase.google.com/docs/firestore) & [Authentication](https://firebase.google.com/docs/auth)
-- :wrench: [Architecture Component](https://developer.android.com/topic/architecture)
-- :reminder_ribbon: [View Binding](https://developer.android.com/topic/libraries/view-binding) for direct references to views
+- :fire: Firebase [Firestore](https://firebase.google.com/docs/firestore) & [Authentication](https://firebase.google.com/docs/auth)
+- :wrench: [Architecture Component](https://developer.android.com/topic/architecture) to build lifecycle-aware components
+- :reminder_ribbon: [View Binding](https://developer.android.com/topic/libraries/view-binding) for type-safe views references
 - :ship: [Navigation](https://developer.android.com/guide/navigation) for screen navigation
 - :floppy_disk: [Room](https://developer.android.com/training/data-storage/room) for local data cache
 - :musical_note: [Media3](https://developer.android.com/media/media3) & [ExoPlayer](https://developer.android.com/media/media3/exoplayer) for audio streaming
@@ -27,7 +27,7 @@
 - :iphone: [Espresso](https://developer.android.com/training/testing/espresso) for UI test
 
 ## :gear: Architecture
-<img src="https://github.com/iamoscarliang/spotify-clone/blob/master/screenshot/arch.png" width="600">
+<img src="https://github.com/iamoscarliang/spotify-clone/blob/master/screenshots/arch.png" width="600">
 
 ## :handshake: Credit
 Music provided by the [Free Music Archive](https://freemusicarchive.org) under [CC BY](https://creativecommons.org/licenses/by/4.0/)
