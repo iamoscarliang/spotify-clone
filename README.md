@@ -1,6 +1,7 @@
 <div align="center">
-<img src="https://github.com/iamoscarliang/spotify-clone/blob/master/screenshot/feature_graph.png" width="600">
-  
+<img src="https://github.com/iamoscarliang/spotify-clone/blob/master/screenshots/feature_graph.gif" width="600">
+
+[![Build](https://github.com/iamoscarliang/spotify-clone/workflows/Build/badge.svg)](https://github.com/iamoscarliang/spotify-clone/actions)
 ![minSdk](https://img.shields.io/badge/minSdk-21-brightgreen)
 [![license](https://img.shields.io/badge/license-MIT-brightgreen)](https://github.com/iamoscarliang/spotify-clone/blob/master/LICENSE)
 
@@ -9,31 +10,19 @@
 
 ---
 
-## :pushpin: Features
-Welcome                    |Home                       |Album detail               |Artist detail
-:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
-<img src="https://github.com/iamoscarliang/spotify-clone/blob/master/screenshot/welcome.png" width="200">|<img src="https://github.com/iamoscarliang/spotify-clone/blob/master/screenshot/home.png" width="200">|<img src="https://github.com/iamoscarliang/spotify-clone/blob/master/screenshot/album_detail.png" width="200">|<img src="https://github.com/iamoscarliang/spotify-clone/blob/master/screenshot/artist_detail.png" width="200">
-
-Search                     |Search result              |Library                    |Playlist detail   
-:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
-<img src="https://github.com/iamoscarliang/spotify-clone/blob/master/screenshot/search.png" width="200">|<img src="https://github.com/iamoscarliang/spotify-clone/blob/master/screenshot/search_result.png" width="200">|<img src="https://github.com/iamoscarliang/spotify-clone/blob/master/screenshot/library.png" width="200">|<img src="https://github.com/iamoscarliang/spotify-clone/blob/master/screenshot/playlist_detail.png" width="200">
-
-## :film_projector: Demo
-<details>
-     <summary> Click to expand </summary>
-  
-https://github.com/iamoscarliang/spotify-clone/assets/152960326/32371298-0836-40b2-85d5-d716423d226d
-
-</details>
+## :pushpin: Screenshots
+<img src="https://github.com/iamoscarliang/spotify-clone/blob/master/screenshots/screenshot.png" width="800">
 
 ## :books: Tech Stack
-- :cloud: Firebase [Firestore](https://firebase.google.com/docs/firestore) & [Cloud Storage](https://firebase.google.com/docs/storage)
-- :wrench: Architecture Component with [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) & [Livedata](https://developer.android.com/topic/libraries/architecture/livedata)
-- :reminder_ribbon: [View Binding](https://developer.android.com/topic/libraries/view-binding) to make concise interaction with view
-- :ship: [Navigation Component](https://developer.android.com/guide/navigation) for screen navigation
+- :cloud: Firebase [Firestore](https://firebase.google.com/docs/firestore) & [Authentication](https://firebase.google.com/docs/auth)
+- :wrench: [Architecture Component](https://developer.android.com/topic/architecture)
+- :reminder_ribbon: [View Binding](https://developer.android.com/topic/libraries/view-binding) for direct references to views
+- :ship: [Navigation](https://developer.android.com/guide/navigation) for screen navigation
+- :floppy_disk: [Room](https://developer.android.com/training/data-storage/room) for local data cache
 - :musical_note: [Media3](https://developer.android.com/media/media3) & [ExoPlayer](https://developer.android.com/media/media3/exoplayer) for audio streaming
+- :rocket: [RxJava](https://github.com/ReactiveX/RxJava) for asynchronous task
+- :syringe: [Dagger](https://dagger.dev) for dependency injection
 - :framed_picture: [Glide](https://github.com/bumptech/glide) for image loading
-- :syringe: [Dagger](https://developer.android.com/training/dependency-injection/dagger-basics) for dependency injection
 - :bar_chart: [Junit](https://developer.android.com/training/testing/local-tests) & [Mockito](https://github.com/mockito/mockito) for Unit test
 - :iphone: [Espresso](https://developer.android.com/training/testing/espresso) for UI test
 
