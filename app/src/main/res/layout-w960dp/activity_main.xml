@@ -16,26 +16,56 @@
         android:layout_height="match_parent"
         android:background="?attr/colorPrimary">
 
-        <ImageButton
-            android:id="@+id/btn_menu"
-            android:layout_width="?actionBarSize"
-            android:layout_height="?actionBarSize"
-            android:background="?attr/colorSurface"
-            android:contentDescription="@string/content_description_menu"
-            android:src="@drawable/ic_menu"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <LinearLayout
+            android:id="@+id/layout_toolbar"
             android:layout_width="0dp"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="wrap_content"
             android:background="?attr/colorSurface"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="@id/nav_view"
-            app:layout_constraintStart_toEndOf="@id/btn_menu"
-            app:layout_constraintTop_toTopOf="parent"
-            app:titleTextColor="?attr/colorSecondary"
-            tools:title="Home" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:id="@+id/btn_menu"
+                android:layout_width="?actionBarSize"
+                android:layout_height="?actionBarSize"
+                android:background="?attr/colorSurface"
+                android:contentDescription="@string/content_description_menu"
+                android:src="@drawable/ic_menu" />
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorSurface"
+                app:titleTextColor="?attr/colorSecondary"
+                tools:title="Home" />
+
+        </LinearLayout>
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:background="?attr/colorSurface"
+            app:elevation="0dp"
+            app:itemIconTint="@drawable/selector_nav"
+            app:itemTextColor="@drawable/selector_nav"
+            app:layout_constraintBottom_toTopOf="@id/mini_player_host_fragment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_toolbar"
+            app:menu="@menu/menu_nav" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/mini_player_host_fragment"
+            android:name="com.oscarliang.spotifyclone.feature.player.MiniPlayerFragment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/nav_view"
+            app:layout_constraintStart_toStartOf="@id/nav_view"
+            tools:layout="@layout/fragment_mini_player" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/nav_host_fragment"
@@ -48,29 +78,6 @@
             app:layout_constraintStart_toEndOf="@id/nav_view"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout="@layout/fragment_home" />
-
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/mini_player_host_fragment"
-            android:name="com.oscarliang.spotifyclone.feature.player.MiniPlayerFragment"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/nav_view"
-            app:layout_constraintStart_toStartOf="@id/nav_view"
-            tools:layout="@layout/fragment_mini_player" />
-
-        <com.google.android.material.navigation.NavigationView
-            android:id="@+id/nav_view"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:background="?attr/colorSurface"
-            app:elevation="0dp"
-            app:itemIconTint="@drawable/selector_nav"
-            app:itemTextColor="@drawable/selector_nav"
-            app:layout_constraintBottom_toTopOf="@id/mini_player_host_fragment"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_menu"
-            app:menu="@menu/menu_nav" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
