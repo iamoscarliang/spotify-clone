@@ -54,7 +54,7 @@ public class PlaylistSelectAdapter extends ListAdapter<Playlist, PlaylistSelectA
         Glide.with(holder.itemView.getContext())
                 .load(playlist.getImageUrl())
                 .placeholder(R.drawable.ic_music)
-                .error(R.drawable.ic_error)
+                .error(R.drawable.ic_music)
                 .into(holder.binding.imagePlaylist);
         holder.binding.textPlaylist.setText(playlist.getName());
         int count = playlist.getMusicIds() != null ? playlist.getMusicIds().size() : 0;
