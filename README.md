@@ -1,5 +1,5 @@
 <div align="center">
-<img src="https://github.com/iamoscarliang/spotify-clone/blob/master/screenshots/feature_graph.gif" width="600">
+<img src="https://github.com/iamoscarliang/spotify-clone/blob/master/images/showcase.gif" width="600">
 
 [![Build](https://github.com/iamoscarliang/spotify-clone/workflows/Build/badge.svg)](https://github.com/iamoscarliang/spotify-clone/actions)
 ![minSdk](https://img.shields.io/badge/minSdk-21-brightgreen)
@@ -11,7 +11,7 @@
 ---
 
 ## :pushpin: Screenshots
-<img src="https://github.com/iamoscarliang/spotify-clone/blob/master/screenshots/screenshot.png" width="800">
+<img src="https://github.com/iamoscarliang/spotify-clone/blob/master/images/screenshot.png" width="800">
 
 ## :books: Tech Stack
 - :fire: Firebase [Firestore](https://firebase.google.com/docs/firestore) & [Authentication](https://firebase.google.com/docs/auth)
@@ -27,7 +27,7 @@
 - :iphone: [Espresso](https://developer.android.com/training/testing/espresso) for UI test
 
 ## :gear: Architecture
-<img src="https://github.com/iamoscarliang/spotify-clone/blob/master/screenshots/arch.png" width="600">
+<img src="https://github.com/iamoscarliang/spotify-clone/blob/master/images/architecture.png" width="600">
 
 ## :handshake: Credit
 Music provided by the [Free Music Archive](https://freemusicarchive.org) under [CC BY](https://creativecommons.org/licenses/by/4.0/)
