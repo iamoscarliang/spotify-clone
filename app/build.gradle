@@ -22,10 +22,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
     buildFeatures {
         viewBinding true
     }
@@ -77,27 +73,4 @@ dependencies {
 
     annotationProcessor libs.dagger.compiler
     annotationProcessor libs.dagger.android.processor
-
-//    // Unit test
-//    testImplementation 'junit:junit:4.13.2'
-//    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-//
-//    // Espresso test
-//    def espresso_version = "3.3.0"
-//    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
-//    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espresso_version"
-//
-//    // Mockito test
-//    def mockito_version = "3.3.3"
-//    testImplementation "org.mockito:mockito-core:$mockito_version"
-//    androidTestImplementation "org.mockito:mockito-android:$mockito_version"
-//
-//    // Architecture components test
-//    def androidx_arch_test_version = "2.2.0"
-//    testImplementation "androidx.arch.core:core-testing:$androidx_arch_test_version"
-//    androidTestImplementation "androidx.arch.core:core-testing:$androidx_arch_test_version"
-//
-//    // Fragment test
-//    def fragment_version = "1.6.2"
-//    debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
 }
