@@ -49,9 +49,9 @@ public class PlaylistViewModel extends ViewModel {
                                 .toObservable()
                                 .startWithItem(Result.loading());
                     }
-                });
-        // Since the playlist may be updated from
-        // elsewhere, we do not cache the current data
+                })
+                .replay(1)
+                .autoConnect();
     }
 
     public Observable<Result<Pair<Playlist, List<Music>>>> getResult() {

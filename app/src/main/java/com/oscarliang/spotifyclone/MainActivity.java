@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements HasAndroidInjecto
         binding.drawer.navView.setNavigationItemSelectedListener(item -> {
             if (item.getItemId() == R.id.action_logout) {
                 authManager.signOut();
-                navigateOnboardingFragment();
+                navigateWelcomeFragment();
             }
             item.setChecked(true);
             binding.drawerLayout.close();
@@ -170,9 +170,8 @@ public class MainActivity extends AppCompatActivity implements HasAndroidInjecto
         );
     }
 
-    private void navigateOnboardingFragment() {
-        // Navigate to welcome page and pop up all the
-        // backstack to prevent navigating back to home page
+    private void navigateWelcomeFragment() {
+        // Pop up all the backstack to prevent navigating back
         navController.navigate(
                 Uri.parse("android-app://welcomeFragment"),
                 new NavOptions.Builder()

@@ -1,5 +1,7 @@
 package com.oscarliang.spotifyclone.feature.playlistedit;
 
+import android.annotation.SuppressLint;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -210,8 +213,8 @@ public class PlaylistEditFragment extends Fragment {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         () -> {
-                            // Navigate back and show snackbar in previous fragment
-                            NavHostFragment.findNavController(this).navigateUp();
+                            // We always navigate to playlist after editing
+                            navigatePlaylistFragment(playlistId);
                             actionController.sendAction(
                                     new Action(
                                             Action.Type.SHOW_SNACK_BAR,
@@ -233,6 +236,28 @@ public class PlaylistEditFragment extends Fragment {
             musicIds.add(music.getId());
         }
         return musicIds;
+    }
+
+    @SuppressLint("DiscouragedApi")
+    private void navigatePlaylistFragment(String playlistId) {
+        // Pop up all the backstack to library to
+        // prevent navigating back to playlistEdit
+        // Possible path:
+        // Path 1 (Click playlist): Library -> Playlist -> PlaylistEdit -> Playlist
+        // Path 2 (Click bottom sheet): Library -> PlaylistEdit -> Playlist
+        int destinationId = getResources().getIdentifier(
+                "libraryFragment",
+                "id",
+                getContext().getPackageName()
+        );
+        NavHostFragment
+                .findNavController(this)
+                .navigate(
+                        Uri.parse("android-app://playlistFragment/" + playlistId),
+                        new NavOptions.Builder()
+                                .setPopUpTo(destinationId, false)
+                                .build()
+                );
     }
 
 }

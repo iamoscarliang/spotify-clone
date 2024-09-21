@@ -198,10 +198,9 @@ public class SignupFragment extends Fragment {
 
     @SuppressLint("DiscouragedApi")
     private void navigateHomeFragment() {
-        // Navigate to home and pop up all the backstack to
-        // prevent navigating back to onboarding fragment
+        // Pop up all the backstack to prevent navigating back
         int destinationId = getResources().getIdentifier(
-                "nav_graph_welcome",
+                "nav_graph",
                 "id",
                 getContext().getPackageName()
         );
