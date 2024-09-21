@@ -41,7 +41,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class AlbumFragment extends Fragment {
 
-    public static final String ALBUM_ID_KEY = "albumId";
+    private static final String ALBUM_ID_KEY = "albumId";
 
     @Inject
     MusicPlayer musicPlayer;

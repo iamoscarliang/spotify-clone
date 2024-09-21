@@ -33,11 +33,11 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class LoginFragment extends Fragment implements
         ResetPasswordDialog.onSendResetPasswordEmailClickListener {
 
-    private AutoClearedValue<FragmentLoginBinding> binding;
-    private LoginViewModel viewModel;
-
     @Inject
     ViewModelProvider.Factory factory;
+
+    private AutoClearedValue<FragmentLoginBinding> binding;
+    private LoginViewModel viewModel;
 
     private final CompositeDisposable disposables = new CompositeDisposable();
 

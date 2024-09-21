@@ -27,13 +27,13 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class HomeFragment extends Fragment {
 
+    @Inject
+    ViewModelProvider.Factory factory;
+
     private AutoClearedValue<FragmentHomeBinding> binding;
     private AlbumCardAdapter albumCardAdapter;
     private ArtistCardAdapter artistCardAdapter;
     private HomeViewModel viewModel;
-
-    @Inject
-    ViewModelProvider.Factory factory;
 
     private final CompositeDisposable disposables = new CompositeDisposable();
 
