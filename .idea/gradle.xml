@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="GradleMigrationSettings" migrationVersion="1" />
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
@@ -31,8 +30,8 @@
             <option value="$PROJECT_DIR$/feature/musicinfo" />
             <option value="$PROJECT_DIR$/feature/player" />
             <option value="$PROJECT_DIR$/feature/playlist" />
-            <option value="$PROJECT_DIR$/feature/playlistInfo" />
             <option value="$PROJECT_DIR$/feature/playlistedit" />
+            <option value="$PROJECT_DIR$/feature/playlistinfo" />
             <option value="$PROJECT_DIR$/feature/playlistselect" />
             <option value="$PROJECT_DIR$/feature/search" />
             <option value="$PROJECT_DIR$/feature/searchresult" />
