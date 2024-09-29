@@ -1,8 +1,11 @@
 package com.oscarliang.spotifyclone.core.auth.api;
 
-import io.reactivex.rxjava3.core.Completable;
+import com.google.firebase.auth.FirebaseUser;
 
-public interface AuthService {
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Observable;
+
+public interface AuthManager {
 
     Completable signup(String email, String password);
 
@@ -11,5 +14,13 @@ public interface AuthService {
     Completable resetPassword(String email);
 
     Completable setUserName(String name);
+
+    Observable<FirebaseUser> getUser();
+
+    String getUserId();
+
+    boolean hasUser();
+
+    void signOut();
 
 }

@@ -3,7 +3,7 @@ package com.oscarliang.spotifyclone.feature.signup;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 
-import com.oscarliang.spotifyclone.core.data.repository.AuthRepository;
+import com.oscarliang.spotifyclone.core.auth.api.AuthManager;
 
 import javax.inject.Inject;
 
@@ -13,7 +13,7 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
 public class SignupViewModel extends ViewModel {
 
-    private final AuthRepository authRepository;
+    private final AuthManager authManager;
     private final Observable<Boolean> isSignupEnable;
 
     private final BehaviorSubject<String> name = BehaviorSubject.createDefault("");
@@ -21,8 +21,8 @@ public class SignupViewModel extends ViewModel {
     private final BehaviorSubject<String> password = BehaviorSubject.createDefault("");
 
     @Inject
-    public SignupViewModel(AuthRepository authRepository) {
-        this.authRepository = authRepository;
+    public SignupViewModel(AuthManager authManager) {
+        this.authManager = authManager;
         this.isSignupEnable = Observable.combineLatest(
                 name, email, password,
                 (name, email, password) -> !name.isEmpty() && !email.isEmpty() && !password.isEmpty()
@@ -46,7 +46,9 @@ public class SignupViewModel extends ViewModel {
     }
 
     public Completable signup(String name, String email, String password) {
-        return authRepository.signup(name, email, password);
+        return authManager
+                .signup(email, password)
+                .andThen(authManager.setUserName(name));
     }
 
 }

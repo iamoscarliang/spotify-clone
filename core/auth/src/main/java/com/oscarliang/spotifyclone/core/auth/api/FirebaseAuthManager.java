@@ -1,20 +1,22 @@
 package com.oscarliang.spotifyclone.core.auth.api;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Observable;
 
 @Singleton
-public class FirebaseAuthService implements AuthService {
+public class FirebaseAuthManager implements AuthManager {
 
     private final FirebaseAuth auth;
 
     @Inject
-    public FirebaseAuthService(FirebaseAuth auth) {
+    public FirebaseAuthManager(FirebaseAuth auth) {
         this.auth = auth;
     }
 
@@ -77,6 +79,31 @@ public class FirebaseAuthService implements AuthService {
                                 emitter.onError(e != null ? e : new Exception("Unknown error"));
                             }
                         }));
+    }
+
+    @Override
+    public Observable<FirebaseUser> getUser() {
+        return Observable.create(emitter ->
+                auth.addAuthStateListener(auth -> {
+                    if (auth != null && auth.getCurrentUser() != null) {
+                        emitter.onNext(auth.getCurrentUser());
+                    }
+                }));
+    }
+
+    @Override
+    public String getUserId() {
+        return auth.getCurrentUser().getUid();
+    }
+
+    @Override
+    public boolean hasUser() {
+        return auth.getCurrentUser() != null;
+    }
+
+    @Override
+    public void signOut() {
+        auth.signOut();
     }
 
 }

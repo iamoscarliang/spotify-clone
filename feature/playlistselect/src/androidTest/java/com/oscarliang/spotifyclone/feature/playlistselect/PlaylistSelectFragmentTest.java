@@ -28,7 +28,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.oscarliang.spotifyclone.core.auth.AuthManager;
+import com.oscarliang.spotifyclone.core.auth.api.AuthManager;
 import com.oscarliang.spotifyclone.core.common.util.Result;
 import com.oscarliang.spotifyclone.core.model.Playlist;
 import com.oscarliang.spotifyclone.core.testing.util.RecyclerViewMatcher;

@@ -1,7 +1,7 @@
 package com.oscarliang.spotifyclone.core.auth.di;
 
-import com.oscarliang.spotifyclone.core.auth.api.AuthService;
-import com.oscarliang.spotifyclone.core.auth.api.FirebaseAuthService;
+import com.oscarliang.spotifyclone.core.auth.api.AuthManager;
+import com.oscarliang.spotifyclone.core.auth.api.FirebaseAuthManager;
 
 import javax.inject.Singleton;
 
@@ -13,8 +13,8 @@ public abstract class AuthModule {
 
     @Singleton
     @Binds
-    public abstract AuthService bindAuthService(
-            FirebaseAuthService authService
+    public abstract AuthManager bindAuthManager(
+            FirebaseAuthManager authManager
     );
 
 }

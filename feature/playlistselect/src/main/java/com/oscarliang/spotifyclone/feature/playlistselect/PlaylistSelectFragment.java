@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.oscarliang.spotifyclone.core.auth.AuthManager;
+import com.oscarliang.spotifyclone.core.auth.api.AuthManager;
 import com.oscarliang.spotifyclone.core.model.Playlist;
 import com.oscarliang.spotifyclone.core.ui.R;
 import com.oscarliang.spotifyclone.core.ui.adapter.PlaylistSelectAdapter;

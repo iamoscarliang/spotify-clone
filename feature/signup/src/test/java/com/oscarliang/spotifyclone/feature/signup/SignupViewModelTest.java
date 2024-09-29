@@ -1,26 +1,30 @@
 package com.oscarliang.spotifyclone.feature.signup;
 
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-import com.oscarliang.spotifyclone.core.data.repository.AuthRepository;
+import com.oscarliang.spotifyclone.core.auth.api.AuthManager;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import io.reactivex.rxjava3.core.Completable;
+
 @RunWith(JUnit4.class)
 public class SignupViewModelTest {
 
-    private AuthRepository authRepository;
+    private AuthManager authManager;
     private SignupViewModel viewModel;
 
     @Before
     public void setUp() {
-        authRepository = mock(AuthRepository.class);
-        viewModel = new SignupViewModel(authRepository);
+        authManager = mock(AuthManager.class);
+        viewModel = new SignupViewModel(authManager);
     }
 
     @Test
@@ -31,8 +35,12 @@ public class SignupViewModelTest {
 
     @Test
     public void testSignup() {
+        when(authManager.signup(any(), any())).thenReturn(Completable.never());
+        when(authManager.setUserName(any())).thenReturn(Completable.never());
+
         viewModel.signup("foo", "bar", "123");
-        verify(authRepository).signup("foo", "bar", "123");
+        verify(authManager).signup("bar", "123");
+        verify(authManager).setUserName("foo");
     }
 
     @Test

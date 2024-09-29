@@ -2,11 +2,9 @@ package com.oscarliang.spotifyclone.core.data.di;
 
 import com.oscarliang.spotifyclone.core.data.repository.AlbumRepository;
 import com.oscarliang.spotifyclone.core.data.repository.ArtistRepository;
-import com.oscarliang.spotifyclone.core.data.repository.AuthRepository;
 import com.oscarliang.spotifyclone.core.data.repository.CategoryRepository;
 import com.oscarliang.spotifyclone.core.data.repository.DefaultAlbumRepository;
 import com.oscarliang.spotifyclone.core.data.repository.DefaultArtistRepository;
-import com.oscarliang.spotifyclone.core.data.repository.DefaultAuthRepository;
 import com.oscarliang.spotifyclone.core.data.repository.DefaultCategoryRepository;
 import com.oscarliang.spotifyclone.core.data.repository.DefaultMusicRepository;
 import com.oscarliang.spotifyclone.core.data.repository.DefaultPlaylistRepository;
@@ -44,11 +42,6 @@ public abstract class DataModule {
     @Binds
     public abstract PlaylistRepository bindPlaylistRepository(
             DefaultPlaylistRepository playlistRepository
-    );
-
-    @Binds
-    public abstract AuthRepository bindAuthRepository(
-            DefaultAuthRepository authRepository
     );
 
     @Binds
