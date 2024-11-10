@@ -18,7 +18,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.oscarliang.spotifyclone.core.analytics.AnalyticsEvent;
 import com.oscarliang.spotifyclone.core.analytics.AnalyticsLogger;
 import com.oscarliang.spotifyclone.core.analytics.AnalyticsParam;
-import com.oscarliang.spotifyclone.core.auth.api.AuthManager;
+import com.oscarliang.spotifyclone.core.auth.AuthManager;
 import com.oscarliang.spotifyclone.core.ui.R;
 import com.oscarliang.spotifyclone.core.ui.action.Action;
 import com.oscarliang.spotifyclone.core.ui.action.ActionController;

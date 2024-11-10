@@ -1,4 +1,4 @@
-package com.oscarliang.spotifyclone.core.auth.api;
+package com.oscarliang.spotifyclone.core.auth;
 
 import com.google.firebase.auth.FirebaseUser;
 
