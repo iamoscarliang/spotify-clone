@@ -12,7 +12,7 @@ import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
-import com.oscarliang.spotifyclone.core.auth.api.AuthManager;
+import com.oscarliang.spotifyclone.core.auth.AuthManager;
 import com.oscarliang.spotifyclone.databinding.ActivityMainBinding;
 
 import java.util.Objects;
