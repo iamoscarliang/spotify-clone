@@ -27,6 +27,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.oscarliang.spotifyclone.core.analytics.NoOpAnalyticsLogger;
 import com.oscarliang.spotifyclone.core.common.util.Result;
 import com.oscarliang.spotifyclone.core.model.Playlist;
 import com.oscarliang.spotifyclone.core.testing.util.ViewModelUtil;
@@ -67,6 +68,7 @@ public class PlaylistInfoBottomSheetTest {
                     ) {
                         PlaylistInfoBottomSheet fragment = new PlaylistInfoBottomSheet();
                         fragment.actionController = actionController;
+                        fragment.analyticsLogger = new NoOpAnalyticsLogger();
                         fragment.factory = ViewModelUtil.createFor(viewModel);
                         return fragment;
                     }

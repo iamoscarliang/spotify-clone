@@ -2,6 +2,7 @@ package com.oscarliang.spotifyclone.di;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import com.oscarliang.spotifyclone.core.analytics.di.AnalyticsModule;
 import com.oscarliang.spotifyclone.core.auth.di.AuthModule;
 import com.oscarliang.spotifyclone.core.common.scheduler.di.SchedulerModule;
 import com.oscarliang.spotifyclone.core.data.di.DataModule;
@@ -21,6 +22,7 @@ import dagger.Module;
         DataModule.class,
         DatabaseModule.class,
         NetworkModule.class,
+        AnalyticsModule.class,
         ViewModelModule.class,
         SchedulerModule.class
 })

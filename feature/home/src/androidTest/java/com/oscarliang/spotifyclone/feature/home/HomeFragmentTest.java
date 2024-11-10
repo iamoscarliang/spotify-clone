@@ -31,6 +31,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.oscarliang.spotifyclone.core.analytics.NoOpAnalyticsLogger;
 import com.oscarliang.spotifyclone.core.common.util.Result;
 import com.oscarliang.spotifyclone.core.model.Album;
 import com.oscarliang.spotifyclone.core.model.Artist;
@@ -70,6 +71,7 @@ public class HomeFragmentTest {
                             @NonNull String className
                     ) {
                         HomeFragment fragment = new HomeFragment();
+                        fragment.analyticsLogger = new NoOpAnalyticsLogger();
                         fragment.factory = ViewModelUtil.createFor(viewModel);
                         return fragment;
                     }

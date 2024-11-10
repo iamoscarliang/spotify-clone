@@ -11,8 +11,7 @@ androidxTestExt = "1.1.5"
 androidxTestEspresso = "3.3.0"
 androidxTestRunner = "1.5.2"
 androidxFragmentTesting = "1.6.2"
-firebaseFirestore = "24.11.0"
-firebaseAuth = "22.3.1"
+firebaseBom = "32.8.1"
 dagger = "2.35.1"
 rxjava = "3.1.5"
 rxandroid = "3.0.2"
@@ -37,8 +36,10 @@ androidx-test-ext = { group = "androidx.test.ext", name = "junit", version.ref =
 androidx-test-espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidxTestEspresso" }
 androidx-test-runner = { group = "androidx.test", name = "runner", version.ref = "androidxTestRunner" }
 androidx-fragment-testing = { group = "androidx.fragment", name = "fragment-testing", version.ref = "androidxFragmentTesting" }
-firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
-firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth" }
 dagger-core = { group = "com.google.dagger", name = "dagger", version.ref = "dagger" }
 dagger-compiler = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "dagger" }
 dagger-android-core = { group = "com.google.dagger", name = "dagger-android", version.ref = "dagger" }

@@ -1,5 +1,7 @@
 package com.oscarliang.spotifyclone.feature.playlistedit;
 
+import static java.util.Collections.singletonList;
+
 import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,6 +19,9 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.oscarliang.spotifyclone.core.analytics.AnalyticsEvent;
+import com.oscarliang.spotifyclone.core.analytics.AnalyticsLogger;
+import com.oscarliang.spotifyclone.core.analytics.AnalyticsParam;
 import com.oscarliang.spotifyclone.core.model.Music;
 import com.oscarliang.spotifyclone.core.model.Playlist;
 import com.oscarliang.spotifyclone.core.ui.R;
@@ -43,6 +48,9 @@ public class PlaylistEditFragment extends Fragment {
 
     @Inject
     ActionController actionController;
+
+    @Inject
+    AnalyticsLogger analyticsLogger;
 
     @Inject
     ViewModelProvider.Factory factory;
@@ -98,6 +106,16 @@ public class PlaylistEditFragment extends Fragment {
     public void onStart() {
         super.onStart();
         subscribeObserver();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Log screen view event
+        analyticsLogger.logEvent(
+                AnalyticsEvent.SCREEN_VIEW,
+                singletonList(new AnalyticsParam(AnalyticsParam.SCREEN_NAME, getString(R.string.feature_playlist_edit)))
+        );
     }
 
     @Override

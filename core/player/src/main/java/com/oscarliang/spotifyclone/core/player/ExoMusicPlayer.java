@@ -1,12 +1,13 @@
 package com.oscarliang.spotifyclone.core.player;
 
+import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
+import static java.util.Collections.singletonList;
 
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
 import androidx.media3.common.MediaItem;
 import androidx.media3.common.MediaMetadata;
 import androidx.media3.common.Player;
@@ -14,9 +15,11 @@ import androidx.media3.session.MediaController;
 
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.MoreExecutors;
+import com.oscarliang.spotifyclone.core.analytics.AnalyticsEvent;
+import com.oscarliang.spotifyclone.core.analytics.AnalyticsLogger;
+import com.oscarliang.spotifyclone.core.analytics.AnalyticsParam;
 import com.oscarliang.spotifyclone.core.model.Music;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -29,28 +32,45 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject;
 @Singleton
 public class ExoMusicPlayer implements MusicPlayer {
 
-    @VisibleForTesting
-    MediaController mediaController;
+    private MediaController mediaController;
 
-    private final Observable<PlaybackState> playbackState;
-
-    private final BehaviorSubject<List<Music>> musics = BehaviorSubject.createDefault(emptyList());
     private final BehaviorSubject<String> musicId = BehaviorSubject.createDefault(EMPTY_MUSIC);
     private final BehaviorSubject<Long> duration = BehaviorSubject.createDefault(0L);
     private final BehaviorSubject<Integer> repeatMode = BehaviorSubject.createDefault(Player.REPEAT_MODE_OFF);
     private final BehaviorSubject<Boolean> isShuffleModeEnabled = BehaviorSubject.createDefault(false);
     private final BehaviorSubject<Boolean> isPlaying = BehaviorSubject.createDefault(false);
+    private final BehaviorSubject<List<Music>> musics = BehaviorSubject.createDefault(emptyList());
+
+    private final Observable<PlaybackState> playbackState = Observable.combineLatest(
+            musicId, duration, repeatMode, isShuffleModeEnabled, isPlaying, musics,
+            (musicId, duration, repeatMode, isShuffleModeEnabled, isPlaying, musics) ->
+                    new PlaybackState(musicId, duration, repeatMode, isShuffleModeEnabled, isPlaying, musics)
+    );
 
     @Inject
-    public ExoMusicPlayer(ListenableFuture<MediaController> future) {
+    public ExoMusicPlayer(
+            ListenableFuture<MediaController> future,
+            AnalyticsLogger analyticsLogger
+    ) {
         future.addListener(() -> {
             try {
                 this.mediaController = future.get();
                 this.mediaController.addListener(new Player.Listener() {
                     @Override
                     public void onMediaItemTransition(@Nullable MediaItem mediaItem, int reason) {
-                        if (mediaItem != null && mediaItem.mediaId != null) {
+                        if (mediaItem != null
+                                && mediaItem.mediaId != null
+                                && mediaItem.mediaMetadata.title != null) {
                             musicId.onNext(mediaItem.mediaId);
+
+                            // Log music play event
+                            analyticsLogger.logEvent(
+                                    AnalyticsEvent.MUSIC_PLAY,
+                                    asList(
+                                            new AnalyticsParam(AnalyticsParam.MUSIC_ID, mediaItem.mediaId),
+                                            new AnalyticsParam(AnalyticsParam.MUSIC_TITLE, mediaItem.mediaMetadata.title.toString())
+                                    )
+                            );
                         } else {
                             // Update when music end
                             musicId.onNext(EMPTY_MUSIC);
@@ -83,11 +103,6 @@ public class ExoMusicPlayer implements MusicPlayer {
                 e.printStackTrace();
             }
         }, MoreExecutors.directExecutor());
-        this.playbackState = Observable.combineLatest(
-                musicId, duration, repeatMode, isShuffleModeEnabled, isPlaying, musics,
-                (musicId, duration, repeatMode, isShuffleModeEnabled, isPlaying, musics) ->
-                        new PlaybackState(musicId, duration, repeatMode, isShuffleModeEnabled, isPlaying, musics)
-        );
     }
 
     @Override
@@ -161,7 +176,7 @@ public class ExoMusicPlayer implements MusicPlayer {
         mediaController.addMediaItem(mediaItem);
         mediaController.prepare();
         // Update playlist music
-        musics.onNext(Collections.singletonList(music));
+        musics.onNext(singletonList(music));
     }
 
     @Override

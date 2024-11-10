@@ -16,6 +16,7 @@ dependencies {
     implementation(project(":core:model"))
     implementation(project(":core:testing"))
 
+    implementation platform(libs.firebase.bom)
     implementation libs.firebase.firestore
     implementation libs.dagger.core
     implementation libs.rxjava

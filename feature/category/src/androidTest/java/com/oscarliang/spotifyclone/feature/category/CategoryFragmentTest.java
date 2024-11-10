@@ -30,6 +30,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.oscarliang.spotifyclone.core.analytics.NoOpAnalyticsLogger;
 import com.oscarliang.spotifyclone.core.common.util.Result;
 import com.oscarliang.spotifyclone.core.model.Category;
 import com.oscarliang.spotifyclone.core.model.Music;
@@ -77,6 +78,7 @@ public class CategoryFragmentTest {
                     ) {
                         CategoryFragment fragment = new CategoryFragment();
                         fragment.musicPlayer = musicPlayer;
+                        fragment.analyticsLogger = new NoOpAnalyticsLogger();
                         fragment.factory = ViewModelUtil.createFor(viewModel);
                         return fragment;
                     }

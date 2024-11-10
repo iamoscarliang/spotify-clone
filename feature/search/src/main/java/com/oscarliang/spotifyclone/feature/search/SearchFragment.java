@@ -1,5 +1,7 @@
 package com.oscarliang.spotifyclone.feature.search;
 
+import static java.util.Collections.singletonList;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +15,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.oscarliang.spotifyclone.core.analytics.AnalyticsEvent;
+import com.oscarliang.spotifyclone.core.analytics.AnalyticsLogger;
+import com.oscarliang.spotifyclone.core.analytics.AnalyticsParam;
 import com.oscarliang.spotifyclone.core.ui.R;
 import com.oscarliang.spotifyclone.core.ui.adapter.CategoryAdapter;
 import com.oscarliang.spotifyclone.core.ui.util.AutoClearedValue;
@@ -25,6 +30,9 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class SearchFragment extends Fragment {
+
+    @Inject
+    AnalyticsLogger analyticsLogger;
 
     @Inject
     ViewModelProvider.Factory factory;
@@ -71,6 +79,16 @@ public class SearchFragment extends Fragment {
         super.onStart();
         subscribeObserver();
         subscribeSortState();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Log screen view event
+        analyticsLogger.logEvent(
+                AnalyticsEvent.SCREEN_VIEW,
+                singletonList(new AnalyticsParam(AnalyticsParam.SCREEN_NAME, getString(R.string.feature_search)))
+        );
     }
 
     @Override

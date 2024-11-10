@@ -1,5 +1,7 @@
 package com.oscarliang.spotifyclone.feature.welcome;
 
+import static java.util.Collections.singletonList;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,11 +14,19 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.oscarliang.spotifyclone.core.analytics.AnalyticsEvent;
+import com.oscarliang.spotifyclone.core.analytics.AnalyticsLogger;
+import com.oscarliang.spotifyclone.core.analytics.AnalyticsParam;
 import com.oscarliang.spotifyclone.core.ui.R;
 import com.oscarliang.spotifyclone.core.ui.util.AutoClearedValue;
 import com.oscarliang.spotifyclone.feature.welcome.databinding.FragmentWelcomeBinding;
 
+import javax.inject.Inject;
+
 public class WelcomeFragment extends Fragment {
+
+    @Inject
+    AnalyticsLogger analyticsLogger;
 
     private AutoClearedValue<FragmentWelcomeBinding> binding;
 
@@ -45,6 +55,16 @@ public class WelcomeFragment extends Fragment {
     ) {
         super.onViewCreated(view, savedInstanceState);
         initButton();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Log screen view event
+        analyticsLogger.logEvent(
+                AnalyticsEvent.SCREEN_VIEW,
+                singletonList(new AnalyticsParam(AnalyticsParam.SCREEN_NAME, getString(R.string.feature_welcome)))
+        );
     }
 
     private void initButton() {

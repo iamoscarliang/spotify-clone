@@ -32,6 +32,7 @@ import androidx.test.espresso.UiController;
 import androidx.test.espresso.ViewAction;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.oscarliang.spotifyclone.core.analytics.NoOpAnalyticsLogger;
 import com.oscarliang.spotifyclone.core.common.util.Result;
 import com.oscarliang.spotifyclone.core.model.Music;
 import com.oscarliang.spotifyclone.core.player.MusicPlayer;
@@ -77,6 +78,7 @@ public class PlayerFragmentTest {
                     ) {
                         PlayerFragment fragment = new PlayerFragment();
                         fragment.musicPlayer = musicPlayer;
+                        fragment.analyticsLogger = new NoOpAnalyticsLogger();
                         fragment.factory = ViewModelUtil.createFor(viewModel);
                         return fragment;
                     }

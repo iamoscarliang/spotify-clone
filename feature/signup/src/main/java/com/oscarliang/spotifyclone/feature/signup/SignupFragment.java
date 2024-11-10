@@ -1,5 +1,7 @@
 package com.oscarliang.spotifyclone.feature.signup;
 
+import static java.util.Collections.singletonList;
+
 import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +21,9 @@ import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.oscarliang.spotifyclone.core.analytics.AnalyticsEvent;
+import com.oscarliang.spotifyclone.core.analytics.AnalyticsLogger;
+import com.oscarliang.spotifyclone.core.analytics.AnalyticsParam;
 import com.oscarliang.spotifyclone.core.ui.R;
 import com.oscarliang.spotifyclone.core.ui.util.AutoClearedValue;
 import com.oscarliang.spotifyclone.feature.signup.databinding.FragmentSignupBinding;
@@ -30,6 +35,9 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class SignupFragment extends Fragment {
+
+    @Inject
+    AnalyticsLogger analyticsLogger;
 
     @Inject
     ViewModelProvider.Factory factory;
@@ -75,6 +83,16 @@ public class SignupFragment extends Fragment {
     public void onStart() {
         super.onStart();
         subscribeObserver();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Log screen view event
+        analyticsLogger.logEvent(
+                AnalyticsEvent.SCREEN_VIEW,
+                singletonList(new AnalyticsParam(AnalyticsParam.SCREEN_NAME, getString(R.string.feature_signup)))
+        );
     }
 
     @Override

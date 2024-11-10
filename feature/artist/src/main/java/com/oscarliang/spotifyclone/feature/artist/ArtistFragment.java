@@ -1,5 +1,7 @@
 package com.oscarliang.spotifyclone.feature.artist;
 
+import static java.util.Collections.singletonList;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +16,9 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.snackbar.Snackbar;
+import com.oscarliang.spotifyclone.core.analytics.AnalyticsEvent;
+import com.oscarliang.spotifyclone.core.analytics.AnalyticsLogger;
+import com.oscarliang.spotifyclone.core.analytics.AnalyticsParam;
 import com.oscarliang.spotifyclone.core.model.Artist;
 import com.oscarliang.spotifyclone.core.ui.R;
 import com.oscarliang.spotifyclone.core.ui.adapter.AlbumAdapter;
@@ -29,6 +34,9 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class ArtistFragment extends Fragment {
 
     private static final String ARTIST_ID_KEY = "artistId";
+
+    @Inject
+    AnalyticsLogger analyticsLogger;
 
     @Inject
     ViewModelProvider.Factory factory;
@@ -84,6 +92,16 @@ public class ArtistFragment extends Fragment {
     public void onStart() {
         super.onStart();
         subscribeObserver();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Log screen view event
+        analyticsLogger.logEvent(
+                AnalyticsEvent.SCREEN_VIEW,
+                singletonList(new AnalyticsParam(AnalyticsParam.SCREEN_NAME, getString(R.string.feature_artist)))
+        );
     }
 
     @Override

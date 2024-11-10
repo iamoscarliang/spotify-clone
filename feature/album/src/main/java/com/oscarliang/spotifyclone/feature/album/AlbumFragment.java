@@ -1,5 +1,7 @@
 package com.oscarliang.spotifyclone.feature.album;
 
+import static java.util.Collections.singletonList;
+
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +21,9 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.google.android.material.snackbar.Snackbar;
+import com.oscarliang.spotifyclone.core.analytics.AnalyticsEvent;
+import com.oscarliang.spotifyclone.core.analytics.AnalyticsLogger;
+import com.oscarliang.spotifyclone.core.analytics.AnalyticsParam;
 import com.oscarliang.spotifyclone.core.model.Album;
 import com.oscarliang.spotifyclone.core.model.Music;
 import com.oscarliang.spotifyclone.core.player.MusicPlayer;
@@ -45,6 +50,9 @@ public class AlbumFragment extends Fragment {
 
     @Inject
     MusicPlayer musicPlayer;
+
+    @Inject
+    AnalyticsLogger analyticsLogger;
 
     @Inject
     ViewModelProvider.Factory factory;
@@ -101,6 +109,16 @@ public class AlbumFragment extends Fragment {
         super.onStart();
         subscribeObserver();
         subscribePlaybackState();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Log screen view event
+        analyticsLogger.logEvent(
+                AnalyticsEvent.SCREEN_VIEW,
+                singletonList(new AnalyticsParam(AnalyticsParam.SCREEN_NAME, getString(R.string.feature_album)))
+        );
     }
 
     @Override

@@ -29,6 +29,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.oscarliang.spotifyclone.core.analytics.NoOpAnalyticsLogger;
 import com.oscarliang.spotifyclone.core.auth.api.AuthManager;
 import com.oscarliang.spotifyclone.core.common.util.Event;
 import com.oscarliang.spotifyclone.core.common.util.Result;
@@ -77,6 +78,7 @@ public class LibraryFragmentTest {
                         LibraryFragment fragment = new LibraryFragment();
                         fragment.authManager = mock(AuthManager.class);
                         fragment.actionController = actionController;
+                        fragment.analyticsLogger = new NoOpAnalyticsLogger();
                         fragment.factory = ViewModelUtil.createFor(viewModel);
                         return fragment;
                     }

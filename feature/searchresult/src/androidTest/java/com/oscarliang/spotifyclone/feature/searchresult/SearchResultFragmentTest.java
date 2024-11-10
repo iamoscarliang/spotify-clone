@@ -30,6 +30,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.oscarliang.spotifyclone.core.analytics.NoOpAnalyticsLogger;
 import com.oscarliang.spotifyclone.core.model.RecentSearch;
 import com.oscarliang.spotifyclone.core.testing.util.RecyclerViewMatcher;
 import com.oscarliang.spotifyclone.core.testing.util.ViewModelUtil;
@@ -73,6 +74,7 @@ public class SearchResultFragmentTest {
                     ) {
                         SearchResultFragment fragment = new SearchResultFragment();
                         fragment.fragmentFactory = fragmentFactory;
+                        fragment.analyticsLogger = new NoOpAnalyticsLogger();
                         fragment.factory = ViewModelUtil.createFor(viewModel);
                         return fragment;
                     }

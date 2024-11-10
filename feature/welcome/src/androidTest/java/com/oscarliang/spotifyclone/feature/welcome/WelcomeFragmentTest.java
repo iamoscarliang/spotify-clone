@@ -18,6 +18,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.oscarliang.spotifyclone.core.analytics.NoOpAnalyticsLogger;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,7 +43,9 @@ public class WelcomeFragmentTest {
                             @NonNull ClassLoader classLoader,
                             @NonNull String className
                     ) {
-                        return new WelcomeFragment();
+                        WelcomeFragment fragment = new WelcomeFragment();
+                        fragment.analyticsLogger = new NoOpAnalyticsLogger();
+                        return fragment;
                     }
                 }
         );

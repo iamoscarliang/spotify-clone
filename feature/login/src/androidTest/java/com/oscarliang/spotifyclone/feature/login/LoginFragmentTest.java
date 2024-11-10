@@ -21,6 +21,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.oscarliang.spotifyclone.core.analytics.NoOpAnalyticsLogger;
 import com.oscarliang.spotifyclone.core.testing.util.ViewModelUtil;
 
 import org.junit.Before;
@@ -57,6 +58,7 @@ public class LoginFragmentTest {
                             @NonNull String className
                     ) {
                         LoginFragment fragment = new LoginFragment();
+                        fragment.analyticsLogger = new NoOpAnalyticsLogger();
                         fragment.factory = ViewModelUtil.createFor(viewModel);
                         return fragment;
                     }

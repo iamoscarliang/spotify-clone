@@ -1,5 +1,7 @@
 package com.oscarliang.spotifyclone.feature.playlistselect;
 
+import static java.util.Collections.singletonList;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.oscarliang.spotifyclone.core.analytics.AnalyticsEvent;
+import com.oscarliang.spotifyclone.core.analytics.AnalyticsLogger;
+import com.oscarliang.spotifyclone.core.analytics.AnalyticsParam;
 import com.oscarliang.spotifyclone.core.auth.api.AuthManager;
 import com.oscarliang.spotifyclone.core.model.Playlist;
 import com.oscarliang.spotifyclone.core.ui.R;
@@ -34,6 +39,9 @@ public class PlaylistSelectFragment extends Fragment implements
 
     @Inject
     AuthManager authManager;
+
+    @Inject
+    AnalyticsLogger analyticsLogger;
 
     @Inject
     ViewModelProvider.Factory factory;
@@ -91,6 +99,16 @@ public class PlaylistSelectFragment extends Fragment implements
     public void onStart() {
         super.onStart();
         subscribeObserver();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Log screen view event
+        analyticsLogger.logEvent(
+                AnalyticsEvent.SCREEN_VIEW,
+                singletonList(new AnalyticsParam(AnalyticsParam.SCREEN_NAME, getString(R.string.feature_playlist_select)))
+        );
     }
 
     @Override

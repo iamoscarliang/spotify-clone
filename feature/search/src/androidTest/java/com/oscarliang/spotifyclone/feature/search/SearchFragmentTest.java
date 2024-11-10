@@ -28,6 +28,7 @@ import androidx.navigation.Navigation;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.google.firebase.firestore.Query;
+import com.oscarliang.spotifyclone.core.analytics.NoOpAnalyticsLogger;
 import com.oscarliang.spotifyclone.core.common.util.Result;
 import com.oscarliang.spotifyclone.core.model.Category;
 import com.oscarliang.spotifyclone.core.testing.util.RecyclerViewMatcher;
@@ -68,6 +69,7 @@ public class SearchFragmentTest {
                             @NonNull String className
                     ) {
                         SearchFragment fragment = new SearchFragment();
+                        fragment.analyticsLogger = new NoOpAnalyticsLogger();
                         fragment.factory = ViewModelUtil.createFor(viewModel);
                         return fragment;
                     }

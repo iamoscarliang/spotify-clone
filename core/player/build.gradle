@@ -12,6 +12,7 @@ android {
 
 dependencies {
     implementation(project(":core:model"))
+    implementation(project(":core:analytics"))
 
     implementation libs.androidx.appcompat
     implementation libs.androidx.media3.exoplayer

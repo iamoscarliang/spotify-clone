@@ -1,5 +1,7 @@
 package com.oscarliang.spotifyclone.feature.musicinfo;
 
+import static java.util.Collections.singletonList;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,6 +17,9 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.oscarliang.spotifyclone.core.analytics.AnalyticsEvent;
+import com.oscarliang.spotifyclone.core.analytics.AnalyticsLogger;
+import com.oscarliang.spotifyclone.core.analytics.AnalyticsParam;
 import com.oscarliang.spotifyclone.core.ui.R;
 import com.oscarliang.spotifyclone.core.ui.util.AutoClearedValue;
 import com.oscarliang.spotifyclone.feature.musicinfo.databinding.BottomSheetMusicInfoBinding;
@@ -28,6 +33,9 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class MusicInfoBottomSheet extends BottomSheetDialogFragment {
 
     private static final String MUSIC_ID_KEY = "musicId";
+
+    @Inject
+    AnalyticsLogger analyticsLogger;
 
     @Inject
     ViewModelProvider.Factory factory;
@@ -83,6 +91,16 @@ public class MusicInfoBottomSheet extends BottomSheetDialogFragment {
             dialog.getBehavior().setState(BottomSheetBehavior.STATE_EXPANDED);
         }
         subscribeObserver();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Log screen view event
+        analyticsLogger.logEvent(
+                AnalyticsEvent.SCREEN_VIEW,
+                singletonList(new AnalyticsParam(AnalyticsParam.SCREEN_NAME, getString(R.string.feature_music_info)))
+        );
     }
 
     @Override

@@ -22,12 +22,14 @@ dependencies {
     implementation(project(":core:data"))
     implementation(project(":core:model"))
     implementation(project(":core:common"))
+    implementation(project(":core:analytics"))
     implementation(project(":core:testing"))
 
     implementation libs.androidx.appcompat
     implementation libs.androidx.constraintlayout
     implementation libs.androidx.navigation.fragment
     implementation libs.androidx.navigation.ui
+    implementation platform(libs.firebase.bom)
     implementation libs.firebase.firestore
     implementation libs.dagger.core
     implementation libs.rxjava
