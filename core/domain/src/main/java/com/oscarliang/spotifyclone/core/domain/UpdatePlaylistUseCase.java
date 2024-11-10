@@ -51,14 +51,13 @@ public class UpdatePlaylistUseCase {
     }
 
     private String getFirstMusicImage(List<Music> musics, String id) {
-        Music first = null;
         for (Music music : musics) {
             if (Objects.equals(music.getId(), id)) {
-                first = music;
+                return music.getImageUrl();
             }
         }
 
-        return first.getImageUrl();
+        return "";
     }
 
 }
