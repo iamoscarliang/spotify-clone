@@ -6,7 +6,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.oscarliang.spotifyclone.core.auth.AuthManager;
+import com.oscarliang.spotifyclone.core.auth.api.AuthManager;
 
 import org.junit.Before;
 import org.junit.Test;

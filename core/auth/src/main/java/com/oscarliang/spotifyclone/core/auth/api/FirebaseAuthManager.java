@@ -1,9 +1,8 @@
-package com.oscarliang.spotifyclone.core.auth;
+package com.oscarliang.spotifyclone.core.auth.api;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
-import com.oscarliang.spotifyclone.core.auth.AuthManager;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

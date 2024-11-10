@@ -1,7 +1,7 @@
 package com.oscarliang.spotifyclone.core.auth.di;
 
-import com.oscarliang.spotifyclone.core.auth.AuthManager;
-import com.oscarliang.spotifyclone.core.auth.FirebaseAuthManager;
+import com.oscarliang.spotifyclone.core.auth.api.AuthManager;
+import com.oscarliang.spotifyclone.core.auth.api.FirebaseAuthManager;
 
 import javax.inject.Singleton;
 

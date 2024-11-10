@@ -3,7 +3,7 @@ package com.oscarliang.spotifyclone.feature.login;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 
-import com.oscarliang.spotifyclone.core.auth.AuthManager;
+import com.oscarliang.spotifyclone.core.auth.api.AuthManager;
 
 import javax.inject.Inject;
 
