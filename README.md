@@ -14,7 +14,7 @@
 <img src="https://github.com/iamoscarliang/spotify-clone/blob/master/images/screenshot.png" width="800">
 
 ## :books: Tech Stack
-- :fire: Firebase [Firestore](https://firebase.google.com/docs/firestore) & [Authentication](https://firebase.google.com/docs/auth)
+- :fire: Firebase [Firestore](https://firebase.google.com/docs/firestore) & [Analytics](https://firebase.google.com/docs/analytics) & [Authentication](https://firebase.google.com/docs/auth)
 - :wrench: [Architecture Component](https://developer.android.com/topic/architecture) to build lifecycle-aware components
 - :reminder_ribbon: [View Binding](https://developer.android.com/topic/libraries/view-binding) for type-safe views references
 - :ship: [Navigation](https://developer.android.com/guide/navigation) for screen navigation
