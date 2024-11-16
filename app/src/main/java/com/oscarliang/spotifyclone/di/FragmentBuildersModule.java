@@ -19,12 +19,16 @@ import com.oscarliang.spotifyclone.feature.searchresult.ArtistResultFragment;
 import com.oscarliang.spotifyclone.feature.searchresult.MusicResultFragment;
 import com.oscarliang.spotifyclone.feature.searchresult.SearchResultFragment;
 import com.oscarliang.spotifyclone.feature.signup.SignupFragment;
+import com.oscarliang.spotifyclone.feature.welcome.WelcomeFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
 @Module
 public abstract class FragmentBuildersModule {
+
+    @ContributesAndroidInjector
+    abstract WelcomeFragment contributeWelcomeFragment();
 
     @ContributesAndroidInjector
     abstract LoginFragment contributeLoginFragment();
