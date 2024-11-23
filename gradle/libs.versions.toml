@@ -1,6 +1,7 @@
 [versions]
 androidGradlePlugin = "7.2.0"
 googleGradlePlugin = "4.3.0"
+crashlyticsGradlePlugin = "2.9.9"
 androidxAppCompat = "1.6.1"
 androidxConstraintlayout = "2.1.4"
 androidxNavigation = "2.4.0"
@@ -39,6 +40,7 @@ androidx-fragment-testing = { group = "androidx.fragment", name = "fragment-test
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
+firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth" }
 dagger-core = { group = "com.google.dagger", name = "dagger", version.ref = "dagger" }
 dagger-compiler = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "dagger" }
@@ -58,3 +60,4 @@ mockito-android = { group = "org.mockito", name = "mockito-android", version.ref
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 google-services = { id = "com.google.gms.google-services", version.ref = "googleGradlePlugin" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "crashlyticsGradlePlugin" }
