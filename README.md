@@ -3,7 +3,8 @@
 
 [![Build](https://github.com/iamoscarliang/spotify-clone/workflows/Build/badge.svg)](https://github.com/iamoscarliang/spotify-clone/actions)
 ![minSdk](https://img.shields.io/badge/minSdk-21-brightgreen)
-[![license](https://img.shields.io/badge/license-MIT-brightgreen)](https://github.com/iamoscarliang/spotify-clone/blob/master/LICENSE)
+[![license](https://img.shields.io/badge/license-MIT-yellow)](https://github.com/iamoscarliang/spotify-clone/blob/master/LICENSE)
+[![download](https://img.shields.io/badge/download-apk-blue)](https://github.com/iamoscarliang/spotify-clone/releases)
 
 **Spotify clone app made with [Firebase](https://firebase.google.com/)**
 </div>
@@ -14,7 +15,7 @@
 <img src="https://github.com/iamoscarliang/spotify-clone/blob/master/images/screenshot.png" width="800">
 
 ## :books: Tech Stack
-- :fire: Firebase [Firestore](https://firebase.google.com/docs/firestore) & [Analytics](https://firebase.google.com/docs/analytics) & [Authentication](https://firebase.google.com/docs/auth)
+- :fire: Firebase [Firestore](https://firebase.google.com/docs/firestore) & [Analytics](https://firebase.google.com/docs/analytics) & [Crashlytics](https://firebase.google.com/docs/crashlytics) & [Authentication](https://firebase.google.com/docs/auth)
 - :wrench: [Architecture Component](https://developer.android.com/topic/architecture) to build lifecycle-aware components
 - :reminder_ribbon: [View Binding](https://developer.android.com/topic/libraries/view-binding) for type-safe views references
 - :ship: [Navigation](https://developer.android.com/guide/navigation) for screen navigation
