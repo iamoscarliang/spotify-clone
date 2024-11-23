@@ -200,6 +200,15 @@ public class ExoMusicPlayer implements MusicPlayer {
         this.musics.onNext(musics);
     }
 
+    @Override
+    public void clearMusic() {
+        // Stop the current music and clear all the media items.
+        // Note that we do not call release(), or the player
+        // will be unavailable when later the user re-login.
+        mediaController.stop();
+        mediaController.clearMediaItems();
+    }
+
     private MediaItem createMediaItem(Music music) {
         return new MediaItem.Builder()
                 .setMediaId(music.getId())

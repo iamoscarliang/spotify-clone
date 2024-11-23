@@ -37,4 +37,6 @@ public interface MusicPlayer {
 
     void addPlaylist(@NonNull List<Music> musics, @NonNull String playlistId);
 
+    void clearMusic();
+
 }

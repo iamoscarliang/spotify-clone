@@ -14,6 +14,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import com.oscarliang.spotifyclone.core.auth.AuthManager;
+import com.oscarliang.spotifyclone.core.player.MusicPlayer;
 import com.oscarliang.spotifyclone.databinding.ActivityMainBinding;
 
 import java.util.Objects;
@@ -34,6 +35,9 @@ public class MainActivity extends AppCompatActivity implements HasAndroidInjecto
 
     @Inject
     AuthManager authManager;
+
+    @Inject
+    MusicPlayer musicPlayer;
 
     private ActivityMainBinding binding;
     private NavController navController;
@@ -79,8 +83,7 @@ public class MainActivity extends AppCompatActivity implements HasAndroidInjecto
     private void initDrawer() {
         binding.drawer.navView.setNavigationItemSelectedListener(item -> {
             if (item.getItemId() == R.id.action_logout) {
-                authManager.signOut();
-                navigateWelcomeFragment();
+                signOut();
             }
             item.setChecked(true);
             binding.drawerLayout.close();
@@ -170,6 +173,16 @@ public class MainActivity extends AppCompatActivity implements HasAndroidInjecto
                     textUser.setText(user.getDisplayName());
                 })
         );
+    }
+
+    private void signOut() {
+        // Clear all the music to prevent playing
+        // the music in bg when user is not log in
+        musicPlayer.clearMusic();
+
+        // Sign out and navigate to welcome page
+        authManager.signOut();
+        navigateWelcomeFragment();
     }
 
     private void navigateWelcomeFragment() {
