@@ -11,8 +11,8 @@ android {
         applicationId "com.oscarliang.spotifyclone"
         minSdk 21
         targetSdk 34
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.1"
 
         testInstrumentationRunner "com.oscarliang.spotifyclone.core.testing.SpotifyTestRunner"
     }
