@@ -65,10 +65,7 @@ public class FirebasePlaylistService implements PlaylistService {
                                             emitter.onError(e);
                                             return;
                                         }
-                                        // If the snapshot is empty and service is offline,
-                                        // we always show errors since we don't know if the
-                                        // online data is also empty or not
-                                        if (value == null || (value.isEmpty() && value.getMetadata().isFromCache())) {
+                                        if (value == null) {
                                             emitter.onError(new Exception("Connection error"));
                                             return;
                                         }
