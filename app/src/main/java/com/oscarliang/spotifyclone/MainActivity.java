@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.NavGraph;
 import androidx.navigation.NavOptions;
@@ -131,28 +132,29 @@ public class MainActivity extends AppCompatActivity implements HasAndroidInjecto
                 return;
             }
 
+            // Hide or show the toolbar
+            if (Objects.equals(label, getString(com.oscarliang.spotifyclone.core.ui.R.string.feature_home))
+                    || Objects.equals(label, getString(com.oscarliang.spotifyclone.core.ui.R.string.feature_search))
+                    || Objects.equals(label, getString(com.oscarliang.spotifyclone.core.ui.R.string.feature_library))
+            ) {
+                showTopBar(label);
+            } else {
+                hideTopBar();
+            }
+
             // Hide or show the nav view
             if (Objects.equals(label, getString(com.oscarliang.spotifyclone.core.ui.R.string.feature_player))
                     || Objects.equals(label, getString(com.oscarliang.spotifyclone.core.ui.R.string.feature_welcome))
                     || Objects.equals(label, getString(com.oscarliang.spotifyclone.core.ui.R.string.feature_signup))
                     || Objects.equals(label, getString(com.oscarliang.spotifyclone.core.ui.R.string.feature_login))
             ) {
-                navView.setVisibility(View.GONE);
-                binding.miniPlayerHostFragment.setVisibility(View.GONE);
+                hideBottomBar();
+                // Disable the drawer when user not sign in
+                binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
             } else {
-                navView.setVisibility(View.VISIBLE);
-                binding.miniPlayerHostFragment.setVisibility(View.VISIBLE);
-            }
-
-            // Hide or show the toolbar
-            if (Objects.equals(label, getString(com.oscarliang.spotifyclone.core.ui.R.string.feature_home))
-                    || Objects.equals(label, getString(com.oscarliang.spotifyclone.core.ui.R.string.feature_search))
-                    || Objects.equals(label, getString(com.oscarliang.spotifyclone.core.ui.R.string.feature_library))
-            ) {
-                binding.toolbar.setVisibility(View.VISIBLE);
-                binding.toolbar.setTitle(label);
-            } else {
-                binding.toolbar.setVisibility(View.GONE);
+                showBottomBar();
+                // Enable the drawer when user has sign in
+                binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             }
         });
     }
@@ -178,6 +180,25 @@ public class MainActivity extends AppCompatActivity implements HasAndroidInjecto
                         .setPopUpTo(R.id.nav_graph, true)
                         .build()
         );
+    }
+
+    private void showTopBar(String label) {
+        binding.toolbar.setVisibility(View.VISIBLE);
+        binding.toolbar.setTitle(label);
+    }
+
+    private void hideTopBar() {
+        binding.toolbar.setVisibility(View.GONE);
+    }
+
+    private void showBottomBar() {
+        navView.setVisibility(View.VISIBLE);
+        binding.miniPlayerHostFragment.setVisibility(View.VISIBLE);
+    }
+
+    private void hideBottomBar() {
+        navView.setVisibility(View.GONE);
+        binding.miniPlayerHostFragment.setVisibility(View.GONE);
     }
 
 }
