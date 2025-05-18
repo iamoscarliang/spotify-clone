@@ -1,5 +1,5 @@
 [versions]
-androidGradlePlugin = "7.2.0"
+androidGradlePlugin = "8.7.3"
 googleGradlePlugin = "4.3.0"
 crashlyticsGradlePlugin = "2.9.9"
 androidxAppCompat = "1.6.1"
